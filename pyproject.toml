@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-handover-kit"
+version = "0.1.0"
+description = "Evidence-driven context cache and workflow for taking over unfamiliar business systems with AI"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "AI Handover Kit"}]
+license = {text = "MIT"}
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "License :: OSI Approved :: MIT License",
+]
+
+[project.scripts]
+ai-handover = "ai_handover.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+ai_handover = ["templates/*.md", "templates/context/modules/*.md", "templates/context/flows/*.md"]
