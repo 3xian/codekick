@@ -1,151 +1,168 @@
 ---
 name: change
-description: Analyze a requested software change and determine the smallest safe implementation. Use before editing unfamiliar or business-critical code.
+description: Analyze and implement the smallest safe change for a requested behavior in an existing system. Use before editing unfamiliar or business-critical code.
 ---
 
 # Objective
 
-Determine the smallest correct change that satisfies the requested behavior while minimizing regression risk.
+Satisfy the requested behavior with the smallest semantically correct change and bounded regression risk.
 
-# Context first
+# Context Loading
 
-Resolve only the relevant project map, module/flow cards, durable knowledge, and source anchors before broad exploration.
+1. Read `AGENTS.md`.
+2. Read `.ai/PROJECT.md`.
+3. Read only relevant `.ai/KNOWLEDGE.md` sections.
+4. Read/create a task artifact when the task is complex, cross-module, long-running, ambiguous or high-risk.
+5. Search real source evidence.
 
-Treat summaries as navigation caches. Re-validate potentially stale claims against executable evidence.
+# Modification Gate
 
-# Modification gate
+Do not modify production code until all material items below are known:
 
-DO NOT modify code until all of the following are known well enough to act:
+1. `Current Behavior`
+2. `Desired Behavior`
+3. `Relevant Execution Path`
+4. `Likely Change Point`
+5. `Important Invariants / Side Effects`
+6. `Validation Strategy`
 
-1. current behavior
-2. desired behavior
-3. relevant execution path
-4. likely semantic change point
-5. important affected dependencies
-6. validation strategy
-
-If any item is materially unclear, continue investigation first.
+If one item is materially unclear, investigate first.
 
 # Protocol
 
 ## 1. Normalize the requirement
 
-Identify:
+Separate:
 
-- requested behavior
-- conditions under which it applies
-- expected outcome
-- behavior that must remain unchanged
-
-Separate explicit requirements from assumptions.
+- explicit requested behavior;
+- conditions;
+- expected result;
+- behavior that must stay unchanged;
+- assumptions / ambiguities.
 
 ## 2. Establish current behavior
 
-Trace the existing implementation and identify:
+Trace the real implementation from entry to relevant state and side effects.
 
-- entry point
-- decision/business logic
-- persistence
-- side effects
-- existing tests
-
-Do not design the change before understanding current behavior.
+Look for existing tests before designing the change.
 
 ## 3. Identify invariants
 
-Look for relevant invariants such as:
+Examples:
 
-- API compatibility
-- database compatibility
-- valid state transitions
-- transaction semantics
-- idempotency
-- authorization
-- old-client behavior
+- API compatibility;
+- state transition rules;
+- transaction semantics;
+- authorization;
+- idempotency;
+- old-client behavior;
+- message contracts;
+- database compatibility.
+
+Only include invariants relevant to this task.
 
 ## 4. Find candidate change points
 
-Evaluate candidate locations by:
+For each realistic candidate, evaluate:
 
-- semantic ownership
-- scope of impact
-- duplication
-- coupling
-- testability
-- consistency with existing architecture
+- does this layer actually own the business rule?
+- impact surface;
+- duplication;
+- coupling;
+- consistency with existing patterns;
+- testability.
 
-Prefer the location where the business rule conceptually belongs, not merely the easiest patch point.
+Prefer the semantic owner of the rule, not the easiest patch site.
 
-## 5. Determine blast radius
+## 5. Determine the credible blast radius
 
-Trace only credible effects:
+Trace upstream/downstream effects only when relevant:
 
-- callers/callees
-- DB reads/writes
-- state transitions
-- transactions
-- events/messages
-- jobs
-- caches
-- external integrations
-- authorization
-- public contracts
+- callers/callees;
+- state/database writes;
+- transactions;
+- events/messages;
+- jobs;
+- caches;
+- external integrations;
+- permissions;
+- public API contracts.
 
-Do not mechanically apply unrelated checklist categories.
+Do not perform checklist theater.
 
-## 6. Search for existing patterns
+## 6. Search for established project patterns
 
-Before introducing a new abstraction/mechanism, search for similar behavior already present.
-
-Prefer established project conventions unless they are demonstrably wrong for the case.
+Before adding abstractions, mechanisms, helpers, error models or config styles, search the repository for comparable existing behavior.
 
 ## 7. Design the smallest safe change
 
-The preferred solution should:
+Prefer a solution that:
 
-- touch the fewest conceptual boundaries
-- preserve contracts where possible
-- avoid unrelated refactoring
-- reuse existing domain concepts
-- remain testable
-- make failure behavior explicit
+- changes the fewest conceptual boundaries;
+- reuses existing domain concepts;
+- preserves contracts where possible;
+- avoids unrelated refactoring;
+- has explicit failure behavior;
+- can be tested directly.
 
-## 8. Derive validation
+## 8. Implement
+
+Only after the Modification Gate is satisfied.
+
+During implementation:
+
+- stay within analyzed scope;
+- keep unrelated cleanup out;
+- if new evidence invalidates the plan, stop expanding the change and revise the analysis first.
+
+## 9. Derive validation
 
 At minimum consider:
 
-- primary success path
-- case where the new behavior should not apply
-- boundary condition
-- existing behavior that must remain unchanged
-- failure path when relevant
+- primary success path;
+- case where new behavior should not apply;
+- important boundary;
+- existing invariant that must remain true;
+- failure path when meaningful.
 
-Additional tests should follow from actual implementation risks.
+Additional checks must come from actual implementation risk.
 
-# During implementation
+## 10. Persist only durable learning
 
-- stay within analyzed scope,
-- do not perform opportunistic refactoring,
-- if unexpected behavior/architecture appears, stop expanding the edit and update the analysis first.
+After implementation:
 
-# Evidence rules
+- task-specific reasoning → task artifact;
+- stable project structure → PROJECT.md;
+- hidden reusable knowledge → KNOWLEDGE.md.
 
-Tie major conclusions to repository evidence.
+# Evidence Rules
 
-A proposed change point must include evidence explaining why it owns the behavior.
+Every proposed change point must have evidence showing why it owns or controls the relevant behavior.
 
-# Stop conditions
+Distinguish `FACT`, `INFERENCE`, `HYPOTHESIS`, `UNKNOWN` when uncertainty affects the implementation.
 
-Analysis is complete when:
+# Negative Constraints
 
-1. current behavior is understood,
-2. ambiguity is resolved or explicit,
-3. the preferred change point is identified,
-4. material blast radius is known,
-5. implementation can be described concretely,
+- Do not patch before understanding current behavior.
+- Do not introduce a new abstraction before searching for an existing pattern.
+- Do not combine architectural cleanup with the business change unless required for correctness.
+- Do not widen API or persistence surface speculatively.
+- Do not silently assume unknown business rules.
+
+# Stop Conditions
+
+Analysis is ready for implementation when:
+
+1. current behavior is evidence-backed;
+2. requirement ambiguity is resolved or explicitly bounded;
+3. preferred change point is justified;
+4. credible blast radius is known;
+5. implementation steps are concrete;
 6. validation can detect likely regressions.
 
 # Output
+
+Before or alongside implementation, keep the analysis compact:
 
 ## Requirement
 ## Current Behavior
@@ -155,5 +172,4 @@ Analysis is complete when:
 ## Implementation Plan
 ## Risks
 ## Validation Plan
-## Evidence
 ## Unknowns

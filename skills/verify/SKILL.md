@@ -1,135 +1,184 @@
 ---
 name: verify
-description: Verify whether an implementation correctly satisfies the requested change without introducing unacceptable regressions. Use after code changes and before considering the task complete.
+description: Verify whether an actual implementation satisfies the requested change without unacceptable regressions. Use after code changes and before considering a task complete.
 ---
 
 # Objective
 
-Determine whether the actual implementation is correct, minimal, and safe.
+Verify the real implementation, not the intended plan.
 
-Verification must be based on the actual diff, not only on the intended design.
+# Core Rule
 
-# Core principle
+```text
+Requirement + Actual Diff
+        ↓
+Changed Behavior
+        ↓
+Plausible Failure Modes
+        ↓
+Tests / Checks
+```
 
-`Diff -> behavioral changes -> risks -> validation`
+# Context Loading
 
-Do not apply unrelated checklist items mechanically.
+1. Read `AGENTS.md`.
+2. Read the requirement/task artifact.
+3. Read relevant PROJECT/KNOWLEDGE context only as needed.
+4. Inspect the complete actual diff.
+5. Read changed code plus enough surrounding source to reconstruct behavior.
 
 # Protocol
 
-## 1. Re-read the requirement
+## 1. Re-establish requirement and invariants
 
-Identify required behavior, conditions, expected outcomes, and invariants.
+Confirm:
 
-Verify against the requirement, not the earlier implementation plan alone.
+- required behavior;
+- conditions;
+- expected result;
+- behavior that must stay unchanged.
 
-## 2. Inspect the complete diff
+Do not verify only against the implementation plan.
 
-Understand every meaningful changed line.
+## 2. Inspect every meaningful diff
 
-Classify changes into:
+Classify changes as:
 
-- intended behavior change
-- supporting change
-- test change
-- unrelated/suspicious change
+- intended behavior change;
+- supporting change;
+- test change;
+- unrelated/suspicious change.
 
 Flag unexplained changes.
 
 ## 3. Reconstruct post-change behavior
 
-Trace the actual changed path and confirm the rule is implemented at the intended semantic layer.
+Trace the changed path and confirm the rule was implemented at an appropriate semantic layer.
 
-Do not assume the code matches the plan.
+## 4. Derive risks from the actual diff
 
-## 4. Derive risks from the diff
-
-Examples of triggers:
-
-- transaction changes -> atomicity, rollback, propagation
-- SQL/schema changes -> compatibility, constraints, nullability, migration/query behavior
-- events/messages -> duplicates, ordering, retries, partial failure
-- state transitions -> illegal/terminal/backward transitions
-- caches -> invalidation, stale reads, consistency
-- public API changes -> backward compatibility and error semantics
-- concurrency-sensitive changes -> races, lost updates, locking, idempotency
-
-Only inspect categories triggered by the actual change.
-
-## 5. Review test coverage
-
-Confirm tests prove:
-
-- requested behavior works
-- previous behavior remains intact
-- material edge cases are covered
-- identified risks are exercised
-
-Do not treat test existence as proof. Inspect assertions.
-
-## 6. Look for silent failures
+Only inspect categories triggered by the change.
 
 Examples:
 
-- swallowed exceptions
-- partial persistence
-- event emitted before commit
-- ignored failures
-- unsafe defaults
-- fallbacks hiding errors
-- broad exception handling
+### Transaction changes
+
+Check atomicity, rollback and propagation.
+
+### SQL/schema changes
+
+Check compatibility, constraints, nullability, migration safety and query behavior.
+
+### Event/message changes
+
+Check duplicate delivery, ordering, retry and partial failure.
+
+### State transition changes
+
+Check illegal transitions, terminal states and unintended paths.
+
+### Cache changes
+
+Check invalidation, stale reads and consistency.
+
+### Public API changes
+
+Check compatibility, field optionality and error semantics.
+
+### Concurrency-sensitive changes
+
+Check races, lost updates, locking and idempotency.
+
+## 5. Evaluate tests, not just test presence
+
+Confirm assertions prove:
+
+- requested behavior works;
+- relevant previous behavior remains intact;
+- meaningful edge/risk scenarios are covered.
+
+## 6. Look for silent failure modes
+
+Examples:
+
+- swallowed exceptions;
+- partial persistence;
+- event before commit;
+- ignored failure response;
+- accidental default/fallback;
+- broad exception handling hiding incorrect state.
 
 ## 7. Evaluate minimality
 
-Flag behaviorally relevant:
+Flag changes that materially expand regression surface without being required:
 
-- unnecessary refactors
-- unrelated churn
-- speculative abstractions
-- duplicated logic
-- widened API surface
+- unrelated refactoring;
+- speculative abstractions;
+- duplicated logic;
+- widened API surface;
+- unrelated churn.
 
-# Findings quality
+## 8. Execute feasible validation
 
-Every issue should include:
+Run focused tests/checks first. Broaden only when risk justifies it.
 
-- location
-- observed behavior
-- why it matters
-- plausible failure scenario
-- recommended fix
+Record commands and outcomes in the task artifact when one exists.
 
-Avoid warnings with no plausible failure scenario.
+## 9. Persist durable learning
+
+After verification:
+
+- stable structure → PROJECT.md;
+- hidden reusable knowledge → KNOWLEDGE.md;
+- verification evidence/status → task artifact.
+
+# Evidence Rules
+
+Every reported defect should include:
+
+- location;
+- observed behavior;
+- why it matters;
+- plausible failure scenario;
+- recommended correction when clear.
+
+Avoid speculative warnings without a credible scenario.
 
 # Severity
 
-- `CRITICAL` — corruption, security failure, major production failure
-- `HIGH` — likely incorrect behavior or significant regression
-- `MEDIUM` — realistic edge case or maintainability issue with behavioral risk
-- `LOW` — minor issue or improvement opportunity
+- `CRITICAL`: corruption, severe security issue, catastrophic production behavior.
+- `HIGH`: likely incorrect behavior or significant regression.
+- `MEDIUM`: realistic edge case or design defect with behavioral risk.
+- `LOW`: minor risk/improvement.
 
 Do not inflate severity.
 
-# Stop conditions
+# Stop Conditions
 
 Verification is complete when:
 
-1. every meaningful diff is understood,
-2. requirement coverage is checked,
-3. diff-triggered risks are reviewed,
-4. tests are evaluated against those risks,
+1. every meaningful diff is understood;
+2. requirement coverage is checked;
+3. diff-triggered risks are reviewed;
+4. tests/checks address credible risks;
 5. remaining uncertainty is explicit.
 
 # Output
 
 ## Verdict
 
-One of: `PASS`, `PASS WITH CONCERNS`, `FAIL`.
+`PASS` / `PASS WITH CONCERNS` / `FAIL`
 
 ## Requirement Coverage
+
 ## Findings
+
+For each finding: severity, location, problem, failure scenario, recommended fix.
+
 ## Regression Risks
+
 ## Test Gaps
+
 ## Unrelated Changes
-## Evidence
+
 ## Remaining Unknowns

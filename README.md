@@ -1,185 +1,210 @@
-# CodeKick - AI Handover Kit
+# CodeKick
 
-[中文说明](README.zh-CN.md)
+CodeKick 是一套面向大型遗留业务系统二次开发的轻量 AI 工作流。
 
-A small, evidence-driven operating system for taking over unfamiliar business systems with AI.
+目标不是让 AI 先“理解整个系统”，而是让它在每个真实任务中：
 
-The goal is not to make an agent understand the whole repository. The goal is to repeatedly build the **smallest useful context** for the task, change the system at the **smallest correct semantic point**, and verify the result from the **actual diff**.
+1. 先用项目地图快速定位；
+2. 再用源码证据理解当前行为；
+3. 找到最小正确修改点；
+4. 用实际 diff 推导回归风险；
+5. 只沉淀以后无法低成本重新推导的知识。
 
-## Core model
+整个方案刻意保持简单，不依赖向量数据库、知识图谱、MCP 或专用索引服务。
+
+## 核心结构
 
 ```text
-Source code / DB / config / tests / git
-                |
-                v
-          PROJECT_MAP.md
-                |
-        +-------+-------+
-        |               |
-   Module Cards      Flow Cards
-        |               |
-        +-------+-------+
-                |
-         Context Resolver
-                |
-      smallest useful context
-                |
-     understand -> change -> verify
-                |
-       durable non-obvious knowledge
-                |
-          KNOWLEDGE.md
+.
+├── AGENTS.md                 # 全局 AI 工作纪律
+├── .ai/
+│   ├── PROJECT.md            # 项目地图：系统有什么、去哪里找
+│   ├── KNOWLEDGE.md          # 隐含业务知识、历史原因、生产坑
+│   └── tasks/                # 复杂任务的持久工作记忆
+├── skills/
+│   ├── bootstrap/SKILL.md    # 第一次接手项目时建立 PROJECT.md
+│   ├── understand/SKILL.md   # 理解现有行为
+│   ├── change/SKILL.md       # 分析并实施最小安全修改
+│   └── verify/SKILL.md       # 基于 requirement + diff 验证修改
+├── templates/
+│   └── TASK.md               # 复杂任务模板
+├── scripts/
+│   └── new-task.py           # 创建任务文件
+└── examples/                 # 示例
 ```
 
-## What is included
+## 核心原则
 
-- `AGENTS.md` — global agent policy.
-- `skills/bootstrap` — create a shallow project index.
-- `skills/understand` — investigate a behavior with evidence.
-- `skills/change` — plan the smallest safe change before editing.
-- `skills/verify` — verify the actual diff and derive regression risks.
-- `templates/` — project map, module card, flow card, knowledge templates.
-- `ai-handover` CLI — initialize `.ai/`, create cards on demand, rank context cards for a task, build a context pack, and check whether cards may be stale relative to Git.
-- `examples/sample-project` — a small example `.ai/` knowledge layer.
-- `tests/` — tests for the resolver and freshness logic.
+### 1. PROJECT.md 是导航，不是第二份源码
 
-## Quick start
+它只回答：
 
-Zero-install usage from the unpacked kit:
+- 系统负责什么；
+- 模块在哪里；
+- 核心入口在哪里；
+- 关键业务流大致怎么走；
+- 主要数据库、消息、外部系统是什么；
+- 测试和运行入口在哪里。
 
-```bash
-/path/to/ai-handover-kit/bin/ai-handover init /path/to/your/project
-/path/to/ai-handover-kit/bin/ai-handover new-card module order /path/to/your/project
-/path/to/ai-handover-kit/bin/ai-handover resolve "订单取消增加信用额度校验" /path/to/your/project
-/path/to/ai-handover-kit/bin/ai-handover pack "订单取消增加信用额度校验" /path/to/your/project --output .ai/context-pack.md
-/path/to/ai-handover-kit/bin/ai-handover freshness /path/to/your/project
-```
+不要把类、方法、表字段逐条复制进去。
 
-Or install the CLI:
+建议长期控制在约 2k~5k tokens。
 
-```bash
-python -m pip install -e .
-```
+### 2. KNOWLEDGE.md 只保存“源码看不出来”的东西
 
-Then point your coding agent at:
+适合记录：
 
-1. `AGENTS.md` from this repository (or copy it into your project).
-2. The relevant `skills/*/SKILL.md`.
-3. The generated `.ai/context-pack.md`.
-4. Source files named by the selected cards and the agent's own evidence search.
+- 业务术语和代码概念的映射；
+- 隐含业务规则；
+- 历史原因；
+- 外部系统的非显然行为；
+- 生产环境坑；
+- 团队约定；
+- 已知危险区域。
 
-## Recommended workflow
+判断标准：
 
-### First day on a project
+> 如果通过 5 分钟代码搜索就能重新得到，不要写进 KNOWLEDGE.md。
+
+### 3. Task Artifact 只用于复杂任务
+
+简单 bug 不需要创建任务文件。
+
+当一个任务具有以下特征时再创建：
+
+- 跨模块；
+- 需要多次会话；
+- 需求有歧义；
+- 调查链较长；
+- 风险较高；
+- 需要保留诊断与验证过程。
+
+任务完成后，可保留归档；只有真正可复用的知识才提炼进 KNOWLEDGE.md。
+
+### 4. Evidence first
+
+AI 的重要结论必须尽量有证据：
+
+- 文件路径；
+- symbol；
+- SQL / schema；
+- 配置；
+- 测试；
+- git history；
+- 用户提供的日志或运行结果。
+
+必须区分：
+
+- FACT：直接有证据；
+- INFERENCE：由多个事实强烈推导；
+- HYPOTHESIS：合理但尚未验证；
+- UNKNOWN：证据不足。
+
+## 推荐工作流
+
+### 第一次接手项目
+
+让 Agent 执行 `bootstrap`：
 
 ```text
 /bootstrap
-    -> .ai/PROJECT_MAP.md
 ```
 
-Keep the first map shallow. Do not attempt to document the entire system.
+目标只是建立一份足够好用的 `.ai/PROJECT.md`，不要一次性分析整个系统的每个细节。
 
-### Every task
+### 日常理解问题
 
 ```text
-Task
-  -> resolve context
-  -> /understand if behavior is unclear
-  -> /change
-  -> implement
-  -> /verify
-  -> persist only durable, non-obvious knowledge
+/understand 订单取消为什么会释放库存？
 ```
 
-### Progressive indexing
-
-Create module/flow cards only when a task touches that area. Over time the system becomes cheaper to navigate without a large up-front indexing project.
-
-## Principles
-
-1. Evidence before conclusion.
-2. Repository behavior outranks prose documentation.
-3. Fact != inference != hypothesis != unknown.
-4. Explore only what the current task requires.
-5. Understand before editing unfamiliar or business-critical behavior.
-6. Prefer the smallest correct semantic change.
-7. Derive verification from the actual diff.
-8. Persist only knowledge that is expensive to rediscover.
-9. Treat summaries as caches, never as the source of truth.
-10. When summaries and executable evidence conflict, update or invalidate the summary.
-
-## Card freshness
-
-Cards can contain:
-
-```yaml
-verified_commit: abc123
-source_paths:
-  - src/order/**
-  - db/order/**
-```
-
-`ai-handover freshness` checks whether files under those paths changed after `verified_commit`.
-
-Freshness is deliberately conservative: a card becoming "potentially stale" does not mean it is wrong; it means the relevant source should be re-validated before relying on it.
-
-## Context resolver
-
-The resolver is intentionally simple and transparent. It ranks:
-
-- `PROJECT_MAP.md`
-- `KNOWLEDGE.md`
-- module cards
-- flow cards
-
-using title, scope, aliases, tags, and body text. It is a pre-filter, not an oracle. The agent still has to verify material claims against source code/tests/schema/runtime evidence.
-
-## Adapting to your tools
-
-The repository is vendor-neutral. Common options:
-
-- Claude Code: reference `AGENTS.md` and the selected `SKILL.md` in project instructions.
-- Codex: copy/merge `AGENTS.md` into your repository-level agent instructions and invoke the skill text as task policy.
-- Cursor: use the policies as project rules and keep `.ai/` in the repository.
-- Other agents: treat each `SKILL.md` as a protocol, not a one-shot prompt.
-
-## What not to do
-
-- Do not create a complete knowledge base before real work starts.
-- Do not load every summary on every task.
-- Do not let the agent edit code before it can state current behavior and the change point.
-- Do not let old summaries override tests or implementation.
-- Do not persist obvious facts that can be re-derived cheaply.
-- Do not mix unrelated refactors into business changes.
-
-## Repository layout
+执行顺序：
 
 ```text
-ai-handover-kit/
-├── AGENTS.md
-├── README.md
-├── pyproject.toml
-├── skills/
-│   ├── bootstrap/SKILL.md
-│   ├── understand/SKILL.md
-│   ├── change/SKILL.md
-│   └── verify/SKILL.md
-├── src/ai_handover/
-│   ├── cli.py
-│   ├── frontmatter.py
-│   ├── git_utils.py
-│   ├── models.py
-│   ├── resolver.py
-│   └── templates/        # packaged copies used by the CLI
-├── templates/
-│   ├── PROJECT_MAP.md
-│   ├── KNOWLEDGE.md
-│   └── context/
-│       ├── modules/_MODULE.md
-│       └── flows/_FLOW.md
-├── docs/
-│   ├── architecture.md
-│   └── adoption.md
-├── examples/sample-project/.ai/
-└── tests/
+PROJECT.md
+  ↓
+定位相关区域
+  ↓
+读取相关 KNOWLEDGE
+  ↓
+搜索真实源码
+  ↓
+追最小必要调用链
+  ↓
+给出证据化结论
 ```
+
+### 修改需求
+
+```text
+/change 订单审核时增加客户信用额度校验
+```
+
+AI 在修改前必须先确定：
+
+- Current Behavior；
+- Desired Behavior；
+- Change Point；
+- 重要影响范围；
+- 验证方案。
+
+这些没有搞清楚之前，不允许直接改代码。
+
+### 修改完成后
+
+```text
+/verify
+```
+
+验证逻辑：
+
+```text
+Requirement + Actual Diff
+          ↓
+Changed Behavior
+          ↓
+Real Risks
+          ↓
+Tests / Checks
+```
+
+不是机械跑一张 50 项 checklist。
+
+## 安装到已有项目
+
+最简单的方式是复制以下内容到项目根目录：
+
+```text
+AGENTS.md
+.ai/
+skills/
+templates/
+scripts/
+```
+
+如果你的 Agent/IDE 对 skill 路径有自己的约定，可以只复制 `SKILL.md` 内容到对应目录。
+
+## 最小使用方式
+
+如果你不想引入任何命令机制，也可以只让 Agent 遵守：
+
+```text
+1. 开始任务前读取 AGENTS.md 和 .ai/PROJECT.md。
+2. 只在相关时读取 .ai/KNOWLEDGE.md。
+3. 理解当前行为后才修改代码。
+4. 重要结论附源码证据。
+5. 修改后基于实际 diff 做验证。
+6. 发现新的项目结构时更新 PROJECT.md。
+7. 发现新的隐含知识时更新 KNOWLEDGE.md。
+```
+
+## 什么时候再升级架构
+
+不要提前引入更复杂基础设施。只有遇到真实瓶颈时再升级：
+
+- 经常找不到 callers/callees → 引入 Serena/LSP 级 symbol navigation；
+- 跨大量服务做 blast radius 很困难 → 引入 code graph；
+- PROJECT.md 膨胀到不可控 → 再做分层 memory；
+- 多项目知识检索成为瓶颈 → 再考虑搜索/向量层。
+
+先拿真实遗留系统跑 10~20 个任务，根据 AI 实际犯的错误修改规则，比预先设计完整平台更有效。

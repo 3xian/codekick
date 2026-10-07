@@ -1,96 +1,123 @@
 ---
 name: bootstrap
-description: Build or refresh a shallow project navigation map for an unfamiliar repository. Use when first taking over a repository or when its top-level architecture has materially changed.
+description: Perform a shallow first-pass onboarding of an unfamiliar repository and create or refresh .ai/PROJECT.md. Use when taking over a project for the first time or when PROJECT.md is missing or clearly obsolete.
 ---
 
 # Objective
 
-Create the smallest useful project index that lets future tasks find the right area quickly.
+Create a small, useful project map that helps future tasks answer one question quickly:
 
-Do not attempt to fully document the repository.
+> Where should I look first?
 
-# Inputs
+Do not attempt to fully understand or document the repository.
 
-- repository root
-- existing README/build files
-- top-level source structure
-- runtime/deployment configuration
-- database/messaging/integration configuration if discoverable cheaply
+# Preconditions
+
+- Read `AGENTS.md` if present.
+- Read existing `.ai/PROJECT.md` and `.ai/KNOWLEDGE.md` if present.
+- Preserve correct existing knowledge; refresh only what evidence shows is wrong or missing.
 
 # Protocol
 
-## 1. Establish the system boundary
+## 1. Shallow repository scan
 
-Identify what the repository appears to own and what it delegates elsewhere.
+Inspect only enough to identify:
 
-## 2. Inventory top-level modules
+- primary languages / frameworks;
+- top-level directory responsibilities;
+- build/package files;
+- runtime entry points;
+- test layout;
+- configuration locations;
+- schema/migration locations;
+- obvious messaging/jobs/integrations.
 
-Identify modules/services/packages that represent meaningful runtime or business boundaries.
+Do not recursively read large numbers of implementation files.
 
-Ignore generated/vendor directories unless they affect build/runtime behavior.
+## 2. Identify business/module boundaries
 
-## 3. Locate primary entry points
+Use evidence such as:
 
-Look for:
+- directory/package structure;
+- application entry points;
+- route/controller registration;
+- dependency configuration;
+- module/build definitions;
+- database ownership;
+- message consumers/producers.
 
-- HTTP/RPC entry points
-- message consumers/listeners
-- scheduled jobs
-- CLI workers
-- application bootstraps
+Prefer 5–15 useful module/domain entries over an exhaustive inventory.
 
-## 4. Locate state and infrastructure
+## 3. Identify key flows only when obvious
 
-Identify, at a shallow level:
+Record a flow only if the repository makes it reasonably clear from direct evidence.
 
-- primary databases
-- migration/schema locations
-- cache systems
-- messaging systems
-- object/file storage
-- external integrations
+Examples:
 
-## 5. Locate verification and operations
+```text
+HTTP endpoint
+→ application service
+→ domain/service
+→ repository
+→ event
+```
 
-Identify:
+Do not invent business flows from naming alone.
 
-- test layout
-- build/run commands
-- CI/CD entry points
-- deployment manifests
-- observability/logging configuration
+## 4. Record external boundaries
 
-## 6. Create `.ai/PROJECT_MAP.md`
+Identify obvious:
 
-Keep it compact. Prefer pointers over explanations.
+- databases;
+- queues/topics;
+- scheduled jobs;
+- external APIs;
+- authentication/authorization entry points;
+- observability entry points.
 
-Include:
+## 5. Record run/test commands
 
-- system purpose
-- module map
-- entry points
-- data/infrastructure map
-- integrations
-- testing/build/deploy pointers
-- high-risk/unknown areas only when supported by evidence
-- source anchors
+Prefer commands proven by:
 
-## 7. Do not create deep cards preemptively
+- README/build files;
+- package scripts;
+- Makefile/task runner;
+- CI configuration.
 
-Only create module or flow cards if the initial task already needs them.
+Do not fabricate commands.
 
-# Evidence rules
+## 6. Update `.ai/PROJECT.md`
 
-Important claims must reference repository evidence where possible.
+Keep it concise and navigational.
 
-Do not infer business ownership from directory names alone.
+Delete placeholder TODO sections that add no value, but retain genuinely unknown items under `Unknown Areas`.
 
-# Stop conditions
+# Evidence Rules
 
-Stop when a new engineer/agent can answer:
+Every non-obvious structural claim should be backed by repository evidence.
 
-1. Where should I start looking for a given business capability?
-2. What are the main runtime boundaries?
-3. Where are data, messaging, tests, and deployment defined?
+Do not use `.ai/PROJECT.md` itself as the sole evidence for refreshing `.ai/PROJECT.md`.
 
-Do not continue into detailed business flow analysis unless required by an active task.
+# Negative Constraints
+
+- Do not document every class/function/table.
+- Do not perform a full architecture review.
+- Do not create module cards or flow cards.
+- Do not put hidden business knowledge into PROJECT.md; use KNOWLEDGE.md.
+- Do not spend large context on areas unrelated to navigation.
+
+# Stop Conditions
+
+Stop when a new developer/agent can reliably answer:
+
+- What kind of system is this?
+- What are the main modules/domains?
+- Where are the primary entry points?
+- Where are data, jobs, messages, integrations, config and tests?
+- Which area should I search first for a given business topic?
+
+# Output
+
+1. Update `.ai/PROJECT.md`.
+2. Report the most important project areas discovered.
+3. List significant unknown areas without investigating them further.

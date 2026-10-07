@@ -1,144 +1,124 @@
 ---
 name: understand
-description: Investigate how an existing behavior, business concept, module, field, API, job, event, or code path actually works. Use before making assumptions about unfamiliar code.
+description: Investigate how an existing behavior, business concept, module, field, API, job, event, or code path actually works. Use when the user needs an evidence-backed explanation before changing code.
 ---
 
 # Objective
 
-Build the smallest evidence-backed model of the system required to answer the current question.
+Build the smallest evidence-backed model needed to answer the current question.
 
-Do not attempt to document or understand the entire system.
+# Context Loading
 
-# Context first
+1. Read `AGENTS.md` if present.
+2. Read `.ai/PROJECT.md` if present.
+3. Read only relevant sections of `.ai/KNOWLEDGE.md`.
+4. Read a current task artifact if the user/task identifies one.
+5. Then search real source evidence.
 
-Before broad source search:
-
-1. read `.ai/PROJECT_MAP.md` if present,
-2. resolve relevant module/flow cards,
-3. read relevant durable knowledge,
-4. check whether selected cards may be stale,
-5. use the cards as navigation hints, not truth.
+Do not load unrelated project context for completeness.
 
 # Protocol
 
-## 1. Define the question
+## 1. Define the exact question
 
-Determine exactly what must be understood and avoid broadening it unnecessarily.
+Internally identify what must be understood and what is out of scope.
 
-## 2. Find entry points
+## 2. Find plausible entry points
 
-Locate plausible entry points before following one:
+Search for relevant:
 
-- HTTP/RPC handlers
-- UI-triggered commands
-- consumers/listeners
-- scheduled jobs
-- CLI commands
-- application services
-- public methods
-- triggers/procedures
+- HTTP/RPC handlers;
+- UI/server actions;
+- message consumers;
+- jobs;
+- public application services;
+- database procedures/triggers when applicable.
 
-## 3. Trace the execution path
+If multiple plausible entry points exist, identify them before committing to one path.
 
-Follow only the relevant path:
+## 3. Trace the minimal execution path
 
-`Entry -> orchestration -> business/domain logic -> persistence -> side effects`
+Follow only the relevant chain:
 
-Inspect callers/callees only when they can affect the behavior under investigation.
+```text
+Entry
+→ orchestration/application layer
+→ business/domain logic
+→ persistence/state
+→ relevant side effects
+```
 
-## 4. Trace state and data
+Inspect callers/callees only when they can materially affect the answer.
 
-Identify relevant:
+## 4. Trace state and side effects
 
-- entities/tables
-- controlling fields
-- state transitions
-- read/write operations
-- transaction boundaries
-- caches
+When relevant, identify:
 
-Do not infer behavior solely from names.
+- important entities/tables/fields;
+- state transitions;
+- reads/writes;
+- transaction boundaries;
+- messages/events;
+- jobs;
+- caches;
+- external systems.
 
-## 5. Trace side effects
+Do not inspect categories that the actual path does not touch.
 
-Check relevant interactions with:
+## 5. Resolve ambiguity with evidence
 
-- events/messages
-- background jobs
-- external APIs
-- files/object storage
-- caches
-- notifications
-- accounting/inventory/other subsystems
+Prefer, in order:
 
-## 6. Prefer behavioral evidence
+1. executable tests/runtime evidence;
+2. implementation code;
+3. schema/constraints;
+4. configuration;
+5. git history;
+6. project documentation;
+7. naming assumptions.
 
-Prefer evidence in this order when available:
+Classify material conclusions as `FACT`, `INFERENCE`, `HYPOTHESIS`, or `UNKNOWN` when uncertainty matters.
 
-1. executable tests
-2. implementation code
-3. database schema/constraints
-4. configuration
-5. git history
-6. project documentation
-7. naming conventions
+## 6. Update persistent context only if warranted
 
-Documentation is not authoritative when it conflicts with executable behavior.
+After answering:
 
-## 7. Preserve uncertainty
+- update `.ai/PROJECT.md` only for newly discovered stable structure;
+- update `.ai/KNOWLEDGE.md` only for non-obvious reusable knowledge;
+- update current task artifact if one exists.
 
-Classify material conclusions as `FACT`, `INFERENCE`, `HYPOTHESIS`, or `UNKNOWN` when needed.
+Do not persist ordinary code facts.
 
-Never present a hypothesis as fact.
+# Negative Constraints
 
-# Evidence rules
+- Do not understand the entire repository.
+- Do not infer behavior from names alone.
+- Do not treat stale docs as authoritative over executable behavior.
+- Do not modify code unless the user explicitly asks for a change.
+- Do not hide conflicting evidence; report the conflict.
 
-For important behavioral claims, provide concrete anchors when possible:
-
-- file path
-- symbol/function/class
-- line or code location
-- SQL/schema
-- test
-- configuration
-- git commit/history
-- runtime evidence supplied by the user
-
-# Card maintenance
-
-If the investigation discovers durable navigation knowledge:
-
-- create/update the relevant module/flow card,
-- update `verified_commit`,
-- keep the card concise,
-- write only durable non-obvious knowledge into `KNOWLEDGE.md`.
-
-Do not persist task-specific scratch reasoning.
-
-# Stop conditions
+# Stop Conditions
 
 Stop when:
 
-1. the original question can be answered,
-2. the main execution path is identified,
-3. relevant state/data is understood,
-4. important side effects are identified,
+1. the original question can be answered;
+2. the main relevant execution path is known;
+3. important state/data is understood;
+4. relevant side effects are known;
 5. remaining unknowns would not materially change the answer.
 
 # Output
+
+Use a compact structure:
 
 ## Summary
 
 ## Execution Flow
 
-## Key Business Rules
-
-## Key Data
-
-## Dependencies / Side Effects
+## Key Rules / State
 
 ## Evidence
 
 ## Unknowns
 
-Prefer compression over completeness. Spend output tokens on non-obvious behavior, risks, evidence, and unknowns.
+Omit sections that add no value.

@@ -1,8 +1,12 @@
-__pycache__/
-*.py[cod]
-*.egg-info/
-.venv/
-dist/
-build/
-.pytest_cache/
+# OS / editor
 .DS_Store
+.idea/
+.vscode/
+
+# Python helper script cache
+__pycache__/
+*.pyc
+
+# Local AI scratch files (optional convention)
+.ai/tmp/
+.ai/scratch/
