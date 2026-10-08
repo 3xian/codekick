@@ -7,6 +7,10 @@
 __pycache__/
 *.pyc
 
+# Local environments and packaging metadata
+.venv/
+*.egg-info/
+
 # Local AI scratch files (optional convention)
 .ai/tmp/
 .ai/scratch/
