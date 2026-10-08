@@ -1,0 +1,147 @@
+$ docker build --memory 3g --platform linux/arm64 -t codekick-discourse-runtime:ck-real-04 /tmp/codekick-discourse-runtime-build
+--- stdout ---
+
+--- stderr ---
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.29kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/discourse/discourse_dev@sha256:05a49b74da4d1252c6e571a2a3200ece5b8baa2757fe57626f712039ff4ea8e1
+#2 DONE 26.6s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [ 1/11] FROM docker.io/discourse/discourse_dev@sha256:05a49b74da4d1252c6e571a2a3200ece5b8baa2757fe57626f712039ff4ea8e1
+#5 resolve docker.io/discourse/discourse_dev@sha256:05a49b74da4d1252c6e571a2a3200ece5b8baa2757fe57626f712039ff4ea8e1
+#5 ...
+
+#6 [auth] discourse/discourse_dev:pull token for registry-1.docker.io
+#6 DONE 0.0s
+
+#5 [ 1/11] FROM docker.io/discourse/discourse_dev@sha256:05a49b74da4d1252c6e571a2a3200ece5b8baa2757fe57626f712039ff4ea8e1
+#5 ...
+
+#7 [auth] discourse/discourse_dev:pull token for registry-1.docker.io
+#7 DONE 0.0s
+
+#5 [ 1/11] FROM docker.io/discourse/discourse_dev@sha256:05a49b74da4d1252c6e571a2a3200ece5b8baa2757fe57626f712039ff4ea8e1
+#5 resolve docker.io/discourse/discourse_dev@sha256:05a49b74da4d1252c6e571a2a3200ece5b8baa2757fe57626f712039ff4ea8e1 120.2s done
+#5 DONE 120.2s
+
+#5 [ 1/11] FROM docker.io/discourse/discourse_dev@sha256:05a49b74da4d1252c6e571a2a3200ece5b8baa2757fe57626f712039ff4ea8e1
+#5 CACHED
+
+#4 [internal] load build context
+#4 transferring context: 738.20kB 0.0s done
+#4 DONE 0.0s
+
+#8 [ 3/11] COPY Gemfile Gemfile.lock ./
+#8 CACHED
+
+#9 [ 2/11] WORKDIR /opt/codekick/dependencies
+#9 CACHED
+
+#10 [ 4/11] RUN bundle _2.6.4_ install --jobs 2 --retry 3 &&     chmod -R a+rX /opt/codekick/bundle
+#10 CACHED
+
+#11 [ 5/11] RUN npm install --global pnpm@9.15.5
+#11 2.933 
+#11 2.933 changed 1 package in 3s
+#11 2.933 
+#11 2.933 1 package is looking for funding
+#11 2.933   run `npm fund` for details
+#11 2.934 npm notice
+#11 2.934 npm notice New major version of npm available! 10.9.3 -> 12.2.0
+#11 2.934 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+#11 2.934 npm notice To update run: npm install -g npm@12.2.0
+#11 2.934 npm notice
+#11 DONE 3.1s
+
+#12 [ 6/11] COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+#12 DONE 0.1s
+
+#13 [ 7/11] COPY patches/ ./patches/
+#13 DONE 0.0s
+
+#14 [ 8/11] RUN pnpm fetch --frozen-lockfile --store-dir /opt/codekick/pnpm-store &&     chmod -R a+rX /opt/codekick/pnpm-store
+#14 0.702 Importing packages to virtual store
+#14 0.776 Already up to date
+#14 0.828 Progress: resolved 1, reused 0, downloaded 0, added 0
+#14 1.828 Progress: resolved 1909, reused 0, downloaded 5, added 4
+#14 2.828 Progress: resolved 1909, reused 0, downloaded 144, added 142
+#14 3.827 Progress: resolved 1909, reused 0, downloaded 255, added 255
+#14 4.829 Progress: resolved 1909, reused 0, downloaded 383, added 383
+#14 5.832 Progress: resolved 1909, reused 0, downloaded 500, added 500
+#14 6.831 Progress: resolved 1909, reused 0, downloaded 639, added 639
+#14 7.831 Progress: resolved 1909, reused 0, downloaded 789, added 789
+#14 8.833 Progress: resolved 1909, reused 0, downloaded 876, added 876
+#14 9.835 Progress: resolved 1909, reused 0, downloaded 1001, added 998
+#14 10.83 Progress: resolved 1909, reused 0, downloaded 1153, added 1153
+#14 11.83 Progress: resolved 1909, reused 0, downloaded 1241, added 1240
+#14 12.83 Progress: resolved 1909, reused 0, downloaded 1410, added 1410
+#14 13.83 Progress: resolved 1909, reused 0, downloaded 1535, added 1535
+#14 14.84 Progress: resolved 1909, reused 0, downloaded 1665, added 1665
+#14 15.84 Progress: resolved 1909, reused 0, downloaded 1829, added 1828
+#14 16.46 Progress: resolved 1909, reused 0, downloaded 1909, added 1909, done
+#14 16.83 .../node_modules/@swc/core postinstall$ node postinstall.js
+#14 16.87 .../esbuild@0.27.1/node_modules/esbuild postinstall$ node install.js
+#14 16.87 .../esbuild@0.25.12/node_modules/esbuild postinstall$ node install.js
+#14 16.90 .../node_modules/lefthook postinstall$ node postinstall.js
+#14 16.93 .../core-js@3.47.0/node_modules/core-js postinstall$ node -e "try{require('./postinstall')}catch(e){}"
+#14 16.96 .../esbuild@0.27.1/node_modules/esbuild postinstall: Done
+#14 16.97 .../node_modules/@swc/core postinstall: Done
+#14 17.02 .../core-js@3.47.0/node_modules/core-js postinstall: Thank you for using core-js ( https://github.com/zloirock/core-js ) for polyfilling JavaScript standard library!
+#14 17.02 .../core-js@3.47.0/node_modules/core-js postinstall: The project needs your help! Please consider supporting core-js:
+#14 17.02 .../core-js@3.47.0/node_modules/core-js postinstall: > https://opencollective.com/core-js 
+#14 17.02 .../core-js@3.47.0/node_modules/core-js postinstall: > https://patreon.com/zloirock 
+#14 17.02 .../core-js@3.47.0/node_modules/core-js postinstall: > https://boosty.to/zloirock 
+#14 17.02 .../core-js@3.47.0/node_modules/core-js postinstall: > bitcoin: bc1qlea7544qtsmj2rayg0lthvza9fau63ux0fstcz 
+#14 17.02 .../core-js@3.47.0/node_modules/core-js postinstall: I highly recommend reading this: https://github.com/zloirock/core-js/blob/master/docs/2023-02-14-so-whats-next.md 
+#14 17.03 .../core-js@3.47.0/node_modules/core-js postinstall: Done
+#14 17.03 .../esbuild@0.25.12/node_modules/esbuild postinstall: Done
+#14 17.05 .../core-js@2.6.12/node_modules/core-js postinstall$ node -e "try{require('./postinstall')}catch(e){}"
+#14 17.08 .../node_modules/lefthook postinstall: │  > git rev-parse --path-format=absolute --show-toplevel --git-path hooks --git-path info --git-dir
+#14 17.09 .../node_modules/lefthook postinstall: │    fatal: not a git repository (or any of the parent directories): .git                           
+#14 17.09 .../node_modules/lefthook postinstall: │                                                                                                   
+#14 17.09 .../node_modules/lefthook postinstall: exit status 128
+#14 17.11 .../core-js@2.6.12/node_modules/core-js postinstall: Thank you for using core-js ( https://github.com/zloirock/core-js ) for polyfilling JavaScript standard library!
+#14 17.11 .../core-js@2.6.12/node_modules/core-js postinstall: The project needs your help! Please consider supporting of core-js on Open Collective or Patreon: 
+#14 17.11 .../core-js@2.6.12/node_modules/core-js postinstall: > https://opencollective.com/core-js 
+#14 17.11 .../core-js@2.6.12/node_modules/core-js postinstall: > https://www.patreon.com/zloirock 
+#14 17.11 .../core-js@2.6.12/node_modules/core-js postinstall: Also, the author of core-js ( https://github.com/zloirock ) is looking for a good job -)
+#14 17.11 .../node_modules/lefthook postinstall: Done
+#14 17.11 .../core-js@2.6.12/node_modules/core-js postinstall: Done
+#14 17.70 
+#14 DONE 18.6s
+
+#15 [ 9/11] COPY bootstrap.sh /usr/local/bin/codekick-discourse-bootstrap
+#15 DONE 0.6s
+
+#16 [10/11] RUN chmod 755 /usr/local/bin/codekick-discourse-bootstrap
+#16 DONE 0.2s
+
+#17 [11/11] WORKDIR /workspace
+#17 DONE 0.0s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 32.3s done
+#18 exporting manifest sha256:b1f1084d149ccea4d4a35f48cf8b6d61914c131f6d35774250f1d166da9b3173 0.0s done
+#18 exporting config sha256:c7d06e2a21ffcd80ba18e3310dd9a6775b49f501a5f09930007cb0738661f0ff 0.0s done
+#18 exporting attestation manifest sha256:e251527a1a09b931eb77b7d5f450480b5f0470ae863ab02b522e38799f227981 done
+#18 exporting manifest list sha256:21bc22f7bdb880c4523add767ea17e2fa83f9e6a70d1781da720e515b8ff5021 done
+#18 naming to docker.io/library/codekick-discourse-runtime:ck-real-04 done
+#18 unpacking to docker.io/library/codekick-discourse-runtime:ck-real-04
+#18 unpacking to docker.io/library/codekick-discourse-runtime:ck-real-04 13.2s done
+#18 DONE 45.7s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/ni797aacmjfq3ie67eh13ecag
+
+exit_code=0

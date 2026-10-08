@@ -1,0 +1,97 @@
+HEAD: b25bc2441827a31b5629e9f79ad7296b992648a2
+Command: ['/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/venv/bin/python', 'tests/runtests.py', 'admin_changelist.tests.ChangeListTests.test_exact_lookup_with_invalid_value', 'admin_changelist.tests.ChangeListTests.test_exact_lookup_mixed_terms', 'admin_changelist.tests.ChangeListTests.test_exact_lookup_with_more_lenient_formfield', 'admin_changelist.tests.ChangeListTests.test_exact_lookup_validates_each_field_independently', 'admin_changelist.tests.ChangeListTests.test_search_with_exact_lookup_for_non_string_field', 'admin_changelist.test_codekick_index.ExactSearchIndexTests.test_numeric_primary_key_search_shape', '--settings=test_sqlite', '--parallel=1', '--verbosity=2']
+CWD: /var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/pre
+PYTHONPATH: /var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/pre
+PYTHONNOUSERSITE: 1
+Testing against Django installed in '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/pre/django'
+Importing application admin_changelist
+Found 6 test(s).
+Skipping setup of unused database(s): other.
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Operations to perform:
+  Synchronize unmigrated apps: admin_changelist, auth, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table admin_changelist_event
+    Creating table admin_changelist_parent
+    Creating table admin_changelist_child
+    Creating table admin_changelist_grandchild
+    Creating table admin_changelist_genre
+    Creating table admin_changelist_band
+    Creating table admin_changelist_musician
+    Creating table admin_changelist_group
+    Creating table admin_changelist_concert
+    Creating table admin_changelist_membership
+    Creating table admin_changelist_quartet
+    Creating table admin_changelist_chordsmusician
+    Creating table admin_changelist_chordsband
+    Creating table admin_changelist_invitation
+    Creating table admin_changelist_swallow
+    Creating table admin_changelist_swallowonetoone
+    Creating table admin_changelist_unorderedobject
+    Creating table admin_changelist_orderedobject
+    Creating table admin_changelist_customiduser
+    Creating table admin_changelist_charpk
+    Creating table admin_changelist_mixedfieldsmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_exact_lookup_with_invalid_value (admin_changelist.tests.ChangeListTests.test_exact_lookup_with_invalid_value) ... ok
+test_exact_lookup_mixed_terms (admin_changelist.tests.ChangeListTests.test_exact_lookup_mixed_terms)
+Multi-term search validates each term independently. ... ok
+test_exact_lookup_with_more_lenient_formfield (admin_changelist.tests.ChangeListTests.test_exact_lookup_with_more_lenient_formfield)
+Exact lookups on BooleanField use formfield().to_python() for lenient ... FAIL
+test_exact_lookup_validates_each_field_independently (admin_changelist.tests.ChangeListTests.test_exact_lookup_validates_each_field_independently)
+Each field validates the search term independently without leaking ... FAIL
+test_search_with_exact_lookup_for_non_string_field (admin_changelist.tests.ChangeListTests.test_search_with_exact_lookup_for_non_string_field) ... ok
+test_numeric_primary_key_search_shape (admin_changelist.test_codekick_index.ExactSearchIndexTests.test_numeric_primary_key_search_shape) ... CK-REAL-06 SQL: SELECT "admin_changelist_child"."id", "admin_changelist_child"."parent_id", "admin_changelist_child"."name", "admin_changelist_child"."age" FROM "admin_changelist_child" WHERE CAST("admin_changelist_child"."id" AS text) = %s
+CK-REAL-06 params: ('1',)
+CK-REAL-06 SQLite plan: [(2, 0, 216, 'SCAN admin_changelist_child')]
+FAIL
+
+======================================================================
+FAIL: test_exact_lookup_with_more_lenient_formfield (admin_changelist.tests.ChangeListTests.test_exact_lookup_with_more_lenient_formfield)
+Exact lookups on BooleanField use formfield().to_python() for lenient
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/pre/tests/admin_changelist/tests.py", line 915, in test_exact_lookup_with_more_lenient_formfield
+    self.assertCountEqual(cl.queryset, [obj])
+AssertionError: Element counts were not equal:
+First has 0, Second has 1:  <UnorderedObject: UnorderedObject object (1)>
+
+======================================================================
+FAIL: test_exact_lookup_validates_each_field_independently (admin_changelist.tests.ChangeListTests.test_exact_lookup_validates_each_field_independently)
+Each field validates the search term independently without leaking
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/pre/tests/admin_changelist/tests.py", line 941, in test_exact_lookup_validates_each_field_independently
+    self.assertCountEqual(cl.queryset, [obj_int])
+AssertionError: Element counts were not equal:
+First has 0, Second has 1:  <MixedFieldsModel: MixedFieldsModel object (1)>
+
+======================================================================
+FAIL: test_numeric_primary_key_search_shape (admin_changelist.test_codekick_index.ExactSearchIndexTests.test_numeric_primary_key_search_shape)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/pre/tests/admin_changelist/test_codekick_index.py", line 34, in test_numeric_primary_key_search_shape
+    self.assertNotIn("CAST(", sql.upper())
+AssertionError: 'CAST(' unexpectedly found in 'SELECT "ADMIN_CHANGELIST_CHILD"."ID", "ADMIN_CHANGELIST_CHILD"."PARENT_ID", "ADMIN_CHANGELIST_CHILD"."NAME", "ADMIN_CHANGELIST_CHILD"."AGE" FROM "ADMIN_CHANGELIST_CHILD" WHERE CAST("ADMIN_CHANGELIST_CHILD"."ID" AS TEXT) = %S'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.016s
+
+FAILED (failures=3)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+
+Exit: 1

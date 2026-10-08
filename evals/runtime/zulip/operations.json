@@ -1,0 +1,9 @@
+{
+  "test": {
+    "argv": [".venv/bin/python", "tools/test-backend", "--parallel=1"],
+    "selector": {
+      "position": 3,
+      "pattern": "^[A-Za-z0-9_.]+$"
+    }
+  }
+}

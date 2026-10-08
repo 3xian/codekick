@@ -1,0 +1,29 @@
+{
+  "workspace_read": "ACTOR_VISIBLE_SENTINEL",
+  "workspace_write": "ACTOR_TOOL_WRITE_OK",
+  "synthetic_controller": {
+    "status": "DENIED",
+    "error": "Operation not permitted @ rb_sysopen - /tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/controller/hidden.txt",
+    "errno": 1
+  },
+  "synthetic_other_host": {
+    "status": "DENIED",
+    "error": "Operation not permitted @ rb_sysopen - /tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/outside.txt",
+    "errno": 1
+  },
+  "symlink_traversal": {
+    "status": "DENIED",
+    "error": "Operation not permitted @ rb_sysopen - escape.txt",
+    "errno": 1
+  },
+  "direct_external_ip": {
+    "status": "DENIED",
+    "error": "Operation not permitted - connect(2) for 1.1.1.1:443",
+    "errno": 1
+  },
+  "external_github": {
+    "status": "UNVERIFIED",
+    "error": "getaddrinfo: nodename nor servname provided, or not known",
+    "class": "SocketError"
+  }
+}

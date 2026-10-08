@@ -1,0 +1,24 @@
+commit 4cecf3039586ea738afafb9a28c946bff42c37c1
+Author:     mlissner <mlissner@michaeljaylissner.com>
+AuthorDate: Thu Jan 15 12:30:21 2026 -0800
+Commit:     Jacob Walls <jacobtylerwalls@gmail.com>
+CommitDate: Fri Jan 30 11:45:39 2026 -0500
+
+    Fixed #36865 -- Removed casting from exact lookups in admin searches.
+    
+    Instead of casting non-text fields to CharField (which prevents index
+    usage), skip exact lookups when the search term fails
+    formfield.to_python().
+    
+    This preserves index usage for valid searches while gracefully handling
+    invalid search terms by simply not including them in the query for that
+    field.
+    
+    For multi-term searches like 'foo 123' on search_fields=['name', 'age__exact']:
+    - 'foo': invalid for age, so only name lookup is used
+    - '123': valid for both, so both lookups are used
+    
+    This entails a slight increase in permissiveness for search terms that
+    can be normalized by formfield.to_python().
+
+Verified parent: b25bc2441827a31b5629e9f79ad7296b992648a2

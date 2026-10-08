@@ -1,0 +1,3 @@
+$ docker exec codekick-zulip01-provision chown -R vagrant:vagrant /workspace
+
+EXIT_CODE=0

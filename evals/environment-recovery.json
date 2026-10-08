@@ -1,0 +1,31 @@
+{
+  "purpose": "Resolve Phase 0 runtime blockers without changing the frozen six historical tasks or weakening behavioral oracles.",
+  "application_launch": {
+    "mechanism": "computer.apps.open('/Applications/Docker.app', {activate:false})",
+    "returned_app_id": "com.docker.docker",
+    "running": true,
+    "pid": 40116,
+    "ui_inspection": "PermissionDenied: macOS Screen Recording permission is not granted for this process. No security permission was changed or UI action retried through another mechanism.",
+    "desktop_session": "Closed after daemon startup; no terms accepted or account/security settings changed."
+  },
+  "daemon_observation": {
+    "command": "docker info --format '{{json .ServerVersion}}'",
+    "exit_code": 0,
+    "output": "\"29.7.2\""
+  },
+  "container_smoke": {
+    "command": "docker run --rm alpine:3.21 uname -a",
+    "exit_code": 0,
+    "image_digest": "sha256:ce64758a109eb420d874a118f87920e625e12d3634e03b4a5573fd9f6e5d3507",
+    "output": "Linux 2c617489cbd1 7.0.12-linuxkit #1 SMP PREEMPT Fri Aug 14 16:27:59 UTC 2026 aarch64 Linux"
+  },
+  "gitea_dependency_runtime": {
+    "command": "docker build --tag codekick-gitea-runtime:1.25.5 evals/runtime/gitea",
+    "exit_code": 0,
+    "base": "golang:1.25.5-bookworm@sha256:d9132cce84391efab786495288756d60e1da215b1f94e87860aeefc3d4c45b6d",
+    "image_config": "sha256:e72c2782cf12c07569482355439311192e26f17e48e5a1e305121edbc3adccd6",
+    "manifest_list": "sha256:a8367b0d089b3f11db2b52b3b38e059bceec0d3cfad2a5cdb29eb97255c6cb48",
+    "contents": "Pinned compiler and pre-fix go.mod/go.sum dependency cache only; no reference implementation, oracle, source checkout or future git history baked into image."
+  },
+  "interpretation": "Docker runtime recovered and Go dependency environment built. These are infrastructure facts, not proof of Candidate improvement. Historical Go behavioral replay and other repository provisioning are still running. No provider safeguards were disabled or model substituted."
+}

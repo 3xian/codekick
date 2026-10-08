@@ -1,0 +1,4 @@
+$ docker stop codekick-zulip01-post
+codekick-zulip01-post
+
+EXIT_CODE=0

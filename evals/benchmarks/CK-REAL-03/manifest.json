@@ -1,0 +1,51 @@
+{
+  "task_id": "CK-REAL-03",
+  "repo": "go-gitea/gitea",
+  "repo_url": "https://github.com/go-gitea/gitea.git",
+  "baseline_sha": "63afb2c9258bff513da51f7f0b3a9735b58de64b",
+  "reference_pr": 36295,
+  "reference_sha": "1ee7f8e96635ea1768b1a8309918e2463fb607e6",
+  "verified_parent_sha": "426bb491c0c2a92de8e25bfd5d1d3bc4b3e5922f",
+  "language": "Go",
+  "class": "cross-integration migration panic",
+  "problem_url": "https://github.com/go-gitea/gitea/issues/36292",
+  "status": "REPLAY_VERIFIED",
+  "valid": true,
+  "actor_input": "task.md",
+  "test_command": ["go", "test", "-p", "2", "-tags", "sqlite,sqlite_unlock_notify", "./services/migrations", "-run", "^(TestCodeKickGitlabHistoricalReleaseMigration|TestAwardsToReactions)$", "-count=1", "-v"],
+  "focused_test_command": ["go", "test", "-p", "2", "-tags", "sqlite,sqlite_unlock_notify", "./services/migrations", "-run", "^TestCodeKickGitlabHistoricalReleaseMigration$", "-count=1", "-v"],
+  "oracle": {
+    "reference_patch": "oracle/reference.patch",
+    "reference_metadata": "oracle/reference-commit.json",
+    "reference_pr_metadata": "oracle/reference-pr.json",
+    "identity_evidence": "oracle/identity.log",
+    "original_issue": "oracle/issue.json",
+    "original_panic_log": "oracle/issue-log.json",
+    "issue_linked_gitlab_data": "oracle/issue-linked-releases.json",
+    "selected_real_release": "oracle/gitlab-release-fixture.json",
+    "selected_release_tag": "v0.8.0",
+    "selected_release_sources": 4,
+    "selected_release_links": 7,
+    "historical_new_behavioral_test": false,
+    "note": "The reference changes only an existing ContentType assertion. The hidden oracle is a Controller-designed behavioral test that feeds the issue-linked GitLab v0.8.0 release through the real GetReleases path."
+  },
+  "replay": {
+    "pre": {"status": "FAIL", "executed": true, "exit_code": 1, "observed": "panic: runtime error: index out of range [4] with length 4 in GitlabDownloader.convertGitlabRelease"},
+    "post": {"status": "PASS", "executed": true, "exit_code": 0, "observed": "TestCodeKickGitlabHistoricalReleaseMigration and TestAwardsToReactions pass"},
+    "observed_fail_pass": true,
+    "image": "sha256:344b4f56927a52b0f416a8c89349249b36791d0169704fd58e168d65dbf98a90",
+    "evidence": "oracle/replays/20261007T180737983591Z"
+  },
+  "blocker": null,
+  "temporary_checkouts": {
+    "pre": "/tmp/codekick-gitea-oracle.7fcyh1/pre",
+    "post": "/tmp/codekick-gitea-oracle.7fcyh1/post"
+  },
+  "isolation": {
+    "actor_run_status": "NOT_RUN",
+    "controller_disqualified_as_actor": true,
+    "controller_only": ["manifest.json", "manifest.yaml", "oracle/"],
+    "future_actor_export": "Clean source export of verified parent only; no worktree .git, future git objects, hidden oracle, reference metadata, or task-network access."
+  },
+  "completion_policy": "Admitted as a behavioral oracle. Actor runs remain unauthorized until mailbox isolation is proven."
+}

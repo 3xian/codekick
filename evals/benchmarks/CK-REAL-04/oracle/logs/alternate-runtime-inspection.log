@@ -1,0 +1,5 @@
+Controller inspection via functions.read of /opt/homebrew/Cellar returned the complete root package listing. No ruby, postgresql, or redis package directory was listed. Available packages included openssl@3, readline, gmp, and build-support libraries, but not the required application runtimes/services.
+
+A preceding functions.glob search for /opt/homebrew/Cellar/{ruby*,postgresql*,redis*}, alternate user runtime-manager executables, and Postgres.app timed out before finding matches. That glob result is inconclusive and is not used as proof of absence outside the complete Homebrew Cellar listing or PATH inspection.
+
+No provisioning or host-wide package/service installation was performed. The focused commands were attempted once on each actual historical checkout; both stopped at missing Bundler before any test assertion ran.

@@ -1,0 +1,24 @@
+{
+  "source": "Unmodified historical test hunks from git diff of verified parent to reference commit, limited to historical test paths.",
+  "regression_patch": "regression.patch",
+  "reference_patch": "reference.patch",
+  "selectors": [
+    "zerver.tests.test_users.PermissionTest.test_not_allowed_format"
+  ],
+  "test_only_backport_exit_code": 0,
+  "pre_state": "Verified parent plus only regression.patch; no production changes backported.",
+  "post_state": "Exact verified reference commit, with tests already present.",
+  "regression_status": "VALID",
+  "semantic_fail_observed": true,
+  "reference_pass_observed": true,
+  "infrastructure_failure": null,
+  "runtime_recipe": "../../../runtime/zulip/recipe.json",
+  "runtime_image": "sha256:00a439bffd9d631bca77124823413d29329db133ebc92a558c96707afc7f5de9",
+  "pre_evidence": "docker-pre-replay.log",
+  "reference_evidence": "docker-post-replay.log",
+  "pre_exit_code": 1,
+  "reference_exit_code": 0,
+  "semantic_failure": "test_not_allowed_format at test_users.py:493 asserted HTTP 400 for full_name='iago|72 '; parent returned 200. One test executed and failed. Exact reference ran the same test and passed.",
+  "oracle_caveat": "The historical regression extends an existing endpoint test, not the new method named in the PR description. The actual commit diff is authoritative.",
+  "replay_environment_substitution": "None. No copied-function harness, fake models, stub oracle, or synthetic replacement used."
+}

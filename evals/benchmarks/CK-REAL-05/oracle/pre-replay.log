@@ -1,0 +1,69 @@
+CWD: /tmp/codekick-django.NJ981A/05-pre-clean
+Command: PYTHONNOUSERSITE=1 PYTHONPATH=/tmp/codekick-django.NJ981A/05-pre-clean /tmp/codekick-django.NJ981A/venv/bin/python tests/runtests.py defer.tests.DeferTests.test_only defer.tests.DeferTests.test_only_related_manager_optimization --settings=test_sqlite --parallel=1 --verbosity=2
+Testing against Django installed in '/tmp/codekick-django.NJ981A/05-pre-clean/django'
+Importing application defer
+Found 2 test(s).
+Skipping setup of unused database(s): other.
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, defer, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table defer_secondary
+    Creating table defer_primary
+    Creating table defer_primaryonetoone
+    Creating table defer_child
+    Creating table defer_bigchild
+    Creating table defer_shadowparent
+    Creating table defer_shadowchild
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_only (defer.tests.DeferTests.test_only) ... FAIL
+test_only_related_manager_optimization (defer.tests.DeferTests.test_only_related_manager_optimization) ... FAIL
+
+======================================================================
+FAIL: test_only (defer.tests.DeferTests.test_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/codekick-django.NJ981A/05-pre-clean/tests/defer/tests.py", line 54, in test_only
+    self.assert_delayed(self.s1.primary_set.only("pk")[0], 3)
+  File "/private/tmp/codekick-django.NJ981A/05-pre-clean/tests/defer/tests.py", line 25, in assert_delayed
+    self.assertEqual(count, num)
+AssertionError: 2 != 3
+
+======================================================================
+FAIL: test_only_related_manager_optimization (defer.tests.DeferTests.test_only_related_manager_optimization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/codekick-django.NJ981A/05-pre-clean/tests/defer/tests.py", line 92, in test_only_related_manager_optimization
+    with self.assertNumQueries(1):
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 6 != 1 : 6 queries executed, 1 expected
+Captured queries were:
+1. SELECT "defer_primary"."id" FROM "defer_primary" WHERE "defer_primary"."related_id" = 2
+2. SELECT "defer_primary"."id", "defer_primary"."related_id" FROM "defer_primary" WHERE "defer_primary"."id" = 3 LIMIT 21
+3. SELECT "defer_primary"."id", "defer_primary"."related_id" FROM "defer_primary" WHERE "defer_primary"."id" = 4 LIMIT 21
+4. SELECT "defer_primary"."id", "defer_primary"."related_id" FROM "defer_primary" WHERE "defer_primary"."id" = 5 LIMIT 21
+5. SELECT "defer_primary"."id", "defer_primary"."related_id" FROM "defer_primary" WHERE "defer_primary"."id" = 6 LIMIT 21
+6. SELECT "defer_primary"."id", "defer_primary"."related_id" FROM "defer_primary" WHERE "defer_primary"."id" = 7 LIMIT 21
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.003s
+
+FAILED (failures=2)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+
+Exit code: 1
+Elapsed seconds: 0.957

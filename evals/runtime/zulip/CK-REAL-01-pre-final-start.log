@@ -1,0 +1,5 @@
+$ docker start codekick-zulip01-pre-final
+Error response from daemon: No such container: codekick-zulip01-pre-final
+failed to start containers: codekick-zulip01-pre-final
+
+EXIT_CODE=1

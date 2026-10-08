@@ -1,0 +1,4 @@
+$ docker run -d --name codekick-zulip01-post --network none --memory 3g --cpus 2 --mount type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/post,target=/workspace sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5
+3d8b427d4bffa083a847739d798b24c6c4f021650cf99e2b842e2dd284280bbe
+
+EXIT_CODE=0

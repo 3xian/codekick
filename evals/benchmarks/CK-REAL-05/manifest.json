@@ -1,0 +1,129 @@
+{
+  "task_id": "CK-REAL-05",
+  "role": "BENCHMARK_CONTROLLER",
+  "repo": "django/django",
+  "repo_url": "https://github.com/django/django.git",
+  "baseline_sha": "63afb2c9258bff513da51f7f0b3a9735b58de64b",
+  "language": "Python",
+  "class": "performance_regression",
+  "reference_pr": 20495,
+  "reference_url": "https://github.com/django/django/pull/20495",
+  "reference_sha": "040bb3eba72eb45020dd025d3f83094a0fcaf22f",
+  "verified_parent_sha": "73c5e94521c5b97e27cd2fe2d5b5c2e65f402755",
+  "problem_ticket": 35442,
+  "problem_url": "https://code.djangoproject.com/ticket/35442",
+  "status": "VALID",
+  "status_scope": "Historical behavioral regression on SQLite",
+  "reference_identity": {
+    "api_metadata": "oracle/commit.json",
+    "git_identity": "oracle/identity.txt",
+    "verified_single_parent": true,
+    "pr_metadata": "oracle/pr.json"
+  },
+  "test_only_backport": "oracle/regression-tests.patch",
+  "reference_diff": "oracle/reference.diff",
+  "supplemental_test": null,
+  "pre": {
+    "exit_code": 1,
+    "command": "/tmp/codekick-django.NJ981A/venv/bin/python tests/runtests.py defer.tests.DeferTests.test_only defer.tests.DeferTests.test_only_related_manager_optimization --settings=test_sqlite --parallel=1 --verbosity=2",
+    "cwd": "/tmp/codekick-django.NJ981A/05-pre-clean",
+    "log": "oracle/pre-replay.log",
+    "status": "FAIL",
+    "tests_run": 2,
+    "failures": 2
+  },
+  "post": {
+    "exit_code": 0,
+    "command": "/tmp/codekick-django.NJ981A/venv/bin/python tests/runtests.py defer.tests.DeferTests.test_only defer.tests.DeferTests.test_only_related_manager_optimization --settings=test_sqlite --parallel=1 --verbosity=2",
+    "cwd": "/tmp/codekick-django.NJ981A/05-post",
+    "log": "oracle/post-replay.log",
+    "status": "PASS",
+    "tests_run": 2,
+    "failures": 0
+  },
+  "observations": [
+    "Pre-fix: 6 queries for five children versus 1 expected; reverse FK is eagerly loaded (2 deferred fields versus 3 expected).",
+    "Reference: both upstream tests pass."
+  ],
+  "environment": {
+    "python": "3.12.14",
+    "backend": "SQLite",
+    "environment_evidence": "oracle/environment.txt",
+    "install_log": "oracle/environment-install.log",
+    "requirements_lock": "oracle/requirements.lock",
+    "python_no_user_site": true,
+    "temporary_workspace": "/tmp/codekick-django.NJ981A",
+    "venv": "/tmp/codekick-django.NJ981A/venv"
+  },
+  "commands": {
+    "fetch": [
+      "git init --bare <workspace>/repo",
+      "git --git-dir=<workspace>/repo fetch --depth=2 https://github.com/django/django.git 040bb3eba72eb45020dd025d3f83094a0fcaf22f"
+    ],
+    "identity": "git --git-dir=<workspace>/repo rev-parse 040bb3eba72eb45020dd025d3f83094a0fcaf22f^ # must equal 73c5e94521c5b97e27cd2fe2d5b5c2e65f402755",
+    "preparation": [
+      "python3.12 -m venv <workspace>/venv",
+      "<workspace>/venv/bin/python -m pip install -r oracle/requirements.lock",
+      "git --git-dir=<workspace>/repo worktree add --detach <workspace>/pre 73c5e94521c5b97e27cd2fe2d5b5c2e65f402755",
+      "git --git-dir=<workspace>/repo worktree add --detach <workspace>/post 040bb3eba72eb45020dd025d3f83094a0fcaf22f",
+      "git -C <workspace>/pre apply <absolute task directory>/oracle/regression-tests.patch"
+    ],
+    "tests": [
+      "defer.tests.DeferTests.test_only",
+      "defer.tests.DeferTests.test_only_related_manager_optimization"
+    ],
+    "runner_flags": [
+      "--settings=test_sqlite",
+      "--parallel=1",
+      "--verbosity=2"
+    ],
+    "runner_environment": {
+      "PYTHONPATH": "<stage checkout>",
+      "PYTHONNOUSERSITE": "1"
+    },
+    "portable_replay": "python3.12 oracle/replay.py"
+  },
+  "isolation": {
+    "pre_evidence": "oracle/pre-isolation.txt",
+    "post_evidence": "oracle/post-isolation.txt",
+    "production_fix_backported": false,
+    "reference_exposure_disqualifies_controller_as_actor": true,
+    "actor_visible_artifacts": [
+      "task.md"
+    ],
+    "controller_only_artifacts": [
+      "manifest.json",
+      "oracle/"
+    ],
+    "actor_run_status": "NOT_RUN",
+    "candidate_implementation_status": "NOT_STARTED",
+    "candidate_allowed_before_separate_actor_isolation": false,
+    "requirements": "Separate Actor process/session with only task.md and clean verified-parent checkout; never mount controller oracle, manifest, reference checkout, git objects/history or network reference access."
+  },
+  "limitations": [
+    "No additional database backend or whole-suite replay was run."
+  ],
+  "blockers": [],
+  "artifact_sha256": {
+    "oracle/pre-replay.log": "2a87e48c39c822ecf39e368fbcae96377c882a562c3aa9462587782ddf8ed9c0",
+    "oracle/pr.json": "6386fd12385fb18c19d2ec7f505518e236ae5c87a21cfa89f4e0ec06e316d5b7",
+    "oracle/post-isolation.txt": "c18aceff788b5fdc9b25b2d681473e6ab49e39e1428fe7dd88d833bc563d11a4",
+    "oracle/test-backport.log": "a1071c6ccd9f9e3776495f680e51bdd5d117225bfc227272c6bcffeace08b938",
+    "oracle/pre-isolation.txt": "275cad0444edfdea754d13ffcced472912ace16175f754cccc1327587691894e",
+    "oracle/ticket.rss": "84d06bc512a9b5d9209e4fcd8742fa4b929d60c5a58f8fb6804d832b909e6b71",
+    "oracle/reference.diff": "1fcfd78c8a5969f47796d03da2c01ebaca19bbcc0a959c692e3125676c629959",
+    "oracle/environment-install.log": "5aff06125d35ef482ed3241fa09cd88f2c3b052f6c3b7b792fe45ad7ca4b1a62",
+    "oracle/commit.json": "b4f95f5d4525a883542774bae3a11307c3e306f2fcde1d8d7e68d652a884a292",
+    "oracle/post-replay.log": "da8a0f9aae44c41b276862b622b0d2b0be363011fb9cd78a2af775f705867ed3",
+    "oracle/ticket.html": "a93ad2f4a3a643ae4cf3dc32b9b129b7ecf11eb282dae088838c39abce2bc7a7",
+    "oracle/environment.txt": "0152f633599fa50f35a0c751e00fc044451d4c44b32ae66c195047f425f98ac6",
+    "oracle/pr.diff": "bee9925087bd9c5b37c4fafd95b7f36e5af062dc96e86ffd51f537ee0597b235",
+    "oracle/regression-tests.patch": "4bf8704157de727bd148fc09b922462d944976d40d88f63ebd81eaf14fa5354d",
+    "oracle/identity.txt": "48271ca4071eb204ba51ed4f1d6ac0948dc5181018ce7397ee2402ec1ac360e6",
+    "oracle/requirements.lock": "a97f6471a28583b6cb17733ec42f360814310ee41aab73a0353e016b3bf5eb60",
+    "oracle/sources/post/tests/defer/tests.py": "3b9bdd7e207dd21785ea072bf9e46d69b8f06dee2a8a4c8532e45fe7efb9a451",
+    "oracle/sources/post/django/db/models/query.py": "36645a6ab33579e100a234cc3951dd9bc8893e4c8dc5df29a2c1b88059a91134",
+    "oracle/sources/pre/tests/defer/tests.py": "78de9298774df549a73834179bd6d152912bd836b338e6401e608885ea84d957",
+    "oracle/sources/pre/django/db/models/query.py": "37c80fb12c57aab4dfabaffffba4d6da34953a0d0930bc1d66a0655d00b502cb"
+  }
+}

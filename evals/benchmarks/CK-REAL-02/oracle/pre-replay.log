@@ -1,0 +1,11 @@
+RECORDED_AT=2026-10-07T17:13:22.912420+00:00
+CWD=/tmp/codekick-zulip-oracles.JS2a2B/CK-REAL-02/pre
+COMMIT=e3de6394b0dc45288286366bd10acff5a7a08fa2
+TEST_ONLY_BACKPORT=True
+$ /usr/bin/python3 tools/test-backend --parallel=1 zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move
+You need to run /private/tmp/codekick-zulip-oracles.JS2a2B/CK-REAL-02/pre/tools/test-backend inside a Zulip dev environment.
+You can `source /private/tmp/codekick-zulip-oracles.JS2a2B/CK-REAL-02/pre/.venv/bin/activate` to enter the development environment.
+
+If you are using Vagrant, first run `vagrant ssh` to enter the Vagrant guest.
+
+EXIT_CODE=1

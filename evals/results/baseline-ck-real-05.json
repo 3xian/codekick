@@ -1,0 +1,27 @@
+{
+  "task_id": "CK-REAL-05",
+  "kind": "baseline-actor-run",
+  "label": "baseline-ck-real-05",
+  "status": "COMPLETED_UNSCORED",
+  "violations": [],
+  "exit_code": 0,
+  "turn_completed": true,
+  "wall_time_seconds": 465.6,
+  "tool_items_completed": 30,
+  "tool_types_observed": ["command_execution", "file_change"],
+  "usage": {"input_tokens": 590455, "output_tokens": 6033, "reasoning_output_tokens": 1742, "cached_input_tokens": 525056},
+  "patch_sha256": "4ef91a8a95d8973ab52e8212864bf17f0edc6024c7fcf73faf49ef7495691678",
+  "production_files": ["django/db/models/query.py"],
+  "hidden_tests": {
+    "passed": true,
+    "exit_code": 0,
+    "apply_mode": "production-files-only",
+    "tests": [
+      "defer.tests.DeferTests.test_only",
+      "defer.tests.DeferTests.test_only_related_manager_optimization"
+    ]
+  },
+  "related_existing_tests": {"modules": ["defer", "known_related_objects", "foreign_object"], "tests_run": 137, "exit_code": 0},
+  "contamination_check": "No reference PR, ticket, oracle path, or reference SHA in the transcript. The only github.com string is the upstream pyproject.toml source URL.",
+  "note": "One baseline run. Not a Candidate A/B, confirmation, or product ACCEPT."
+}

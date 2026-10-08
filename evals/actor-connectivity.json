@@ -1,0 +1,14 @@
+{
+  "kind": "fresh process connectivity probe; not a benchmark run or isolation proof",
+  "cli": "codex-cli 0.161.0",
+  "invocation": "npx --yes @openai/codex exec --ignore-user-config --ignore-rules --ephemeral --json --skip-git-repo-check --sandbox read-only -m gpt-6.1-sol -c 'model_reasoning_effort=\"high\"' -c 'web_search=\"disabled\"' -C /tmp/codekick-actor-probe.10fNgY <connectivity-only prompt>",
+  "prompt": "This is an infrastructure connectivity probe, not a software task. Do not read any files, use tools, or access the network. Reply exactly ACTOR_PROBE_OK.",
+  "thread_id": "01a1175c-288a-7391-bafc-de95515df873",
+  "observed_agent_message": "ACTOR_PROBE_OK",
+  "turn_completed": true,
+  "tool_calls_observed": 0,
+  "elapsed_seconds": 118.47,
+  "usage": {"input_tokens": 11918, "cached_input_tokens": 9856, "output_tokens": 9, "reasoning_output_tokens": 0},
+  "transport_observation": "Four reconnect messages after request timeouts; then WebSocket-to-HTTPS fallback and completed turn. Authentication works, transport startup is slow in this probe.",
+  "limits": "No CodeKick task, A/B outcome, tool-mediated oracle isolation, or repeatability conclusion follows from this probe."
+}

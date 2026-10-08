@@ -1,0 +1,403 @@
+<?xml version="1.0"?>
+
+
+
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+  <channel>
+    <title>Django: Ticket #36865: Casting on __exact searches over non-text fields in admin misses indexes</title>
+    <link>https://code.djangoproject.com/ticket/36865</link>
+    <description>&lt;p&gt;
+&lt;a href=&#34;https://code.djangoproject.com/ticket/26001&#34;&gt;https://code.djangoproject.com/ticket/26001&lt;/a&gt; from 10 years ago was fixed in PR &lt;a class=&#34;ext-link&#34; href=&#34;https://github.com/django/django/pull/17885/&#34;&gt;&lt;span class=&#34;icon&#34;&gt;​&lt;/span&gt;https://github.com/django/django/pull/17885/&lt;/a&gt;, which was released in Django 5.2. 
+&lt;/p&gt;
+&lt;p&gt;
+Unfortunately, this fix casts all admin search queries to varchar, which makes the query miss the DB index instead of using it. In large tables, this results in the query timing out, as documented as a comment on the original issue: 
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a href=&#34;https://code.djangoproject.com/ticket/26001#comment:24&#34;&gt;https://code.djangoproject.com/ticket/26001#comment:24&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+And in my project&#39;s issue tracker: 
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a class=&#34;ext-link&#34; href=&#34;https://github.com/freelawproject/courtlistener/issues/6790&#34;&gt;&lt;span class=&#34;icon&#34;&gt;​&lt;/span&gt;https://github.com/freelawproject/courtlistener/issues/6790&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+We&#39;re fixing this in our system by patching the &lt;code&gt;get_search_results&lt;/code&gt; method: 
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a class=&#34;ext-link&#34; href=&#34;https://github.com/freelawproject/courtlistener/pull/6792&#34;&gt;&lt;span class=&#34;icon&#34;&gt;​&lt;/span&gt;https://github.com/freelawproject/courtlistener/pull/6792&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+I&#39;m not at all familiar with this part of Django, but I spent some time with claude and I think I have a fix here: 
+&lt;/p&gt;
+&lt;p&gt;
+&lt;a class=&#34;ext-link&#34; href=&#34;https://github.com/django/django/pull/20538&#34;&gt;&lt;span class=&#34;icon&#34;&gt;​&lt;/span&gt;https://github.com/django/django/pull/20538&lt;/a&gt;
+&lt;/p&gt;
+&lt;p&gt;
+I did my best to be surgical and to add tests, but, again, this is foreign stuff to me. I hope this helps.
+&lt;/p&gt;
+</description>
+    <language>en-us</language>
+    <image>
+      <title>Django</title>
+      <url>https://www.djangoproject.com/s/img/site/hdr_logo.gif</url>
+      <link>https://code.djangoproject.com/ticket/36865</link>
+    </image>
+    <generator>Trac 1.6</generator>
+
+    <item>
+
+      <dc:creator>Simon Charette</dc:creator>
+      <pubDate>Thu, 15 Jan 2026 15:36:08 GMT</pubDate>
+      <title>keywords, needs_better_patch, needs_tests, stage changed</title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:1      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:1</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;keywords&lt;/strong&gt;
+        search_fields cast added; search regression removed
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;needs_better_patch&lt;/strong&gt;
+        set
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;needs_tests&lt;/strong&gt;
+        set
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;stage&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;Unreviewed&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;Accepted&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;
+&lt;a class=&#34;ext-link&#34; href=&#34;https://github.com/django/django/pull/18765#pullrequestreview-2414452529&#34;&gt;&lt;span class=&#34;icon&#34;&gt;​&lt;/span&gt;This problem was discussed in a follow up MR&lt;/a&gt; to &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/26001&#34; title=&#34;#26001: Cleanup/optimization: Make ModelAdmin.search_fields raise data errors on __exact lookups for ... (closed: fixed)&#34;&gt;#26001&lt;/a&gt;.
+&lt;/p&gt;
+&lt;p&gt;
+As pointed out on &lt;a class=&#34;ext-link&#34; href=&#34;https://github.com/django/django/pull/20538/changes#r2694820830&#34;&gt;&lt;span class=&#34;icon&#34;&gt;​&lt;/span&gt;the proposed patch&lt;/a&gt; (which you should prefix with &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/36865&#34; title=&#34;#36865: Bug: Casting on __exact searches over non-text fields in admin misses indexes (closed: fixed)&#34;&gt;#36865&lt;/a&gt; to be automatically linked here Mike) using either &lt;code&gt;field.to_python&lt;/code&gt; (or &lt;code&gt;field.formfield().to_python&lt;/code&gt; as we&#39;re dealing with untrusted user input) can likely be used as a signal to determine if a &lt;code&gt;cast&lt;/code&gt; is necessary.
+&lt;/p&gt;
+&lt;p&gt;
+I&#39;m also wondering why we even search against cast&#39;ed to text integer field when provided a string not composed of digits (AKA when it fails &lt;code&gt;to_python&lt;/code&gt;) when using the &lt;code&gt;exact&lt;/code&gt; lookup. It seems like the logic could be adjusted the other way around by avoiding exact lookups for search terms that search fields fail &lt;code&gt;to_python&lt;/code&gt; and we could drop the casting altogether.
+&lt;/p&gt;
+&lt;p&gt;
+e.g.
+&lt;/p&gt;
+&lt;div class=&#34;wiki-code&#34;&gt;&lt;div class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;Author&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;models&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Model&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;models&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CharField&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;dob&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;models&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DateField&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;AuthorAdmin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;models&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ModelAdmin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;search_fields&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;dob&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;
+then a search of the form &lt;code&gt;?q=foo 2010-01-15&lt;/code&gt; should result in
+&lt;/p&gt;
+&lt;div class=&#34;wiki-code&#34;&gt;&lt;div class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;nb&#34;&gt;filter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;Q&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Q&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;2010-01-15&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Q&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dob&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2010&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;
+Where we don&#39;t even try &lt;code&gt;dob_str=&#34;foo&#34;&lt;/code&gt; as &lt;code&gt;DateField.formfield().to_python(&#34;foo&#34;)&lt;/code&gt; identity that the value is not valid for this field and thus cannot be an exact match.
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Mike Lissner</dc:creator>
+      <pubDate>Thu, 15 Jan 2026 20:34:07 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:2      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:2</guid>
+      <description>
+        &lt;p&gt;
+Thanks. I&#39;ve updated the title of the PR so it links here (magic?) and I&#39;ve pushed a commit with the change you suggest here. I agree — much better. Again, I&#39;ve had a lot of help from Claude on this, so hopefully the code is good. It&#39;s a change I wouldn&#39;t have dared a few months ago, but I&#39;m hopeful will be good enough now.
+&lt;/p&gt;
+&lt;p&gt;
+I see this ticket says it needs tests and that it needs improvement. I&#39;m assuming it&#39;s up to maintainers to uncheck those, yes? 
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Antoliny</dc:creator>
+      <pubDate>Fri, 16 Jan 2026 01:41:54 GMT</pubDate>
+      <title>status changed; owner set</title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:3      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:3</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;owner&lt;/strong&gt;
+        set to &lt;span class=&#34;trac-author&#34;&gt;Mike Lissner&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;status&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;new&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;assigned&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Antoliny</dc:creator>
+      <pubDate>Fri, 16 Jan 2026 01:50:22 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:4      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:4</guid>
+      <description>
+        &lt;p&gt;
+Replying to &lt;a class=&#34;ticket&#34; href=&#34;https://code.djangoproject.com/ticket/36865#comment:2&#34; title=&#34;Comment 2&#34;&gt;Mike Lissner&lt;/a&gt;:
+&lt;/p&gt;
+&lt;blockquote class=&#34;citation&#34;&gt;
+&lt;p&gt;
+I see this ticket says it needs tests and that it needs improvement. I&#39;m assuming it&#39;s up to maintainers to uncheck those, yes? 
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+Thank you Mike!
+Once you&#39;ve completed your work, you can switch &#34;needs tests&#34; and &#34;patch needs improvement&#34; to no.
+When &#34;needs tests&#34;, &#34;needs patch improvement&#34;, and &#34;needs documentation&#34; are all set to no, it will be added to the review queue and can proceed after being reviewed by maintainers or reviewers.
+I think this &lt;a class=&#34;ext-link&#34; href=&#34;https://docs.djangoproject.com/en/6.0/internals/contributing/triaging-tickets/#triage-workflow&#34;&gt;&lt;span class=&#34;icon&#34;&gt;​&lt;/span&gt;document&lt;/a&gt; might be helpful :)
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Mike Lissner</dc:creator>
+      <pubDate>Fri, 16 Jan 2026 15:13:22 GMT</pubDate>
+      <title>needs_better_patch, needs_tests changed</title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:5      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:5</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;needs_better_patch&lt;/strong&gt;
+        unset
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;needs_tests&lt;/strong&gt;
+        unset
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Mike Lissner</dc:creator>
+      <pubDate>Fri, 16 Jan 2026 23:54:06 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:6      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:6</guid>
+      <description>
+        &lt;p&gt;
+This should be ready for review again.
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Jacob Walls</dc:creator>
+      <pubDate>Wed, 28 Jan 2026 17:27:17 GMT</pubDate>
+      <title>needs_better_patch changed</title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:7      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:7</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;needs_better_patch&lt;/strong&gt;
+        set
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Mike Lissner</dc:creator>
+      <pubDate>Thu, 29 Jan 2026 02:31:32 GMT</pubDate>
+      <title>needs_better_patch changed</title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:8      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:8</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;needs_better_patch&lt;/strong&gt;
+        unset
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;
+Tweaks made, pushed. Ready for more review, bosses.
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Jacob Walls</dc:creator>
+      <pubDate>Thu, 29 Jan 2026 15:34:37 GMT</pubDate>
+      <title>needs_better_patch, needs_tests changed</title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:9      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:9</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;needs_better_patch&lt;/strong&gt;
+        set
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;needs_tests&lt;/strong&gt;
+        set
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Mike Lissner</dc:creator>
+      <pubDate>Thu, 29 Jan 2026 17:03:04 GMT</pubDate>
+      <title>needs_better_patch changed</title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:10      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:10</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;needs_better_patch&lt;/strong&gt;
+        unset
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Mike Lissner</dc:creator>
+      <pubDate>Thu, 29 Jan 2026 17:03:16 GMT</pubDate>
+      <title>needs_tests changed</title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:11      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:11</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;needs_tests&lt;/strong&gt;
+        unset
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Jacob Walls</dc:creator>
+      <pubDate>Thu, 29 Jan 2026 17:32:54 GMT</pubDate>
+      <title>stage, summary, version changed</title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:12      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:12</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;stage&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;Accepted&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;Ready for checkin&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;summary&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;Query casting introduced in Django 5.2 makes queries miss DB indexes&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;Casting on __exact searches over non-text fields in admin misses indexes&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;version&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;6.0&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;5.2&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <author>Jacob Walls &lt;jacobtylerwalls@…&gt;</author>
+      <pubDate>Fri, 30 Jan 2026 16:45:43 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:13      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:13</guid>
+      <description>
+        &lt;p&gt;
+In &lt;a class=&#34;changeset&#34; href=&#34;https://code.djangoproject.com/changeset/b25bc2441827a31b5629e9f79ad7296b992648a2&#34; title=&#34;Refs #36865 -- Added test for invalid value handling in admin changelist.&#34;&gt;b25bc24&lt;/a&gt;:
+&lt;/p&gt;
+&lt;div class=&#34;message&#34;&gt;&lt;p&gt;
+Refs &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/36865&#34; title=&#34;#36865: Bug: Casting on __exact searches over non-text fields in admin misses indexes (closed: fixed)&#34;&gt;#36865&lt;/a&gt; -- Added test for invalid value handling in admin changelist.&lt;br /&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <author>Jacob Walls &lt;jacobtylerwalls@…&gt;</author>
+      <pubDate>Fri, 30 Jan 2026 16:45:43 GMT</pubDate>
+      <title>status changed; resolution set</title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:14      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:14</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;resolution&lt;/strong&gt;
+        → &lt;span class=&#34;trac-field-new&#34;&gt;fixed&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;status&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;assigned&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;closed&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;
+In &lt;a class=&#34;changeset&#34; href=&#34;https://code.djangoproject.com/changeset/4cecf3039586ea738afafb9a28c946bff42c37c1&#34; title=&#34;Fixed #36865 -- Removed casting from exact lookups in admin searches.
+ ...&#34;&gt;4cecf303&lt;/a&gt;:
+&lt;/p&gt;
+&lt;div class=&#34;message&#34;&gt;&lt;p&gt;
+Fixed &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/36865&#34; title=&#34;#36865: Bug: Casting on __exact searches over non-text fields in admin misses indexes (closed: fixed)&#34;&gt;#36865&lt;/a&gt; -- Removed casting from exact lookups in admin searches.&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;
+Instead of casting non-text fields to CharField (which prevents index&lt;br /&gt;
+usage), skip exact lookups when the search term fails&lt;br /&gt;
+formfield.to_python().&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;
+This preserves index usage for valid searches while gracefully handling&lt;br /&gt;
+invalid search terms by simply not including them in the query for that&lt;br /&gt;
+field.&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;
+For multi-term searches like &#39;foo 123&#39; on search_fields=[&#39;name&#39;, &#39;age&lt;span class=&#34;underline&#34;&gt;exact&#39;]:&lt;br /&gt;
+&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;&#39;foo&#39;: invalid for age, so only name lookup is used
+&lt;/li&gt;&lt;li&gt;&#39;123&#39;: valid for both, so both lookups are used
+&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;
+This entails a slight increase in permissiveness for search terms that&lt;br /&gt;
+can be normalized by formfield.to_python().&lt;br /&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <author>Jacob Walls &lt;jacobtylerwalls@…&gt;</author>
+      <pubDate>Sat, 31 Jan 2026 16:49:03 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/36865#comment:15      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/36865#comment:15</guid>
+      <description>
+        &lt;p&gt;
+In &lt;a class=&#34;changeset&#34; href=&#34;https://code.djangoproject.com/changeset/674eda1c03a3187905f48afee0f15226aa62fdf3&#34; title=&#34;Refs #36865 -- Fixed ...&#34;&gt;674eda1c&lt;/a&gt;:
+&lt;/p&gt;
+&lt;div class=&#34;message&#34;&gt;&lt;p&gt;
+Refs &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/36865&#34; title=&#34;#36865: Bug: Casting on __exact searches over non-text fields in admin misses indexes (closed: fixed)&#34;&gt;#36865&lt;/a&gt; -- Fixed test_exact_lookup_validates_each_field_independently() crash on databases that don&#39;t support primitives in JSONFields.&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;
+For example on Oracle &amp;lt; 21c.&lt;br /&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+      </description>
+      <category>Ticket</category>
+    </item>
+ </channel>
+</rss>

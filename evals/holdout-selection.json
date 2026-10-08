@@ -1,0 +1,61 @@
+{
+  "rule": "Before any candidate implementation: most recent eligible merged bugfix preceding each core reference commit in the same repository, excluding core tasks, with a problem-only report and a regression test. Identity stays controller-only until confirmation. Not replayed yet, so none is an admitted oracle.",
+  "selected_before_candidate_implementation": true,
+  "tasks": [
+    {
+      "precedes": "CK-REAL-01",
+      "repo": "zulip/zulip",
+      "pr": 39873,
+      "sha": "db0e39f5f2f9",
+      "problem": "USER_CREATED audit log records an incorrect workplace users count.",
+      "test_file": "zerver/tests/test_audit_log.py",
+      "status": "SELECTED_PENDING_REPLAY"
+    },
+    {
+      "precedes": "CK-REAL-02",
+      "repo": "zulip/zulip",
+      "sha": "c1eb982ff11d",
+      "problem": "Restoring compose after reload drops the draft id.",
+      "test_file": "web/tests/reload_setup.test.cjs",
+      "status": "SELECTED_PENDING_REPLAY"
+    },
+    {
+      "precedes": "CK-REAL-03",
+      "repo": "go-gitea/gitea",
+      "pr": 36279,
+      "sha": "b79dbfa9905e",
+      "problem": "Generated links and login redirects do not preserve the intended referrer/origin policy.",
+      "test_file": "modules/markup/sanitizer_description_test.go",
+      "status": "SELECTED_PENDING_REPLAY",
+      "note": "Most recent preceding change with a test. The test updates an expected link rel assertion; replay must show pre-fix FAIL before it counts."
+    },
+    {
+      "precedes": "CK-REAL-04",
+      "repo": "discourse/discourse",
+      "pr": 36930,
+      "sha": "a9008966f0b3",
+      "problem": "Chat document-title counter ignores the title_count_mode preference.",
+      "test_file": "plugins/chat/test/javascripts/unit/services/chat-test.js",
+      "status": "SELECTED_PENDING_REPLAY"
+    },
+    {
+      "precedes": "CK-REAL-05",
+      "repo": "django/django",
+      "pr": 20184,
+      "ticket": 36708,
+      "sha": "21ceaf2fd75b",
+      "problem": "A custom ChangeList without a dynamically assigned formset raises AttributeError.",
+      "test_file": "tests/admin_changelist/tests.py",
+      "status": "SELECTED_PENDING_REPLAY"
+    },
+    {
+      "precedes": "CK-REAL-06",
+      "repo": "django/django",
+      "ticket": 36847,
+      "sha": "fe189dc43ab3",
+      "problem": "auto_now_add fields are not set on pre_save().",
+      "test_file": "tests/model_fields/test_filefield.py",
+      "status": "SELECTED_PENDING_REPLAY"
+    }
+  ]
+}

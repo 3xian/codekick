@@ -1,0 +1,136 @@
+{
+  "task_id": "CK-REAL-01",
+  "repository": "zulip/zulip",
+  "repository_url": "https://github.com/zulip/zulip.git",
+  "codekick_baseline_sha": "63afb2c9258bff513da51f7f0b3a9735b58de64b",
+  "language": "Python",
+  "class": "server-side full-name validation bypass",
+  "original_issue": {
+    "number": 40062,
+    "url": "https://github.com/zulip/zulip/issues/40062",
+    "metadata": "oracle/original-issue.json"
+  },
+  "reference": {
+    "pull_request": 40063,
+    "url": "https://github.com/zulip/zulip/pull/40063",
+    "sha": "45f98143be706567f03b9e229d5ef8d43a2940f4",
+    "verified_parent_sha": "8b8ccfbe79853488760c51f0f820295b279ad40b",
+    "parents": [
+      "8b8ccfbe79853488760c51f0f820295b279ad40b"
+    ],
+    "identity_status": "VERIFIED",
+    "merge_verified": true,
+    "identity_evidence": [
+      "oracle/reference-pr.json",
+      "oracle/reference-commit.json",
+      "oracle/identity.log"
+    ]
+  },
+  "status": "VALID",
+  "valid": true,
+  "blocking_phase": null,
+  "validity_scope": "Historical focused oracle replay only; no Actor, Candidate, screening, or product acceptance conclusion.",
+  "actor_input": "task.md",
+  "actor_isolation": {
+    "status": "NOT_VERIFIED",
+    "controller_disqualified_as_coding_actor": true,
+    "allowed_task_artifacts": [
+      "task.md"
+    ],
+    "controller_only": [
+      "manifest.json",
+      "oracle/"
+    ],
+    "requirement": "A separate fresh Coding Actor may receive only task.md and the original verified-parent source, without oracle, manifest, future git objects/history, PR metadata, or access to historical solution artifacts. Export original parent using git archive before adding the controller test-only patch. No actor or product candidate has been run."
+  },
+  "commands": {
+    "acquisition": [
+      "git init <temporary-repository>",
+      "git remote add origin https://github.com/zulip/zulip.git",
+      "git fetch --depth=2 origin 45f98143be706567f03b9e229d5ef8d43a2940f4",
+      "git worktree add --detach <pre-checkout> 8b8ccfbe79853488760c51f0f820295b279ad40b",
+      "git worktree add --detach <post-checkout> 45f98143be706567f03b9e229d5ef8d43a2940f4"
+    ],
+    "test_backport": [
+      "git",
+      "apply",
+      "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-01/oracle/regression.patch"
+    ],
+    "native_regression": [
+      "./tools/test-backend",
+      "--parallel=1",
+      "zerver.tests.test_users.PermissionTest.test_not_allowed_format"
+    ],
+    "observed_replays": {
+      "pre": ["docker", "exec", "-u", "vagrant", "-w", "/workspace", "codekick-zulip01-pre-oracle", ".venv/bin/python", "tools/test-backend", "--parallel=1", "zerver.tests.test_users.PermissionTest.test_not_allowed_format"],
+      "post": ["docker", "exec", "-u", "vagrant", "-w", "/workspace", "codekick-zulip01-post-oracle", ".venv/bin/python", "tools/test-backend", "--parallel=1", "zerver.tests.test_users.PermissionTest.test_not_allowed_format"]
+    },
+    "future_actor_source_export": [
+      "git",
+      "archive",
+      "8b8ccfbe79853488760c51f0f820295b279ad40b"
+    ]
+  },
+  "runtime": {
+    "image": "sha256:00a439bffd9d631bca77124823413d29329db133ebc92a558c96707afc7f5de9",
+    "recipe": "../../runtime/zulip/recipe.json",
+    "platform": "linux/arm64",
+    "source_free_evidence": "../../runtime/zulip/source-free-image-final.log",
+    "network": "none; native local services remain available on isolated loopback",
+    "pre_export": "/tmp/codekick-zulip-linux-20261008/CK-REAL-01/pre",
+    "reference_export": "/tmp/codekick-zulip-linux-20261008/CK-REAL-01/post"
+  },
+  "replay": {
+    "pre_fix": {
+      "command": ["docker", "exec", "-u", "vagrant", "-w", "/workspace", "codekick-zulip01-pre-oracle", ".venv/bin/python", "tools/test-backend", "--parallel=1", "zerver.tests.test_users.PermissionTest.test_not_allowed_format"],
+      "cwd": "/workspace",
+      "exit_code": 1,
+      "status": "FAIL",
+      "assertions_executed": true,
+      "tests_run": 1,
+      "semantic_failures": 1,
+      "evidence": "oracle/docker-pre-replay.log",
+      "reason": "Historical endpoint assertion at test_users.py:493 rejects trailing-whitespace validation bypass: actual HTTP 200 != required 400."
+    },
+    "reference": {
+      "command": ["docker", "exec", "-u", "vagrant", "-w", "/workspace", "codekick-zulip01-post-oracle", ".venv/bin/python", "tools/test-backend", "--parallel=1", "zerver.tests.test_users.PermissionTest.test_not_allowed_format"],
+      "cwd": "/workspace",
+      "exit_code": 0,
+      "status": "PASS",
+      "assertions_executed": true,
+      "tests_run": 1,
+      "failures": 0,
+      "evidence": "oracle/docker-post-replay.log",
+      "reason": "Exact verified reference commit passed the same historical focused endpoint test."
+    },
+    "observed_fail_pass": true,
+    "reason": "Genuine native pre-fix semantic FAIL and exact-reference PASS observed in isolated real PostgreSQL/cache/queue runtime. No copied-function oracle, fake models, or native sanity-check bypass.",
+    "prior_blocked_replay_logs": ["oracle/pre-replay.log", "oracle/post-replay.log", "oracle/linux-pre-replay.log", "oracle/linux-pre-replay-final.log", "oracle/linux-pre-replay-complete.log"],
+    "resolved_infrastructure_evidence": "../../runtime/zulip/storage-blocker.json"
+  },
+  "evidence": {
+    "acquisition": "oracle/acquisition.log",
+    "pre_checkout": "oracle/pre-checkout.log",
+    "post_checkout": "oracle/post-checkout.log",
+    "test_backport": "oracle/test-backport.log",
+    "regression_patch": "oracle/regression.patch",
+    "reference_patch": "oracle/reference.patch",
+    "runtime_sources": "oracle/runtime-sources.json",
+    "environment": "oracle/environment.json",
+    "pre_replay": "oracle/docker-pre-replay.log",
+    "post_replay": "oracle/docker-post-replay.log",
+    "oracle_specification": "oracle/replay.json",
+    "native_linux_test_backport": "oracle/linux-test-backport.log",
+    "runtime_recipe": "../../runtime/zulip/recipe.json",
+    "python_dependency_pins": "../../runtime/zulip/python-dependencies.log",
+    "system_dependency_pins": "../../runtime/zulip/environment.log",
+    "pre_prepare": "../../runtime/zulip/CK-REAL-01-pre-oracle-prepare.log",
+    "reference_prepare": "../../runtime/zulip/CK-REAL-01-post-oracle-prepare.log"
+  },
+  "temporary_checkouts": {
+    "repository": "/tmp/codekick-zulip-oracles.JS2a2B/repo",
+    "pre": "/tmp/codekick-zulip-oracles.JS2a2B/CK-REAL-01/pre",
+    "post": "/tmp/codekick-zulip-oracles.JS2a2B/CK-REAL-01/post"
+  },
+  "completion_policy": "Historical focused oracle VALID from observed native semantic pre-fix FAIL and exact-reference PASS. Independently verify full Actor isolation before candidate execution; this evidence does not imply an Actor or product acceptance result."
+}

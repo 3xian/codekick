@@ -1,0 +1,4 @@
+$ docker start codekick-zulip01-provision
+codekick-zulip01-provision
+
+EXIT_CODE=0

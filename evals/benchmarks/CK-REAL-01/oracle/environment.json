@@ -1,0 +1,32 @@
+{
+  "recorded_at": "2026-10-07T17:12:41.977297+00:00",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "architecture": "arm64",
+  "python_executable": "/Users/mac/code/codekick/.venv/bin/python",
+  "python_version": "3.12.14 (main, Aug 12 2026, 13:57:54) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "executables": {
+    "python3": "/Users/mac/code/codekick/.venv/bin/python3",
+    "docker": "/opt/homebrew/bin/docker",
+    "vagrant": null,
+    "podman": null,
+    "postgres": null,
+    "pg_ctl": null,
+    "redis-server": null,
+    "memcached": null,
+    "rabbitmq-server": null,
+    "virtualbox": null,
+    "qemu-system-aarch64": null,
+    "limactl": null
+  },
+  "host_interpreter_modules": {
+    "django": false,
+    "orjson": false,
+    "responses": false,
+    "psycopg2": false
+  },
+  "context_observation": "Controller reports Docker CLI installed but daemon unavailable; not rerun to reconfirm. Root user .venv and src not inspected or modified.",
+  "checkout_venvs": {
+    "pre": false,
+    "post": false
+  }
+}

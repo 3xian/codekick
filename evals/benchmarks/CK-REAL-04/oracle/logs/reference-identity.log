@@ -1,0 +1,6 @@
+$ git show --no-patch --format=%H%n%P%n%s ae0188e7d41a693626f1413275694309198ed75f
+ae0188e7d41a693626f1413275694309198ed75f
+ffbf6cb8837e9e8d5012f6e215ff035fa11e8c8e
+FIX: Restore topic bump date when recovering a deleted reply (#36935)
+
+exit_code=0

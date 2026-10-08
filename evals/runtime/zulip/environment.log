@@ -1,0 +1,849 @@
+$ docker exec -u vagrant -w /workspace codekick-zulip01-pre bash -c 'python3 --version; .venv/bin/python --version; uv --version; node --version; .venv/bin/python -m pip freeze; dpkg-query -W; pg_isready'
+Python 3.10.12
+Python 3.10.12
+uv 0.12.5 (aarch64-unknown-linux-gnu)
+v24.19.0
+aioapns==4.0
+aiohappyeyeballs==2.7.1
+aiohttp==3.14.3
+aiohttp-retry==2.9.1
+aiosignal==1.4.0
+aiosmtpd==1.4.6
+alabaster==1.0.0
+altcha==2.1.0
+annotated-doc==0.0.5
+annotated-types==0.8.0
+anyio==4.14.2
+argon2-cffi==25.1.0
+argon2-cffi-bindings==25.1.0
+arrow==1.4.0
+asgiref==3.12.1
+ast_serialize==0.8.0
+asttokens==3.0.2
+async-timeout==5.0.1
+atpublic==7.0.0
+attrs==26.1.0
+Automat==25.4.16
+babel==2.18.0
+backports-datetime-fromisoformat==2.0.3
+beautifulsoup4==4.15.0
+black==26.5.1
+boltons==21.0.0
+boto3==1.43.74
+boto3-stubs==1.43.74
+botocore==1.43.74
+botocore-stubs==1.43.67
+bracex==3.0.1
+CacheControl==0.14.4
+certifi==2026.7.22
+cffi==2.1.1
+chardet==7.6.0
+charset-normalizer==3.5.1
+click==8.4.2
+click-option-group==0.5.9
+codespell==2.4.3
+colorama==0.4.6
+constantly==23.10.4
+coverage==7.15.4
+cryptography==50.0.0
+css-inline==0.21.1
+cssselect==1.5.0
+decorator==5.3.1
+defusedxml==0.7.1
+disposable-email-domains==0.0.238
+distro==1.9.0
+Django==5.2.17
+django-auth-ldap==5.3.0
+django-bitfield==2.4.0
+django-bmemcached==0.3.0
+django-cte==3.0.0
+django-formtools==2.7
+django-otp==1.7.0
+django-phonenumber-field==8.5.0
+django-scim2==0.23.0
+django-stubs==6.0.9
+django-stubs-ext==6.0.9
+django-two-factor-auth==1.18.1
+dnspython==2.8.0
+docutils==0.21.2
+exceptiongroup==1.2.2
+executing==2.2.1
+face==26.0.1
+fakeldap==0.6.6
+filelock==3.32.3
+firebase_admin==7.4.0
+frozenlist==1.8.0
+gitlint-core==0.19.1
+glom==22.1.0
+google-api-core==2.34.0
+google-auth==2.56.3
+google-cloud-core==2.6.1
+google-cloud-firestore==2.28.1
+google-cloud-storage==3.13.1
+google-crc32c==1.8.0
+google-re2==1.1.20251105
+google-re2-stubs==0.1.1
+google-resumable-media==2.10.1
+googleapis-common-protos==1.75.1
+grpcio==1.83.0
+grpcio-status==1.83.0
+h11==0.16.0
+h2==4.4.1
+hpack==4.2.0
+html2text==2025.4.15
+html5lib==1.1
+httpcore==1.0.9
+httpcore2==2.12.0
+httpx==0.28.1
+httpx2==2.12.0
+hyperframe==6.1.0
+hyperlink==21.0.0
+idna==3.19
+imagesize==2.0.0
+importlib_metadata==9.0.0
+Incremental==24.11.0
+ipython==8.39.0
+isodate==0.7.2
+itemadapter==0.13.1
+itemloaders==1.4.0
+jedi==0.20.0
+Jinja2==3.1.6
+jiter==0.16.0
+jmespath==1.1.0
+joblib==1.5.3
+jsonpickle==4.1.2
+jsonref==1.1.0
+jsonschema==4.26.0
+jsonschema-path==0.4.6
+jsonschema-specifications==2025.9.1
+jsx-lexer==2.0.1
+lazy-object-proxy==1.12.0
+librt==0.15.0
+line_profiler==5.0.2
+lxml==6.1.1
+lxml-stubs==0.5.1
+Markdown==3.10.3
+markdown-it-py==3.0.0
+markdownify==1.2.3
+MarkupSafe==3.0.3
+matplotlib-inline==0.2.2
+mdit-py-plugins==0.6.1
+mdurl==0.1.2
+more-itertools==11.1.0
+moto==5.2.2
+msgpack==1.2.1
+multidict==6.7.1
+mypy==2.3.1
+mypy-boto3-s3==1.43.66
+mypy-boto3-ses==1.43.0
+mypy-boto3-sns==1.43.23
+mypy-boto3-sqs==1.43.0
+mypy_extensions==1.1.0
+myst-parser==4.0.1
+natsort==8.4.0
+oauthlib==3.3.1
+openai==3.3.0
+openapi-core==0.23.1
+openapi-schema-validator==0.8.1
+openapi-spec-validator==0.8.5
+orjson==3.12.0
+packaging==26.3
+parsel==1.11.0
+parso==0.8.7
+pathable==0.5.0
+pathspec==1.1.1
+peewee==3.19.0
+pexpect==4.9.0
+phonenumberslite==8.13.55
+pika==1.4.4
+platformdirs==4.11.3
+polib==1.2.0
+prometheus_client==0.26.0
+prompt_toolkit==3.0.53
+propcache==0.5.2
+Protego==0.6.2
+proto-plus==1.28.3
+protobuf==7.35.1
+psycopg2==2.9.12
+ptyprocess==0.7.0
+pure_eval==0.2.3
+py-partiql-parser==0.6.3
+pyahocorasick==2.3.1
+pyasn1==0.6.4
+pyasn1_modules==0.4.2
+pyasyncore==1.0.5
+pybreaker==1.4.1
+pycparser==3.0
+pydantic==2.13.4
+pydantic-partials==4.1.0
+pydantic-settings==2.15.0
+pydantic_core==2.46.4
+PyDispatcher==2.0.7
+PyGithub==2.9.1
+Pygments==2.21.0
+pyicu==2.16.2
+pyinotify==0.9.6
+PyJWT==2.13.0
+pymongo==4.17.0
+PyNaCl==1.6.2
+pyoembed==0.1.2
+pyOpenSSL==26.4.0
+python-binary-memcached==0.32.0
+python-bsonstream==0.1.4
+python-dateutil==2.9.0.post0
+python-debian==1.1.1
+python-digitalocean==1.17.0
+python-dotenv==1.2.3
+python-ldap==3.4.7
+python-magic==0.4.27
+python3-openid==3.2.0
+python3-saml==1.16.0
+pytokens==0.4.1
+pyuca==1.2
+pyvips==3.1.1
+PyYAML==6.0.3
+qrcode==8.2
+queuelib==1.9.0
+redis==8.1.0
+referencing==0.37.0
+regex==2026.7.19
+requests==2.34.2
+requests-file==3.0.1
+requests-oauthlib==2.0.0
+responses==0.26.2
+rfc3339-validator==0.1.4
+rich==15.0.0
+rpds-py==0.30.0
+ruamel.yaml==0.17.40
+ruamel.yaml.clib==0.2.15
+ruff==0.16.3
+s3transfer==0.19.2
+scim2-filter-parser==0.7.0
+Scrapy==2.17.0
+semgrep==1.79.0
+sentry-sdk==2.68.0
+service-identity==26.1.0
+sh==2.4.0
+shellingham==1.5.4
+six==1.17.0
+sly==0.5
+snakeviz==2.2.2
+sniffio==1.3.1
+snowballstemmer==3.1.1
+social-auth-app-django==5.9.0
+social-auth-core==4.9.1
+soupsieve==2.9.2
+Sphinx==8.1.3
+sphinx-copybutton==0.5.2
+sphinx_design==0.6.1
+sphinx_rtd_theme==3.1.0
+sphinxcontrib-applehelp==2.0.0
+sphinxcontrib-devhelp==2.0.0
+sphinxcontrib-htmlhelp==2.1.0
+sphinxcontrib-jquery==4.1
+sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-qthelp==2.0.0
+sphinxcontrib-serializinghtml==2.0.0
+sqlparse==0.6.0
+stack-data==0.6.3
+stripe==15.5.1
+talon-core @ git+https://github.com/zulip/talon.git@e87a64dccc3c5ee1b8ea157d4b6e15ecd46f2bed#subdirectory=talon-core
+tblib==3.2.2
+tenacity==9.1.4
+time-machine==3.4.0
+tldextract==5.3.2
+tlds==2026072401
+tomli==2.0.2
+tornado==6.5.8
+traitlets==5.16.1
+truststore==0.10.4
+twilio==9.11.0
+Twisted==26.4.0
+typer==0.27.1
+types-beautifulsoup4==4.12.0.20250516
+types-boto==2.49.18.20241019
+types-cffi==2.0.0.20260518
+types-decorator==5.2.0.20260712
+types-defusedxml==0.7.0.20260504
+types-html5lib==1.1.11.20260518
+types-jsonschema==4.26.0.20260518
+types-Markdown==3.10.2.20260712
+types-oauthlib==3.3.0.20260724
+types-pika==1.2.0b1
+types-polib==1.2.0.20260518
+types-psycopg2==2.9.21.20260724
+types-Pygments==2.20.0.20260728
+types-pyOpenSSL==24.1.0.20240722
+types-PyYAML==6.0.12.20260815
+types-redis==4.6.0.20241004
+types-regex==2026.7.19.20260720
+types-requests==2.33.0.20260712
+types-requests-oauthlib==2.0.0.20260610
+types-s3transfer==0.16.0
+types-setuptools==84.0.0.20260812
+types-uWSGI==2.0.0.20260518
+types-webencodings==0.5.0.20260408
+types-zstd==1.5.7.3.20260722
+types-zxcvbn==4.5.0.20260518
+typing-inspect==0.9.0
+typing-inspection==0.4.4
+typing_extensions==4.16.0
+tzdata==2026.3
+ua-parser==1.0.2
+ua-parser-builtins==202606
+ua-parser-rs==0.1.5
+uhashring==2.5
+uri-template==1.3.0
+urllib3==2.7.0
+uWSGI==2.0.31
+virtualenv-clone==0.5.7
+w3lib==2.4.1
+wcmatch==8.5.2
+wcwidth==0.8.2
+webencodings==0.6.1
+Werkzeug==3.1.8
+xmlsec==1.3.17
+xmltodict==1.0.4
+xsentinels==1.3.1
+yarl==1.24.5
+zipp==4.1.0
+zope.interface==8.5
+zstd==1.5.7.2
+zulint @ git+https://github.com/zulip/zulint.git@f546edc5b3c2c16e8d5755064540400d77c68a40
+zulip @ git+https://github.com/zulip/python-zulip-api.git@b172347594a4634517f925f9e30522fe987dbb9c#subdirectory=zulip
+zulip_bots @ git+https://github.com/zulip/python-zulip-api.git@b172347594a4634517f925f9e30522fe987dbb9c#subdirectory=zulip_bots
+zxcvbn==4.5.0
+adduser	3.118ubuntu5
+adwaita-icon-theme	41.0-1ubuntu1
+apt	2.4.14
+apt-transport-https	2.4.14
+augeas-lenses	1.13.0-1
+base-files	12ubuntu4.7
+base-passwd	3.5.52build1
+bash	5.1-6ubuntu1.1
+binutils	2.38-4ubuntu2.12
+binutils-aarch64-linux-gnu	2.38-4ubuntu2.12
+binutils-common:arm64	2.38-4ubuntu2.12
+bsdutils	1:2.37.2-4ubuntu3.6
+build-essential	12.9ubuntu3
+bzip2	1.0.8-5ubuntu0.1
+ca-certificates	20260601~22.04.1
+ca-certificates-java	20190909ubuntu1.3
+cmake	3.22.1-1ubuntu1.22.04.2
+cmake-data	3.22.1-1ubuntu1.22.04.2
+coreutils	8.32-4.1ubuntu1.4
+cpp	4:11.2.0-1ubuntu1
+cpp-11	11.4.0-1ubuntu1~22.04.3
+crudini	0.9.3-5
+curl	7.81.0-1ubuntu1.29
+dash	0.5.11+git20210903+057cd650a4ed-3build1
+dbus	1.12.20-2ubuntu4.1
+dbus-user-session	1.12.20-2ubuntu4.1
+dconf-gsettings-backend:arm64	0.40.0-3ubuntu0.1
+dconf-service	0.40.0-3ubuntu0.1
+debconf	1.5.79ubuntu1
+debianutils	5.5-1ubuntu2
+dh-elpa-helper	2.0.9ubuntu1
+dictionaries-common	1.28.14
+diffutils	1:3.8-0ubuntu2.1
+dirmngr	2.2.27-3ubuntu2.5
+dpkg	1.21.1ubuntu2.6
+dpkg-dev	1.21.1ubuntu2.6
+e2fsprogs	1.46.5-2ubuntu1.2
+emacsen-common	3.0.4
+erlang-asn1	1:24.2.1+dfsg-1ubuntu0.7
+erlang-base	1:24.2.1+dfsg-1ubuntu0.7
+erlang-crypto	1:24.2.1+dfsg-1ubuntu0.7
+erlang-eldap	1:24.2.1+dfsg-1ubuntu0.7
+erlang-ftp	1:24.2.1+dfsg-1ubuntu0.7
+erlang-inets	1:24.2.1+dfsg-1ubuntu0.7
+erlang-mnesia	1:24.2.1+dfsg-1ubuntu0.7
+erlang-os-mon	1:24.2.1+dfsg-1ubuntu0.7
+erlang-parsetools	1:24.2.1+dfsg-1ubuntu0.7
+erlang-public-key	1:24.2.1+dfsg-1ubuntu0.7
+erlang-runtime-tools	1:24.2.1+dfsg-1ubuntu0.7
+erlang-snmp	1:24.2.1+dfsg-1ubuntu0.7
+erlang-ssl	1:24.2.1+dfsg-1ubuntu0.7
+erlang-syntax-tools	1:24.2.1+dfsg-1ubuntu0.7
+erlang-tftp	1:24.2.1+dfsg-1ubuntu0.7
+erlang-tools	1:24.2.1+dfsg-1ubuntu0.7
+erlang-xmerl	1:24.2.1+dfsg-1ubuntu0.7
+facter	3.14.12-1.1build2
+findutils	4.8.0-1ubuntu3
+fontconfig	2.13.1-4.2ubuntu5
+fontconfig-config	2.13.1-4.2ubuntu5
+fonts-freefont-ttf	20120503-10build1
+g++	4:11.2.0-1ubuntu1
+g++-11	11.4.0-1ubuntu1~22.04.3
+gcc	4:11.2.0-1ubuntu1
+gcc-11	11.4.0-1ubuntu1~22.04.3
+gcc-11-base:arm64	11.4.0-1ubuntu1~22.04.3
+gcc-12-base:arm64	12.3.0-1ubuntu1~22.04.3
+gettext	0.21-4ubuntu4
+gettext-base	0.21-4ubuntu4
+git	1:2.34.1-1ubuntu1.17
+git-man	1:2.34.1-1ubuntu1.17
+gnupg	2.2.27-3ubuntu2.5
+gnupg-l10n	2.2.27-3ubuntu2.5
+gnupg-utils	2.2.27-3ubuntu2.5
+gpg	2.2.27-3ubuntu2.5
+gpg-agent	2.2.27-3ubuntu2.5
+gpg-wks-client	2.2.27-3ubuntu2.5
+gpg-wks-server	2.2.27-3ubuntu2.5
+gpgconf	2.2.27-3ubuntu2.5
+gpgsm	2.2.27-3ubuntu2.5
+gpgv	2.2.27-3ubuntu2.5
+grep	3.7-1build1
+groonga-apt-source	2026.04.28-1
+gtk-update-icon-cache	3.24.33-1ubuntu2.2
+gzip	1.10-4ubuntu4.2
+hicolor-icon-theme	0.17-2
+hiera	3.2.0-2.1
+hostname	3.23ubuntu2
+humanity-icon-theme	0.6.16
+hunspell-en-us	1:2020.12.07-2
+icu-devtools	70.1-2
+imagemagick-6-common	8:6.9.11.60+dfsg-1.3ubuntu0.22.04.5
+init-system-helpers	1.62
+java-common	0.72build2
+jq	1.6-2.1ubuntu3.2
+libacl1:arm64	2.3.1-1
+libaec0:arm64	1.0.6-1
+libapparmor1:arm64	3.0.4-2ubuntu2.5
+libapt-pkg6.0:arm64	2.4.14
+libarchive13:arm64	3.6.0-1ubuntu1.8
+libargon2-1:arm64	0~20171227-0.3
+libasan6:arm64	11.4.0-1ubuntu1~22.04.3
+libasound2:arm64	1.2.6.1-1ubuntu1.2
+libasound2-data	1.2.6.1-1ubuntu1.2
+libassuan0:arm64	2.5.5-1build1
+libatk-bridge2.0-0:arm64	2.38.0-3
+libatk1.0-0:arm64	2.36.0-3build1
+libatk1.0-data	2.36.0-3build1
+libatomic1:arm64	12.3.0-1ubuntu1~22.04.3
+libatspi2.0-0:arm64	2.44.0-3
+libattr1:arm64	1:2.5.1-1ubuntu0.1
+libaudit-common	1:3.0.7-1ubuntu0.1
+libaudit1:arm64	1:3.0.7-1ubuntu0.1
+libaugeas0:arm64	1.13.0-1
+libavahi-client3:arm64	0.8-5ubuntu5.5
+libavahi-common-data:arm64	0.8-5ubuntu5.5
+libavahi-common3:arm64	0.8-5ubuntu5.5
+libbinutils:arm64	2.38-4ubuntu2.12
+libblkid1:arm64	2.37.2-4ubuntu3.6
+libboost-filesystem1.74.0:arm64	1.74.0-14ubuntu3
+libboost-locale1.74.0:arm64	1.74.0-14ubuntu3
+libboost-log1.74.0	1.74.0-14ubuntu3
+libboost-nowide1.74.0	1.74.0-14ubuntu3
+libboost-program-options1.74.0:arm64	1.74.0-14ubuntu3
+libboost-regex1.74.0:arm64	1.74.0-14ubuntu3
+libboost-thread1.74.0:arm64	1.74.0-14ubuntu3
+libbrotli1:arm64	1.0.9-2build6
+libbsd0:arm64	0.11.5-1
+libbz2-1.0:arm64	1.0.8-5ubuntu0.1
+libc-bin	2.35-0ubuntu3.15
+libc-dev-bin	2.35-0ubuntu3.15
+libc6:arm64	2.35-0ubuntu3.15
+libc6-dev:arm64	2.35-0ubuntu3.15
+libcairo-gobject2:arm64	1.16.0-5ubuntu2.1
+libcairo2:arm64	1.16.0-5ubuntu2.1
+libcap-ng0:arm64	0.7.9-2.2build3
+libcap2:arm64	1:2.44-1ubuntu0.22.04.3
+libcc1-0:arm64	12.3.0-1ubuntu1~22.04.3
+libcfitsio9:arm64	4.0.0-1
+libcgif0	0.2.0-1
+libcolord2:arm64	1.4.6-1
+libcom-err2:arm64	1.46.5-2ubuntu1.2
+libcpp-hocon0.3.0:arm64	0.3.0-1build3
+libcrypt-dev:arm64	1:4.4.27-1
+libcrypt1:arm64	1:4.4.27-1
+libcryptsetup12:arm64	2:2.4.3-1ubuntu1.3
+libctf-nobfd0:arm64	2.38-4ubuntu2.12
+libctf0:arm64	2.38-4ubuntu2.12
+libcups2:arm64	2.4.1op1-1ubuntu4.21
+libcurl3-gnutls:arm64	7.81.0-1ubuntu1.29
+libcurl4:arm64	7.81.0-1ubuntu1.29
+libdatrie1:arm64	0.2.13-2
+libdav1d5:arm64	0.9.2-1
+libdb5.3:arm64	5.3.28+dfsg1-0.8ubuntu3
+libdbus-1-3:arm64	1.12.20-2ubuntu4.1
+libdconf1:arm64	0.40.0-3ubuntu0.1
+libde265-0:arm64	1.0.15-1~ppa1~ubuntu22.04.1
+libdebconfclient0:arm64	0.261ubuntu1
+libdeflate0:arm64	1.10-2
+libdevmapper1.02.1:arm64	2:1.02.175-2.1ubuntu5
+libdpkg-perl	1.21.1ubuntu2.6
+libdrm-amdgpu1:arm64	2.4.113-2~ubuntu0.22.04.1
+libdrm-common	2.4.113-2~ubuntu0.22.04.1
+libdrm-nouveau2:arm64	2.4.113-2~ubuntu0.22.04.1
+libdrm-radeon1:arm64	2.4.113-2~ubuntu0.22.04.1
+libdrm2:arm64	2.4.113-2~ubuntu0.22.04.1
+libedit2:arm64	3.1-20210910-1build1
+libelf1:arm64	0.186-1ubuntu0.1
+libepoxy0:arm64	1.5.10-1
+liberror-perl	0.17029-1
+libevent-2.1-7:arm64	2.1.12-stable-1ubuntu0.2
+libexif12:arm64	0.6.24-1ubuntu0.22.04.1
+libexpat1:arm64	2.4.7-1ubuntu0.9
+libexpat1-dev:arm64	2.4.7-1ubuntu0.9
+libext2fs2:arm64	1.46.5-2ubuntu1.2
+libfacter3.14.12:arm64	3.14.12-1.1build2
+libffi-dev:arm64	3.4.2-4
+libffi8:arm64	3.4.2-4
+libfftw3-double3:arm64	3.3.8-2ubuntu8
+libfontconfig1:arm64	2.13.1-4.2ubuntu5
+libfontenc1:arm64	1:1.1.4-1build3
+libfreetype6:arm64	2.11.1+dfsg-1ubuntu0.4
+libfribidi0:arm64	1.0.8-2ubuntu3.1
+libgbm1:arm64	23.2.1-1ubuntu3.1~22.04.4
+libgcc-11-dev:arm64	11.4.0-1ubuntu1~22.04.3
+libgcc-s1:arm64	12.3.0-1ubuntu1~22.04.3
+libgcrypt20:arm64	1.9.4-3ubuntu3.3
+libgcrypt20-dev	1.9.4-3ubuntu3.3
+libgdbm-compat4:arm64	1.23-1
+libgdbm6:arm64	1.23-1
+libgdk-pixbuf-2.0-0:arm64	2.42.8+dfsg-1ubuntu0.5
+libgdk-pixbuf2.0-common	2.42.8+dfsg-1ubuntu0.5
+libgl1:arm64	1.4.0-1
+libgl1-mesa-dri:arm64	23.2.1-1ubuntu3.1~22.04.4
+libglapi-mesa:arm64	23.2.1-1ubuntu3.1~22.04.4
+libglib2.0-0:arm64	2.72.4-0ubuntu2.10
+libglvnd0:arm64	1.4.0-1
+libglx-mesa0:arm64	23.2.1-1ubuntu3.1~22.04.4
+libglx0:arm64	1.4.0-1
+libgmp-dev:arm64	2:6.2.1+dfsg-3ubuntu1
+libgmp10:arm64	2:6.2.1+dfsg-3ubuntu1
+libgmpxx4ldbl:arm64	2:6.2.1+dfsg-3ubuntu1
+libgnutls-dane0:arm64	3.7.3-4ubuntu1.9
+libgnutls-openssl27:arm64	3.7.3-4ubuntu1.9
+libgnutls28-dev:arm64	3.7.3-4ubuntu1.9
+libgnutls30:arm64	3.7.3-4ubuntu1.9
+libgnutlsxx28:arm64	3.7.3-4ubuntu1.9
+libgomp1:arm64	12.3.0-1ubuntu1~22.04.3
+libgpg-error-dev	1.43-3
+libgpg-error0:arm64	1.43-3
+libgraphite2-3:arm64	1.3.14-1ubuntu0.1
+libgroonga0:arm64	16.1.2-1.ubuntu22.04.1
+libgsf-1-114:arm64	1.14.47-1ubuntu0.1
+libgsf-1-common	1.14.47-1ubuntu0.1
+libgssapi-krb5-2:arm64	1.19.2-2ubuntu0.10
+libgtk-3-0:arm64	3.24.33-1ubuntu2.2
+libgtk-3-common	3.24.33-1ubuntu2.2
+libharfbuzz0b:arm64	2.7.4-1ubuntu3.2
+libhdf5-103-1:arm64	1.10.7+repack-4ubuntu2
+libheif-plugin-dav1d:arm64	1.19.8-1~ppa1~ubuntu22.04
+libheif-plugin-libde265:arm64	1.19.8-1~ppa1~ubuntu22.04
+libheif1:arm64	1.19.8-1~ppa1~ubuntu22.04
+libhogweed6:arm64	3.7.3-1build2
+libhwasan0:arm64	12.3.0-1ubuntu1~22.04.3
+libice6:arm64	2:1.0.10-1build2
+libicu-dev:arm64	70.1-2
+libicu70:arm64	70.1-2
+libidn2-0:arm64	2.3.2-2build1
+libidn2-dev:arm64	2.3.2-2build1
+libilmbase25:arm64	2.5.7-2
+libimagequant0:arm64	2.17.0-1
+libio-pty-perl	1:1.15-2build2
+libip4tc2:arm64	1.8.7-1ubuntu5.2
+libipc-run-perl	20200505.0-1
+libisl23:arm64	0.24-2build1
+libitm1:arm64	12.3.0-1ubuntu1~22.04.3
+libjbig0:arm64	2.1-3.1ubuntu0.22.04.1
+libjemalloc2:arm64	5.2.1-4ubuntu1
+libjpeg-turbo8:arm64	2.1.2-0ubuntu1
+libjpeg8:arm64	8c-2ubuntu10
+libjq1:arm64	1.6-2.1ubuntu3.2
+libjs-jquery	3.6.0+dfsg+~3.5.13-1
+libjs-sphinxdoc	4.3.2-1
+libjs-underscore	1.13.2~dfsg-2
+libjson-c5:arm64	0.15-3~ubuntu1.22.04.2
+libjson-perl	4.04000-1
+libjsoncpp25:arm64	1.9.5-3
+libk5crypto3:arm64	1.19.2-2ubuntu0.10
+libkeyutils1:arm64	1.6.1-2ubuntu3
+libkmod2:arm64	29-1ubuntu1.1
+libkrb5-3:arm64	1.19.2-2ubuntu0.10
+libkrb5support0:arm64	1.19.2-2ubuntu0.10
+libksba8:arm64	1.6.0-2ubuntu0.2
+liblcms2-2:arm64	2.12~rc1-2ubuntu0.1
+libldap-2.5-0:arm64	2.5.20+dfsg-0ubuntu0.22.04.1
+libldap-dev:arm64	2.5.20+dfsg-0ubuntu0.22.04.1
+libldap2-dev	2.5.20+dfsg-0ubuntu0.22.04.1
+libleatherman1.12.1:arm64	1.12.1+dfsg-1.2build1
+libllvm15:arm64	1:15.0.7-0ubuntu0.22.04.3
+liblqr-1-0:arm64	0.4.2-2.1
+liblsan0:arm64	12.3.0-1ubuntu1~22.04.3
+libltdl7:arm64	2.4.6-15build2
+liblua5.1-0:arm64	5.1.5-8.1build4
+liblz4-1:arm64	1.9.3-2build2
+liblzf1:arm64	3.6-3
+liblzma5:arm64	5.2.5-2ubuntu1.1
+libmagic-mgc	1:5.41-3ubuntu0.1
+libmagic1:arm64	1:5.41-3ubuntu0.1
+libmagickcore-6.q16-6:arm64	8:6.9.11.60+dfsg-1.3ubuntu0.22.04.5
+libmatio11:arm64	1.5.21-1
+libmd0:arm64	1.0.4-1build1
+libmount1:arm64	2.37.2-4ubuntu3.6
+libmpc3:arm64	1.2.1-2build1
+libmpdec3:arm64	2.5.1-2build2
+libmpfr6:arm64	4.1.0-3build3
+libmsgpackc2:arm64	3.3.0-4
+libncurses6:arm64	6.3-2ubuntu0.3
+libncursesw6:arm64	6.3-2ubuntu0.3
+libnettle8:arm64	3.7.3-1build2
+libnghttp2-14:arm64	1.43.0-1ubuntu0.4
+libnpth0:arm64	1.6-3build2
+libnsl-dev:arm64	1.3.0-2build2
+libnsl2:arm64	1.3.0-2build2
+libnspr4:arm64	2:4.35-0ubuntu0.22.04.1
+libnspr4-dev	2:4.35-0ubuntu0.22.04.1
+libnss3:arm64	2:3.98-0ubuntu0.22.04.4
+libnss3-dev:arm64	2:3.98-0ubuntu0.22.04.4
+libonig5:arm64	6.9.7.1-2build1
+libopenexr25:arm64	2.5.7-1
+libopenjp2-7:arm64	2.4.0-6ubuntu0.5
+libopenslide0	3.4.1+dfsg-5build1
+liborc-0.4-0:arm64	1:0.4.32-2ubuntu0.1
+libp11-kit-dev:arm64	0.24.0-6ubuntu0.1
+libp11-kit0:arm64	0.24.0-6ubuntu0.1
+libpam-modules:arm64	1.4.0-11ubuntu2.8
+libpam-modules-bin	1.4.0-11ubuntu2.8
+libpam-runtime	1.4.0-11ubuntu2.8
+libpam-systemd:arm64	249.11-0ubuntu3.22
+libpam0g:arm64	1.4.0-11ubuntu2.8
+libpango-1.0-0:arm64	1.50.6+ds-2ubuntu1
+libpangocairo-1.0-0:arm64	1.50.6+ds-2ubuntu1
+libpangoft2-1.0-0:arm64	1.50.6+ds-2ubuntu1
+libpcre2-8-0:arm64	10.39-3ubuntu0.1
+libpcre3:arm64	2:8.39-13ubuntu0.22.04.1
+libpcsclite1:arm64	1.9.5-3ubuntu1
+libperl5.34:arm64	5.34.0-3ubuntu1.9
+libpixman-1-0:arm64	0.40.0-1ubuntu0.22.04.1
+libpng16-16:arm64	1.6.37-3ubuntu0.6
+libpoppler-glib8:arm64	22.02.0-2ubuntu0.14
+libpoppler118:arm64	22.02.0-2ubuntu0.14
+libpopt0:arm64	1.18-3build1
+libpq-dev	18.6-1.pgdg22.04+2
+libpq5:arm64	18.6-1.pgdg22.04+2
+libprocps8:arm64	2:3.3.17-6ubuntu2.1
+libpsl5:arm64	0.21.0-1.2build2
+libpython3-dev:arm64	3.10.6-1~22.04.1
+libpython3-stdlib:arm64	3.10.6-1~22.04.1
+libpython3.10:arm64	3.10.12-1~22.04.18
+libpython3.10-dev:arm64	3.10.12-1~22.04.18
+libpython3.10-minimal:arm64	3.10.12-1~22.04.18
+libpython3.10-stdlib:arm64	3.10.12-1~22.04.18
+libreadline8:arm64	8.1.2-1
+librhash0:arm64	1.4.2-1ubuntu1
+librsvg2-2:arm64	2.52.5+dfsg-3ubuntu0.2
+librtmp1:arm64	2.4+20151223.gitfa8646d.1-2build4
+libruby3.0:arm64	3.0.2-7ubuntu2.13
+libsasl2-2:arm64	2.1.27+dfsg2-3ubuntu1.2
+libsasl2-dev	2.1.27+dfsg2-3ubuntu1.2
+libsasl2-modules-db:arm64	2.1.27+dfsg2-3ubuntu1.2
+libseccomp2:arm64	2.5.3-2ubuntu3~22.04.1
+libselinux1:arm64	3.3-1build2
+libsemanage-common	3.3-1build2
+libsemanage2:arm64	3.3-1build2
+libsensors-config	1:3.6.0-7ubuntu1
+libsensors5:arm64	1:3.6.0-7ubuntu1
+libsepol2:arm64	3.3-1build1
+libsimdjson9	1.0.2-2
+libsm6:arm64	2:1.2.3-1build2
+libsmartcols1:arm64	2.37.2-4ubuntu3.6
+libsqlite3-0:arm64	3.37.2-2ubuntu0.8
+libss2:arm64	1.46.5-2ubuntu1.2
+libssh-4:arm64	0.9.6-2ubuntu0.22.04.8
+libssl-dev:arm64	3.0.2-0ubuntu1.30
+libssl3:arm64	3.0.2-0ubuntu1.30
+libstdc++-11-dev:arm64	11.4.0-1ubuntu1~22.04.3
+libstdc++6:arm64	12.3.0-1ubuntu1~22.04.3
+libsystemd0:arm64	249.11-0ubuntu3.22
+libsz2:arm64	1.0.6-1
+libtasn1-6:arm64	4.18.0-4ubuntu0.2
+libtasn1-6-dev:arm64	4.18.0-4ubuntu0.2
+libtext-iconv-perl	1.7-7build3
+libthai-data	0.1.29-1build1
+libthai0:arm64	0.1.29-1build1
+libtiff5:arm64	4.3.0-6ubuntu0.13
+libtime-duration-perl	1.21-1
+libtimedate-perl	2.3300-2
+libtinfo6:arm64	6.3-2ubuntu0.3
+libtirpc-common	1.3.2-2ubuntu0.1
+libtirpc-dev:arm64	1.3.2-2ubuntu0.1
+libtirpc3:arm64	1.3.2-2ubuntu0.1
+libtsan0:arm64	11.4.0-1ubuntu1~22.04.3
+libubsan1:arm64	12.3.0-1ubuntu1~22.04.3
+libudev1:arm64	249.11-0ubuntu3.22
+libunbound8:arm64	1.13.1-1ubuntu5.16
+libunistring2:arm64	1.0-1
+libunwind8:arm64	1.3.2-2build2.1
+libuuid1:arm64	2.37.2-4ubuntu3.6
+libuv1:arm64	1.43.0-1ubuntu0.1
+libvips-tools	8.12.1-1build1
+libvips42:arm64	8.12.1-1build1
+libwayland-client0:arm64	1.20.0-1ubuntu0.1
+libwayland-cursor0:arm64	1.20.0-1ubuntu0.1
+libwayland-egl1:arm64	1.20.0-1ubuntu0.1
+libwayland-server0:arm64	1.20.0-1ubuntu0.1
+libwebp7:arm64	1.2.2-2ubuntu0.22.04.2
+libwebpdemux2:arm64	1.2.2-2ubuntu0.22.04.2
+libwebpmux3:arm64	1.2.2-2ubuntu0.22.04.2
+libwrap0:arm64	7.6.q-31build2
+libx11-6:arm64	2:1.7.5-1ubuntu0.3
+libx11-data	2:1.7.5-1ubuntu0.3
+libx11-xcb1:arm64	2:1.7.5-1ubuntu0.3
+libxau6:arm64	1:1.0.9-1build5
+libxaw7:arm64	2:1.0.14-1
+libxcb-dri2-0:arm64	1.14-3ubuntu3
+libxcb-dri3-0:arm64	1.14-3ubuntu3
+libxcb-glx0:arm64	1.14-3ubuntu3
+libxcb-present0:arm64	1.14-3ubuntu3
+libxcb-randr0:arm64	1.14-3ubuntu3
+libxcb-render0:arm64	1.14-3ubuntu3
+libxcb-shm0:arm64	1.14-3ubuntu3
+libxcb-sync1:arm64	1.14-3ubuntu3
+libxcb-xfixes0:arm64	1.14-3ubuntu3
+libxcb1:arm64	1.14-3ubuntu3
+libxcomposite1:arm64	1:0.4.5-1build2
+libxcursor1:arm64	1:1.2.0-2build4
+libxdamage1:arm64	1:1.1.5-2build2
+libxdmcp6:arm64	1:1.1.3-0ubuntu5
+libxext6:arm64	2:1.3.4-1build1
+libxfixes3:arm64	1:6.0.0-1
+libxfont2:arm64	1:2.0.5-1ubuntu0.2
+libxi6:arm64	2:1.8-1build1
+libxinerama1:arm64	2:1.1.4-3
+libxkbcommon0:arm64	1.4.0-1
+libxkbfile1:arm64	1:1.1.0-1build3
+libxml2:arm64	2.9.13+dfsg-1ubuntu0.13
+libxml2-dev:arm64	2.9.13+dfsg-1ubuntu0.13
+libxmlsec1:arm64	1.2.33-1build2
+libxmlsec1-dev	1.2.33-1build2
+libxmlsec1-gcrypt:arm64	1.2.33-1build2
+libxmlsec1-gnutls:arm64	1.2.33-1build2
+libxmlsec1-nss:arm64	1.2.33-1build2
+libxmlsec1-openssl:arm64	1.2.33-1build2
+libxmu6:arm64	2:1.1.3-3
+libxmuu1:arm64	2:1.1.3-3
+libxpm4:arm64	1:3.5.12-1ubuntu0.22.04.4
+libxrandr2:arm64	2:1.5.2-1build1
+libxrender1:arm64	1:0.9.10-1build4
+libxshmfence1:arm64	1.3-1build4
+libxslt1-dev:arm64	1.1.34-4ubuntu0.22.04.5
+libxslt1.1:arm64	1.1.34-4ubuntu0.22.04.5
+libxss1:arm64	1:1.2.3-1build2
+libxt6:arm64	1:1.2.1-1
+libxxf86vm1:arm64	1:1.1.4-1build3
+libxxhash0:arm64	0.8.1-1
+libyaml-0-2:arm64	0.2.2-1build2
+libyaml-cpp0.7:arm64	0.7.0+dfsg-8build1
+libyaml-dev:arm64	0.2.2-1build2
+libzstd1:arm64	1.4.8+dfsg-3build1
+linux-libc-dev:arm64	5.15.0-198.208
+locales	2.35-0ubuntu3.15
+login	1:4.8.1-2ubuntu2.2
+logrotate	3.19.0-1ubuntu1.1
+logsave	1.46.5-2ubuntu1.2
+lsb-base	11.1.0ubuntu4
+lto-disabled-list	24
+lua-bitop:arm64	1.0.2-5
+lua-cjson:arm64	2.1.0+dfsg-2.1
+make	4.3-4.1build1
+mawk	1.3.4.20200120-3
+media-types	7.0.0
+memcached	1.6.14-1ubuntu0.3
+moreutils	0.66-1
+mount	2.37.2-4ubuntu3.6
+ncurses-base	6.3-2ubuntu0.3
+ncurses-bin	6.3-2ubuntu0.3
+netbase	6.3
+nettle-dev:arm64	3.7.3-1build2
+openjdk-17-jre-headless:arm64	17.0.20.1+1-1~22.04
+openssl	3.0.2-0ubuntu1.30
+passwd	1:4.8.1-2ubuntu2.2
+patch	2.7.6-7build2
+perl	5.34.0-3ubuntu1.9
+perl-base	5.34.0-3ubuntu1.9
+perl-modules-5.34	5.34.0-3ubuntu1.9
+pinentry-curses	1.1.1-1build2
+pkg-config	0.29.2-1ubuntu3
+postgresql-14	14.24-1.pgdg22.04+2
+postgresql-14-pgroonga	4.0.9-1.ubuntu22.04.1
+postgresql-client-14	14.24-1.pgdg22.04+2
+postgresql-client-common	293.pgdg22.04+1
+postgresql-common	293.pgdg22.04+1
+procps	2:3.3.17-6ubuntu2.1
+puppet	5.5.22-4ubuntu0.2
+puppet-lint	2.4.2-2
+python3	3.10.6-1~22.04.1
+python3-dev	3.10.6-1~22.04.1
+python3-distlib	0.3.4-1
+python3-distutils	3.10.8-1~22.04
+python3-filelock	3.6.0-1
+python3-iniparse	0.4-3
+python3-lib2to3	3.10.8-1~22.04
+python3-minimal	3.10.6-1~22.04.1
+python3-pip	22.0.2+dfsg-1ubuntu0.7
+python3-pip-whl	22.0.2+dfsg-1ubuntu0.7
+python3-pkg-resources	59.6.0-1.2ubuntu0.22.04.3
+python3-platformdirs	2.5.1-1
+python3-setuptools	59.6.0-1.2ubuntu0.22.04.3
+python3-setuptools-whl	59.6.0-1.2ubuntu0.22.04.3
+python3-six	1.16.0-3ubuntu1
+python3-virtualenv	20.13.0+ds-2
+python3-wheel	0.37.1-2ubuntu0.22.04.1
+python3-wheel-whl	0.37.1-2ubuntu0.22.04.1
+python3.10	3.10.12-1~22.04.18
+python3.10-dev	3.10.12-1~22.04.18
+python3.10-minimal	3.10.12-1~22.04.18
+rabbitmq-server	3.9.27-0ubuntu0.5
+rake	13.0.6-2
+readline-common	8.1.2-1
+redis-server	5:6.0.16-1ubuntu1.2
+redis-tools	5:6.0.16-1ubuntu1.2
+rpcsvc-proto	1.4.2-0ubuntu6
+ruby	1:3.0~exp1
+ruby-augeas	1:0.5.0-3build9
+ruby-deep-merge	1.1.1-1
+ruby-net-telnet	0.1.1-2
+ruby-rbtree	0.4.4-1build2
+ruby-rubygems	3.3.5-2ubuntu1.2
+ruby-shadow	2.5.0+gh-1build2
+ruby-sorted-set	1.0.3-3
+ruby-webrick	1.7.0-3ubuntu0.2
+ruby-xmlrpc	0.3.2-1ubuntu0.1
+ruby3.0	3.0.2-7ubuntu2.13
+rubygems-integration	1.18
+sed	4.8-1ubuntu2.1
+sensible-utils	0.0.17
+shared-mime-info	2.1-2
+socat	1.7.4.1-3ubuntu4
+ssl-cert	1.1.2
+sudo	1.9.9-1ubuntu2.7
+supervisor	4.2.1-1ubuntu1
+systemd	249.11-0ubuntu3.22
+systemd-sysv	249.11-0ubuntu3.22
+sysvinit-utils	3.01-1ubuntu1
+tar	1.34+dfsg-1ubuntu0.1.22.04.6
+tzdata	2026c-0ubuntu0.22.04.1
+ubuntu-keyring	2021.03.26
+ubuntu-mono	20.10-0ubuntu2
+ucf	3.0043
+unzip	6.0-26ubuntu3.2
+usrmerge	25ubuntu2
+util-linux	2.37.2-4ubuntu3.6
+virtualenv	20.13.0+ds-2
+x11-common	1:7.7+23ubuntu2
+x11-xkb-utils	7.7+5build4
+xauth	1:1.1-1build2
+xdg-utils	1.1.3-4.1ubuntu3~22.04.1
+xkb-data	2.33-1
+xserver-common	2:21.1.4-2ubuntu1.7~22.04.16
+xvfb	2:21.1.4-2ubuntu1.7~22.04.16
+xz-utils	5.2.5-2ubuntu1.1
+zlib1g:arm64	1:1.2.11.dfsg-2ubuntu9.2
+zlib1g-dev:arm64	1:1.2.11.dfsg-2ubuntu9.2
+/var/run/postgresql:5432 - accepting connections
+
+EXIT_CODE=0

@@ -1,0 +1,24 @@
+$ git -C /tmp/codekick-zulip-oracles.JS2a2B/repo show --no-patch --format=raw dfad942eb931c3df75c9479856603ac610d97795
+commit dfad942eb931c3df75c9479856603ac610d97795
+tree bfb44481deb7a40b6a9c18cdb988f6be8731f793
+parent e3de6394b0dc45288286366bd10acff5a7a08fa2
+author santhoshkumarCodes <santhoshkumartechsavvy@gmail.com> 1766673315 +0530
+committer Prakhar Pratyush <prakhar@zulip.com> 1790263069 +0530
+
+    message_edit: Handle visibility policies for partial moves.
+    
+    We previously updated topic visibility policies only when all
+    the messages from a topic is moved.
+    
+    However, when only a subset of messages are moved (partial move),
+    we should only update policies for users who are participants of
+    the moved messages. We remove the visibility policy of orig_topic
+    in case of full move, but in case of partial move we should not do it.
+    
+    This commit adds a filter and also a condition to not touch the
+    visibility policy of the orig_topic when updating the visibility
+    policies on partial move.
+    
+    Fixes #35224.
+
+EXIT_CODE=0

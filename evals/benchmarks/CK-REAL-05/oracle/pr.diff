@@ -1,0 +1,79 @@
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index 721bf33e57db..e5b3cc600bd9 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -109,16 +109,15 @@ def __iter__(self):
+             (
+                 field,
+                 related_objs,
+-                operator.attrgetter(
+-                    *[
+-                        (
+-                            field.attname
+-                            if from_field == "self"
+-                            else queryset.model._meta.get_field(from_field).attname
+-                        )
+-                        for from_field in field.from_fields
+-                    ]
+-                ),
++                attnames := [
++                    (
++                        field.attname
++                        if from_field == "self"
++                        else queryset.model._meta.get_field(from_field).attname
++                    )
++                    for from_field in field.from_fields
++                ],
++                operator.attrgetter(*attnames),
+             )
+             for field, related_objs in queryset._known_related_objects.items()
+         ]
+@@ -133,10 +132,14 @@ def __iter__(self):
+                     setattr(obj, attr_name, row[col_pos])
+ 
+             # Add the known related objects to the model.
+-            for field, rel_objs, rel_getter in known_related_objects:
++            for field, rel_objs, rel_attnames, rel_getter in known_related_objects:
+                 # Avoid overwriting objects loaded by, e.g., select_related().
+                 if field.is_cached(obj):
+                     continue
++                # Avoid fetching potentially deferred attributes that would
++                # result in unexpected queries.
++                if any(attname not in obj.__dict__ for attname in rel_attnames):
++                    continue
+                 rel_obj_id = rel_getter(obj)
+                 try:
+                     rel_obj = rel_objs[rel_obj_id]
+diff --git a/tests/defer/tests.py b/tests/defer/tests.py
+index c0968080b162..540eaa4a75c4 100644
+--- a/tests/defer/tests.py
++++ b/tests/defer/tests.py
+@@ -47,9 +47,9 @@ def test_only(self):
+         # of them except the model's primary key see #15494
+         self.assert_delayed(qs.only("pk")[0], 3)
+         # You can use 'pk' with reverse foreign key lookups.
+-        # The related_id is always set even if it's not fetched from the DB,
+-        # so pk and related_id are not deferred.
+-        self.assert_delayed(self.s1.primary_set.only("pk")[0], 2)
++        # The related_id is not set if it's not fetched from the DB,
++        # so pk is not deferred, but related_id is.
++        self.assert_delayed(self.s1.primary_set.only("pk")[0], 3)
+ 
+     def test_defer_only_chaining(self):
+         qs = Primary.objects.all()
+@@ -82,6 +82,15 @@ def test_only_none_raises_error(self):
+         with self.assertRaisesMessage(TypeError, msg):
+             Primary.objects.only(None)
+ 
++    def test_only_related_manager_optimization(self):
++        s = Secondary.objects.create(first="one", second="two")
++        Primary.objects.bulk_create(
++            [Primary(name="p1", value="v1", related=s) for _ in range(5)]
++        )
++        with self.assertNumQueries(1):
++            for p in s.primary_set.only("pk"):
++                _ = p.pk
++
+     def test_defer_extra(self):
+         qs = Primary.objects.all()
+         self.assert_delayed(qs.defer("name").extra(select={"a": 1})[0], 1)

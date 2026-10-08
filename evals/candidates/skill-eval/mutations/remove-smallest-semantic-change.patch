@@ -1,0 +1,22 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index 0000000..0000000 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -65,16 +65,7 @@
+ 
+ ## 5. Smallest Semantic Change
+ 
+-优先修改真正拥有该业务规则的语义位置，而不是最容易打补丁的位置。
+-
+-原则：
+-
+-- 尽量少跨 conceptual boundary；
+-- 优先复用项目既有模式；
+-- 不做无关重构；
+-- 不顺手清理 unrelated code；
+-- 不因为“看起来更优雅”就扩大 API 或架构表面积；
+-- 如果调查中发现新结构导致原方案失效，先重新分析，再扩大修改范围。
++优先修改最容易打补丁的位置。
+ 
+ ## 6. Diff-Driven Verification
+ 

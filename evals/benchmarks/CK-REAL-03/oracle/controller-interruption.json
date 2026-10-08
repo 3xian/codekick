@@ -1,0 +1,6 @@
+{
+  "agent": "GiteaOracle",
+  "status": "failed (exit 1)",
+  "provider_error": "[openai-codex/gpt-6.1-sol] Codex error event: This content was flagged for possible cybersecurity risk. If this seems wrong, try rephrasing your request. If you\u2019re doing authorized security work that requires more cyber permissive safeguards, apply for Daybreak access via https://platform.openai.com/settings/organization/status-and-access before retrying. (code=cyber_policy)",
+  "action": "No retry, model substitution, security-setting change, or safety bypass performed. Existing artifacts preserved; no behavioral oracle constructed or replay run."
+}

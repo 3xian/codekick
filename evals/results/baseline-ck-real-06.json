@@ -1,0 +1,29 @@
+{
+  "task_id": "CK-REAL-06",
+  "kind": "baseline-actor-run",
+  "label": "baseline-ck-real-06",
+  "status": "COMPLETED_UNSCORED",
+  "violations": [],
+  "exit_code": 0,
+  "turn_completed": true,
+  "wall_time_seconds": 597.1,
+  "tool_items_completed": 21,
+  "tool_types_observed": ["command_execution", "file_change"],
+  "usage": {"input_tokens": 628748, "output_tokens": 11563, "reasoning_output_tokens": 6240, "cached_input_tokens": 579200},
+  "patch_sha256": "1758970b1ef6432ffec205e4561dc31496523118426f58ee6ca3d7cfe78a7a3e",
+  "production_files": ["django/contrib/admin/options.py"],
+  "hidden_tests": {
+    "passed": false,
+    "exit_code": 1,
+    "apply_mode": "production-files-only",
+    "tests_run": 6,
+    "failures": 2,
+    "failed": [
+      "admin_changelist.tests.ChangeListTests.test_exact_lookup_with_more_lenient_formfield",
+      "admin_changelist.tests.ChangeListTests.test_exact_lookup_validates_each_field_independently"
+    ],
+    "sql_shape_test_passed": true
+  },
+  "contamination_check": "No reference PR, ticket, oracle path, or reference SHA in the transcript.",
+  "note": "One baseline run. Hidden behavioral tests still fail. Not a Candidate A/B or product ACCEPT."
+}

@@ -1,0 +1,11 @@
+commit 040bb3eba72eb45020dd025d3f83094a0fcaf22f
+Author:     Samriddha9619 <sumitkumartripathi0@gmail.com>
+AuthorDate: Mon Jan 5 11:18:40 2026 +0530
+Commit:     Jacob Walls <jacobtylerwalls@gmail.com>
+CommitDate: Tue Jan 13 13:18:14 2026 -0500
+
+    Fixed #35442 -- Prevented N+1 queries in RelatedManager with only().
+    
+    Co-authored-by: Simon Charette <charette.s@gmail.com>
+
+Verified parent: 73c5e94521c5b97e27cd2fe2d5b5c2e65f402755

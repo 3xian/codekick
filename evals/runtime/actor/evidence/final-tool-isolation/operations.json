@@ -1,0 +1,1 @@
+{"smoke": ["python3", "-c", "import pathlib,socket; print(\"LINUX_CONTAINER_SMOKE_OK\"); print(pathlib.Path(\"visible.txt\").read_text().strip()); s=socket.socket(); s.bind((\"127.0.0.1\",0)); s.listen(1); print(\"LOCAL_TEST_BIND_OK\"); s.close()"]}

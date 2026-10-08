@@ -1,0 +1,100 @@
+{
+  "task_id": "CK-REAL-04",
+  "repository": "https://github.com/discourse/discourse.git",
+  "language": "Ruby",
+  "class": "bugfix",
+  "controller_baseline_sha": "63afb2c9258bff513da51f7f0b3a9735b58de64b",
+  "reference_pr": 36935,
+  "reference_sha": "ae0188e7d41a693626f1413275694309198ed75f",
+  "verified_parent_sha": "ffbf6cb8837e9e8d5012f6e215ff035fa11e8c8e",
+  "reference_identity_evidence": "oracle/logs/reference-identity.log",
+  "reference_metadata": [
+    "oracle/pull-request.json",
+    "oracle/reference-commit.json"
+  ],
+  "status": "REPLAY_VERIFIED",
+  "valid": true,
+  "actor_input": "task.md",
+  "hidden_oracle": {
+    "test_only_patch": "oracle/regression.patch",
+    "full_reference_diff": "oracle/reference.patch",
+    "must_not_expose": [
+      "oracle/",
+      "manifest.json"
+    ],
+    "actor_isolation": "NOT_ESTABLISHED; controller storage only; no actor launch authorized"
+  },
+  "commands": {
+    "prepare_pre_fix": "git worktree add --detach /tmp/ck-real-04.ShZwzV/pre-fix ffbf6cb8837e9e8d5012f6e215ff035fa11e8c8e",
+    "prepare_post_fix": "git worktree add --detach /tmp/ck-real-04.ShZwzV/post-fix ae0188e7d41a693626f1413275694309198ed75f",
+    "backport_test_only": "git apply /Users/mac/code/codekick/evals/benchmarks/CK-REAL-04/oracle/regression.patch",
+    "focused_replay": "bundle exec rspec spec/lib/post_destroyer_spec.rb --example 'deleting a last reply'",
+    "build_runtime": "evals/runtime/discourse/build-runtime.sh /path/to/clean-pre-export codekick-discourse-runtime:ck-real-04",
+    "provision_runtime": "pnpm install --offline --frozen-lockfile --store-dir /opt/codekick/pnpm-store && bundle _2.6.4_ exec rake db:create db:migrate"
+  },
+  "temporary_repository": "/tmp/ck-real-04.ShZwzV/repository",
+  "temporary_checkouts": {
+    "pre_fix": "/tmp/ck-real-04.ShZwzV/pre-fix",
+    "post_fix": "/tmp/ck-real-04.ShZwzV/post-fix"
+  },
+  "replay": {
+    "pre-fix": {
+      "status": "FAIL",
+      "exit_code": 1,
+      "log": "oracle/logs/pre-fix-replay.log",
+      "assertions_observed": true,
+      "examples": 6,
+      "failures": 2,
+      "seed": 19648,
+      "container": "codekick-discourse-pre"
+    },
+    "post-fix": {
+      "status": "PASS",
+      "exit_code": 0,
+      "log": "oracle/logs/post-fix-replay.log",
+      "assertions_observed": true,
+      "examples": 6,
+      "failures": 0,
+      "seed": 1533,
+      "container": "codekick-discourse-post"
+    }
+  },
+  "evidence_paths": [
+    "oracle/logs/reference-identity.log",
+    "oracle/logs/pre-fix-checkout.log",
+    "oracle/logs/post-fix-checkout.log",
+    "oracle/logs/test-backport.log",
+    "oracle/logs/dependency-inspection.log",
+    "oracle/logs/pre-fix-replay.log",
+    "oracle/logs/post-fix-replay.log",
+    "oracle/logs/alternate-runtime-inspection.log",
+    "oracle/runtime-requirements.json",
+    "oracle/logs/docker-runtime-build.log",
+    "oracle/logs/docker-pre-start.log",
+    "oracle/logs/docker-post-start.log",
+    "oracle/logs/docker-pre-provision.log",
+    "oracle/logs/docker-post-provision.log",
+    "oracle/logs/docker-environment.log",
+    "oracle/logs/docker-bootstrap.log"
+  ],
+  "blocker": null,
+  "required_prerequisite": "Pinned native linux/arm64 discourse runtime; see oracle/runtime-requirements.json. Actor isolation and fresh freeze remain Main-owned gates, not replay blockers.",
+  "assertion_fail_pass_observed": true,
+  "runtime": {
+    "image": "codekick-discourse-runtime@sha256:21bc22f7bdb880c4523add767ea17e2fa83f9e6a70d1781da720e515b8ff5021",
+    "platform": "linux/arm64",
+    "network": "none",
+    "memory": "3g",
+    "cpus": 2,
+    "recipe": "evals/runtime/discourse/",
+    "freeze_refresh_required": true,
+    "application_database": "Real discourse_test database created and migrated using native rake db:create db:migrate; no copied-function oracle or fake state."
+  },
+  "candidate_implementation_created": false,
+  "artifact_sha256": {
+    "oracle/regression.patch": "05dc1894b7a489aed43315b82464cda1e0a56705eb79e3dbf162548de1ecddb8",
+    "oracle/reference.patch": "10d037d8c8460d62998c20c43b90d6ef13c0f4e0a4d748a9caa6b79c928f62ba",
+    "oracle/pull-request.json": "9610fd225510a57128be9f811db463e64def1e32a6b6f3a23379838dc18c6e98",
+    "oracle/reference-commit.json": "3ac5bc71b6b78ebd9a43905492c8f6325deb11f597de6dd0e6c22bd5ddd2f80b"
+  }
+}

@@ -1,0 +1,4 @@
+$ docker exec -u vagrant -w /workspace codekick-zulip01-pre-final .venv/bin/python tools/test-backend --parallel=1 zerver.tests.test_users.PermissionTest.test_not_allowed_format
+Error response from daemon: No such container: codekick-zulip01-pre-final
+
+EXIT_CODE=1

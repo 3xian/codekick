@@ -1,0 +1,33 @@
+#!/usr/bin/ruby --disable-gems
+require 'json'
+require 'securerandom'
+require 'base64'
+if ARGV == ['--help']
+  puts 'usage: ./codekick-test OPERATION [SELECTOR]'
+  puts 'OPERATION is a public native test/build operation configured by Controller.'
+  puts 'SELECTOR is one string chosen by Actor, never an arbitrary command or argv.'
+  puts 'Go: workspace-relative package, optionally followed by ::test-regex.'
+  puts 'Django: native dotted test identifier. RSpec: relative spec path or native example selector.'
+  puts 'Absolute paths, traversal, hidden paths and symlink escapes are rejected by Controller.'
+  exit 0
+end
+abort('usage: ./codekick-test <fixed-operation-id> [native-test-selector]') unless (1..2).cover?(ARGV.length) && ARGV[0].match?(/\A[a-z][a-z0-9_-]{0,40}\z/)
+root = File.dirname(File.realpath(__FILE__))
+id = SecureRandom.hex(16)
+requests = File.join(root, '.codekick-runtime', 'requests')
+responses = File.join(root, '.codekick-runtime', 'responses')
+request = File.join(requests, id + '.json')
+response = File.join(responses, id + '.json')
+payload = {operation: ARGV[0]}
+payload[:selector] = ARGV[1] if ARGV.length == 2
+File.open(request + '.tmp', File::WRONLY | File::CREAT | File::EXCL, 0600) { |f| f.write(JSON.generate(payload)) }
+File.rename(request + '.tmp', request)
+deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + 960
+until File.file?(response)
+  abort('BLOCKED: Controller test dispatcher did not respond') if Process.clock_gettime(Process::CLOCK_MONOTONIC) >= deadline
+  sleep 0.1
+end
+result = JSON.parse(File.read(response))
+STDOUT.write(Base64.strict_decode64(result.fetch('stdout_base64')))
+STDERR.write(Base64.strict_decode64(result.fetch('stderr_base64')))
+exit(result.fetch('exit_code'))

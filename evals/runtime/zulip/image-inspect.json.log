@@ -1,0 +1,55 @@
+$ docker image inspect sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5
+[
+    {
+        "Architecture": "arm64",
+        "Config": {
+            "Cmd": [
+                "/bin/systemctl"
+            ],
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "LC_ALL=C.UTF-8",
+                "ERL_FLAGS=+S 2:2",
+                "RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=+S 2:2"
+            ],
+            "Labels": {
+                "desktop.docker.io/mounts/0/Source": "/tmp/codekick-zulip-linux-20261008/CK-REAL-01/clean",
+                "desktop.docker.io/mounts/0/SourceKind": "hostFile",
+                "desktop.docker.io/mounts/0/Target": "/workspace",
+                "desktop.docker.io/ports.scheme": "v2",
+                "org.opencontainers.image.version": "22.04"
+            }
+        },
+        "Created": "2026-10-07T18:18:43.855215882Z",
+        "Descriptor": {
+            "digest": "sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5",
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "size": 1189
+        },
+        "Id": "sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5",
+        "Metadata": {
+            "LastTagTime": "2026-10-07T18:19:24.995989179Z"
+        },
+        "Os": "linux",
+        "Parent": "sha256:09cb478142f3e09650ceb8ee9aab474feb7bc5c5610ef467359f042077fbd5cc",
+        "RepoDigests": [
+            "codekick-zulip-runtime@sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5"
+        ],
+        "RepoTags": [
+            "codekick-zulip-runtime:20261008"
+        ],
+        "RootFS": {
+            "Layers": [
+                "sha256:244b24abb260690ae90ebdff115f11f95949aba6794a095c369c95b0dffebbea",
+                "sha256:1fdbf5850928fad11eed5f401f3eb53510742afdff3f2c85465e3876a282e277",
+                "sha256:e7e03092a5176dc31b2039d599861c1f652c8618d29e1df7daaa6bf28d386359",
+                "sha256:3ff07e024740828229d7aa2b6055e8e7ef39d16eb3c7b33b645c382f4dcd55f3"
+            ],
+            "Type": "layers"
+        },
+        "Size": 1263858356
+    }
+]
+
+EXIT_CODE=0

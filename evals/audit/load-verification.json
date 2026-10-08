@@ -1,0 +1,33 @@
+{
+  "cli": "codex-cli 0.161.0",
+  "binary": "/Users/mac/.npm/_npx/c8ab89660c602c20/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/bin/codex",
+  "ignore_rules_help": "Do not load user or project execpolicy .rules files",
+  "ignore_rules_does_not_document_agents_md": true,
+  "probe_workspace": "/tmp/codekick-load-probe",
+  "method": "codex debug prompt-input with a fresh CODEX_HOME and the actor feature flags. debug prompt-input rejects --ignore-rules and --ignore-user-config; those flags are exec-only. Fresh CODEX_HOME stands in for --ignore-user-config.",
+  "sentinel_agents_md": "CODEKICK_LOAD_SENTINEL_7f3a",
+  "sentinel_project_md": "CODEKICK_PROJECT_SENTINEL_1b8d",
+  "sentinel_skill": "CODEKICK_SKILL_SENTINEL_9c2e",
+  "fresh_home_skip_host_skill_discovery": {
+    "agents_md_injected": true,
+    "project_md_injected": false,
+    "workspace_skill_body_injected": false,
+    "workspace_skill_listed": false,
+    "bundled_system_skills_listed": true,
+    "bytes": 13617
+  },
+  "fresh_home_skill_discovery_enabled": {
+    "identical_to_skip_flag_output": true,
+    "bytes": 13617
+  },
+  "historical_actor_tool_reads": {
+    "ck01": ["PROJECT.md", "problem.md", "KNOWLEDGE.md", "AGENTS.md in a later combined command"],
+    "ck02": ["PROJECT.md", "AGENTS.md headings"],
+    "ck03": ["PROJECT.md", "problem.md", "KNOWLEDGE.md", "AGENTS.md"],
+    "ck04": ["PROJECT.md", "problem.md", "KNOWLEDGE.md", "AGENTS.md filename search only; no SKILL.md"],
+    "ck05": ["PROJECT.md", "problem.md", "KNOWLEDGE.md", "AGENTS.md"],
+    "ck06": ["PROJECT.md", "problem.md", "KNOWLEDGE.md", "AGENTS.md"],
+    "skill_md_reads": 0
+  },
+  "conclusion": "Workspace AGENTS.md is injected into the model-visible prompt under the actor feature flags. --ignore-rules is not an AGENTS.md switch. PROJECT.md and skills/ are not auto-injected; baseline actors read PROJECT.md and KNOWLEDGE.md with tools, and none opened SKILL.md. skip_host_skill_discovery did not change this probe's prompt. Baseline runs are not invalid for failure to load AGENTS.md. They are not evidence that skills were used."
+}

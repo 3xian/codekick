@@ -1,0 +1,4 @@
+$ docker create --name codekick-zulip-runtime-native-bootstrap --network none sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd
+7504b5693be1ae387f064cd34af42084d5bf10e0d2d4e62465996e5d3746a73e
+
+EXIT_CODE=0

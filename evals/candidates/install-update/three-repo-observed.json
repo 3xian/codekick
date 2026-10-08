@@ -1,0 +1,38 @@
+[
+  {
+    "repo": "django",
+    "head": "7f48e266a83110d62ffb4663d72c9e347db75a9b",
+    "manual_overwrote_agents": true,
+    "installer_preserved_agents": true,
+    "installer_preserved_knowledge": true,
+    "skills_installed": true,
+    "preserve_actions": [
+      "AGENTS.md",
+      ".ai/KNOWLEDGE.md"
+    ]
+  },
+  {
+    "repo": "gitea",
+    "head": "21cf3f774d22b8d7463339b1afb016fd0dee5508",
+    "manual_overwrote_agents": true,
+    "installer_preserved_agents": true,
+    "installer_preserved_knowledge": true,
+    "skills_installed": true,
+    "preserve_actions": [
+      "AGENTS.md",
+      ".ai/KNOWLEDGE.md"
+    ]
+  },
+  {
+    "repo": "discourse",
+    "head": "1ea80f2c4fd7717b8895d2d75c50215174aee706",
+    "manual_overwrote_agents": true,
+    "installer_preserved_agents": true,
+    "installer_preserved_knowledge": true,
+    "skills_installed": true,
+    "preserve_actions": [
+      "AGENTS.md",
+      ".ai/KNOWLEDGE.md"
+    ]
+  }
+]

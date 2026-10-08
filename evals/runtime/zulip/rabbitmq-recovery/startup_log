@@ -1,0 +1,127 @@
+2026-10-07 18:43:59.530145+00:00 [error] <0.145.0> Too short cookie string
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>     supervisor: {local,net_sup}
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>     errorContext: start_error
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>     reason: {"Too short cookie string",
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>              [{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>               {auth,init,1,[{file,"auth.erl"},{line,144}]},
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>               {gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>               {gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>               {proc_lib,init_p_do_apply,3,
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>                         [{file,"proc_lib.erl"},{line,226}]}]}
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>     offender: [{pid,undefined},
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>                {id,auth},
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>                {mfargs,{auth,start_link,[]}},
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>                {restart_type,permanent},
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>                {significant,false},
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>                {shutdown,2000},
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0>                {child_type,worker}]
+2026-10-07 18:43:59.541512+00:00 [error] <0.143.0> 
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0> 
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0> BOOT FAILED
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0> ===========
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0> Exception during startup:
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0> 
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0> error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_2300@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0> 
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0>     rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0>     rabbit_prelaunch_dist:setup/1, line 23
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0>     rabbit_prelaunch:do_run/0, line 115
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0>     rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0>     supervisor:do_start_child_i/3, line 414
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0>     supervisor:do_start_child/2, line 400
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0>     supervisor:-start_children/2-fun-0-/3, line 384
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0>     supervisor:children_map/4, line 1250
+2026-10-07 18:43:59.547890+00:00 [error] <0.130.0> 
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>   crasher:
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     initial call: auth:init/1
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     pid: <0.145.0>
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     registered_name: []
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     exception error: "Too short cookie string"
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>       in function  auth:init_no_setcookie/0 (auth.erl, line 293)
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>       in call from auth:init/1 (auth.erl, line 144)
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>       in call from gen_server:init_it/2 (gen_server.erl, line 423)
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>       in call from gen_server:init_it/6 (gen_server.erl, line 390)
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     ancestors: [net_sup,kernel_sup,<0.47.0>]
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     message_queue_len: 0
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     messages: []
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     links: [<0.143.0>]
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     dictionary: []
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     trap_exit: true
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     status: running
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     heap_size: 610
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     stack_size: 28
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>     reductions: 1678
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0>   neighbours:
+2026-10-07 18:43:59.541400+00:00 [error] <0.145.0> 
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>     supervisor: {local,rabbit_prelaunch_sup}
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>     errorContext: start_error
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>     reason: {badmatch,
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                 {error,
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                     {{shutdown,
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                          {failed_to_start_child,auth,
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                              {"Too short cookie string",
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                               [{auth,init_no_setcookie,0,
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                                    [{file,"auth.erl"},{line,293}]},
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                                {auth,init,1,[{file,"auth.erl"},{line,144}]},
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                                {gen_server,init_it,2,
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                                    [{file,"gen_server.erl"},{line,423}]},
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                                {gen_server,init_it,6,
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                                    [{file,"gen_server.erl"},{line,390}]},
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                                {proc_lib,init_p_do_apply,3,
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                                    [{file,"proc_lib.erl"},{line,226}]}]}}},
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                      {child,undefined,net_sup_dynamic,
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                          {erl_distribution,start_link,
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                              [[rabbit_prelaunch_2300@localhost,shortnames],
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                               false,net_sup_dynamic]},
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                          permanent,false,1000,supervisor,
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                          [erl_distribution]}}}}
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>     offender: [{pid,undefined},
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                {id,prelaunch},
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                {mfargs,{rabbit_prelaunch,run_prelaunch_first_phase,[]}},
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                {restart_type,transient},
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                {significant,false},
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                {shutdown,5000},
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0>                {child_type,worker}]
+2026-10-07 18:44:00.559301+00:00 [error] <0.130.0> 
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>   crasher:
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     initial call: application_master:init/4
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     pid: <0.128.0>
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     registered_name: []
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     exception exit: {{shutdown,
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                       {failed_to_start_child,prelaunch,
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                        {badmatch,
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                         {error,
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                          {{shutdown,
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                            {failed_to_start_child,auth,
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                             {"Too short cookie string",
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                              [{auth,init_no_setcookie,0,
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                                [{file,"auth.erl"},{line,293}]},
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                               {auth,init,1,[{file,"auth.erl"},{line,144}]},
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                               {gen_server,init_it,2,
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                                [{file,"gen_server.erl"},{line,423}]},
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                               {gen_server,init_it,6,
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                                [{file,"gen_server.erl"},{line,390}]},
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                               {proc_lib,init_p_do_apply,3,
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                                [{file,"proc_lib.erl"},{line,226}]}]}}},
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                           {child,undefined,net_sup_dynamic,
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                            {erl_distribution,start_link,
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                             [[rabbit_prelaunch_2300@localhost,shortnames],
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                              false,net_sup_dynamic]},
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                            permanent,false,1000,supervisor,
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                            [erl_distribution]}}}}}},
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>                      {rabbit_prelaunch_app,start,[normal,[]]}}
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>       in function  application_master:init/4 (application_master.erl, line 142)
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     ancestors: [<0.127.0>]
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     message_queue_len: 1
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     messages: [{'EXIT',<0.129.0>,normal}]
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     links: [<0.127.0>,<0.44.0>]
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     dictionary: []
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     trap_exit: true
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     status: running
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     heap_size: 610
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     stack_size: 28
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>     reductions: 220
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0>   neighbours:
+2026-10-07 18:44:00.560872+00:00 [error] <0.128.0> 
+2026-10-07 18:44:00.562252+00:00 [notice] <0.44.0> Application rabbitmq_prelaunch exited with reason: {{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_2300@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}
+{"Kernel pid terminated",application_controller,"{application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{\"Too short cookie string\",[{auth,init_no_setcookie,0,[{file,\"auth.erl\"},{line,293}]},{auth,init,1,[{file,\"auth.erl\"},{line,144}]},{gen_server,init_it,2,[{file,\"gen_server.erl\"},{line,423}]},{gen_server,init_it,6,[{file,\"gen_server.erl\"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,\"proc_lib.erl\"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_2300@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}}"}

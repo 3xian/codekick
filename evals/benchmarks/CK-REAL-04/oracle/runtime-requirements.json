@@ -1,0 +1,44 @@
+{
+  "ruby_Gemfile": "~> 3.3",
+  "ruby_lock": "3.3.1p55",
+  "bundler_lock": "2.6.4",
+  "database_adapter": "postgresql",
+  "documented_PostgreSQL": "13",
+  "documented_Redis": "7",
+  "observed_runtime": {
+    "platform": "linux/arm64",
+    "historical_devcontainer_image": "discourse/discourse_dev:20250930-0017",
+    "base_image": "discourse/discourse_dev@sha256:05a49b74da4d1252c6e571a2a3200ece5b8baa2757fe57626f712039ff4ea8e1",
+    "image": "codekick-discourse-runtime@sha256:21bc22f7bdb880c4523add767ea17e2fa83f9e6a70d1781da720e515b8ff5021",
+    "ruby": "3.3.8",
+    "bundler": "2.6.4",
+    "node": "22.20.0",
+    "pnpm": "9.15.5",
+    "postgresql": "15.14",
+    "redis": "7.0.15",
+    "gems": "Gemfile.lock; BUNDLE_FROZEN=true; BUNDLE_WITHOUT=development",
+    "javascript": "pnpm-lock.yaml; pnpm fetch --frozen-lockfile at build; pnpm install --offline --frozen-lockfile at provision"
+  },
+  "recipe": [
+    "evals/runtime/discourse/Dockerfile",
+    "evals/runtime/discourse/bootstrap.sh",
+    "evals/runtime/discourse/build-runtime.sh"
+  ],
+  "build": "evals/runtime/discourse/build-runtime.sh /path/to/clean-pre-export codekick-discourse-runtime:ck-real-04",
+  "launch_argv": [
+    "docker", "run", "-d", "--name", "codekick-discourse-TASK-RUN",
+    "--memory", "3g", "--cpus", "2", "--network", "none",
+    "--mount", "type=bind,source=/path/to/clean-workspace,target=/workspace",
+    "codekick-discourse-runtime@sha256:21bc22f7bdb880c4523add767ea17e2fa83f9e6a70d1781da720e515b8ff5021"
+  ],
+  "provision_argv": [
+    "docker", "exec", "codekick-discourse-TASK-RUN", "bash", "-lc",
+    "pnpm install --offline --frozen-lockfile --store-dir /opt/codekick/pnpm-store && bundle _2.6.4_ exec rake db:create db:migrate"
+  ],
+  "focused_test_argv": [
+    "bundle", "exec", "rspec", "spec/lib/post_destroyer_spec.rb", "--example", "deleting a last reply"
+  ],
+  "service_isolation": "Container-private PostgreSQL AF_UNIX /var/run/postgresql; Redis 127.0.0.1:6379. No published ports, no host data, no Docker socket. Container root bootstraps services; Controller runs fixed test argv. Actor receives only its clean workspace, not oracle/post-fix/.git with future objects.",
+  "source_isolation": "Runtime build context contains dependency manifests and vendor dependency patches only, not application sources, hidden oracle, Controller metadata, or git repository. Historical devcontainer image contains no /var/www/discourse source tree; environment evidence searches dependency/home/src paths for .git/post_destroyer source files.",
+  "freeze_change": "Supported runtime recipe and pinned dependency environment replace host BLOCKED recipe. Main must re-freeze recipe/runtime requirements and corrected command before any Actor runs. Original regression.patch and task.md unchanged."
+}

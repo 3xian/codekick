@@ -1,0 +1,22 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index 0000000..0000000 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -52,16 +52,7 @@
+ 
+ ## 4. Understand Before Edit
+ 
+-在修改陌生或业务关键代码之前，至少确认：
+-
+-- Current Behavior；
+-- Desired Behavior；
+-- Relevant Execution Path；
+-- Likely Change Point；
+-- Important Side Effects / Dependencies；
+-- Validation Strategy。
+-
+-如果其中任何一项仍然会实质影响方案，继续调查，不要直接修改。
++找到一个看起来相关的位置后可以直接修改，不必先确认当前行为、执行路径或副作用。
+ 
+ ## 5. Smallest Semantic Change
+ 

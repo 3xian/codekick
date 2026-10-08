@@ -1,0 +1,4 @@
+$ docker create --name codekick-zulip01-pre-recovered --network none --memory 3g --cpus 2 --mount type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/pre,target=/workspace sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd
+832b350820e0ba9792aa33b3fb04c02c0772c56f7bbe0bb5a5140346c5abb7ac
+
+EXIT_CODE=0

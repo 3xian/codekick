@@ -1,0 +1,21 @@
+{
+  "task_id": "CK-REAL-04",
+  "kind": "fresh-actor-after-interruption",
+  "label": "state-resume-ck-real-04",
+  "violations": [],
+  "wall_time_seconds": 284.9,
+  "tool_items_completed": 23,
+  "baseline_tools": 20,
+  "baseline_wall_seconds": 336.2,
+  "repeated_investigation": true,
+  "persistent_artifact_from_interrupted_run": false,
+  "hidden_tests": {
+    "passed": true,
+    "exit_code": 0,
+    "selector": "deleting a last reply",
+    "examples": 6,
+    "failures": 0,
+    "apply_mode": "production-files-only"
+  },
+  "note": "One resume. Hidden tests passed without a state file. Not a product change."
+}

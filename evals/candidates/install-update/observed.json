@@ -1,0 +1,19 @@
+{
+  "target_identity": "zulip parent checkout README copied into temp install target",
+  "zulip_readme_sha_matches": true,
+  "first_preserved_agents": true,
+  "second_agents_unchanged": true,
+  "second_skill_unchanged": true,
+  "partial_restored_skills": true,
+  "user_knowledge_still_present": true,
+  "repos_completed": [
+    "zulip-derived-temp"
+  ],
+  "repos_not_run": [
+    "gitea",
+    "discourse",
+    "django"
+  ],
+  "decision": "INCONCLUSIVE",
+  "reason": "One real-repo-derived target shows manual copy would overwrite user files while the installer preserves them. Four-repo fresh/upgrade/failure evidence is not complete, so this is not ACCEPT."
+}

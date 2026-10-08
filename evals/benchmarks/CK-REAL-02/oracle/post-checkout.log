@@ -1,0 +1,5 @@
+$ git -C /tmp/codekick-zulip-oracles.JS2a2B/repo worktree add --detach /tmp/codekick-zulip-oracles.JS2a2B/CK-REAL-02/post dfad942eb931c3df75c9479856603ac610d97795
+Preparing worktree (detached HEAD dfad942)
+HEAD is now at dfad942 message_edit: Handle visibility policies for partial moves.
+
+EXIT_CODE=0

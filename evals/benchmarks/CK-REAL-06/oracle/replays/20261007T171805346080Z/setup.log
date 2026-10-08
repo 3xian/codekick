@@ -1,0 +1,75 @@
+Command: ['/usr/bin/git', 'init', '--bare', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/repo']
+CWD: 'None'
+Initialized empty Git repository in /private/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/repo/
+
+Exit: 0
+Command: ['/usr/bin/git', '--git-dir=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/repo', 'fetch', '--depth=2', 'https://github.com/django/django.git', '4cecf3039586ea738afafb9a28c946bff42c37c1']
+CWD: 'None'
+From https://github.com/django/django
+ * branch            4cecf3039586ea738afafb9a28c946bff42c37c1 -> FETCH_HEAD
+
+Exit: 0
+Command: ['/usr/bin/git', '--git-dir=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/repo', 'rev-parse', '4cecf3039586ea738afafb9a28c946bff42c37c1']
+CWD: 'None'
+4cecf3039586ea738afafb9a28c946bff42c37c1
+
+Exit: 0
+Command: ['/usr/bin/git', '--git-dir=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/repo', 'rev-parse', '4cecf3039586ea738afafb9a28c946bff42c37c1^']
+CWD: 'None'
+b25bc2441827a31b5629e9f79ad7296b992648a2
+
+Exit: 0
+Command: ['/private/tmp/codekick-django.NJ981A/venv/bin/python', '-m', 'venv', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/venv']
+CWD: 'None'
+
+Exit: 0
+Command: ['/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/venv/bin/python', '-m', 'pip', 'install', '-r', '/Users/mac/code/codekick/evals/benchmarks/CK-REAL-06/oracle/requirements.lock']
+CWD: 'None'
+Collecting asgiref==3.12.1 (from -r /Users/mac/code/codekick/evals/benchmarks/CK-REAL-06/oracle/requirements.lock (line 1))
+  Using cached asgiref-3.12.1-py3-none-any.whl.metadata (9.4 kB)
+Collecting pillow==12.3.0 (from -r /Users/mac/code/codekick/evals/benchmarks/CK-REAL-06/oracle/requirements.lock (line 2))
+  Using cached pillow-12.3.0-cp312-cp312-macosx_11_0_arm64.whl.metadata (9.1 kB)
+Collecting sqlparse==0.6.0 (from -r /Users/mac/code/codekick/evals/benchmarks/CK-REAL-06/oracle/requirements.lock (line 3))
+  Using cached sqlparse-0.6.0-py3-none-any.whl.metadata (6.0 kB)
+Using cached asgiref-3.12.1-py3-none-any.whl (25 kB)
+Using cached pillow-12.3.0-cp312-cp312-macosx_11_0_arm64.whl (4.8 MB)
+Using cached sqlparse-0.6.0-py3-none-any.whl (50 kB)
+Installing collected packages: sqlparse, pillow, asgiref
+
+Successfully installed asgiref-3.12.1 pillow-12.3.0 sqlparse-0.6.0
+
+Exit: 0
+Command: ['/usr/bin/git', '--git-dir=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/repo', 'worktree', 'add', '--detach', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/pre', 'b25bc2441827a31b5629e9f79ad7296b992648a2']
+CWD: 'None'
+Preparing worktree (detached HEAD b25bc24)
+Updating files:  98% (6876/7013)
+Updating files:  99% (6943/7013)
+Updating files: 100% (7013/7013)
+Updating files: 100% (7013/7013), done.
+HEAD is now at b25bc24 Refs #36865 -- Added test for invalid value handling in admin changelist.
+
+Exit: 0
+Command: ['/usr/bin/git', '-C', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/pre', 'apply', '/Users/mac/code/codekick/evals/benchmarks/CK-REAL-06/oracle/regression-tests.patch']
+CWD: 'None'
+
+Exit: 0
+Command: ['/usr/bin/git', '-C', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/pre', 'diff', '--name-only']
+CWD: 'None'
+tests/admin_changelist/models.py
+tests/admin_changelist/tests.py
+
+Exit: 0
+Command: ['/usr/bin/git', '--git-dir=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/repo', 'worktree', 'add', '--detach', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/post', '4cecf3039586ea738afafb9a28c946bff42c37c1']
+CWD: 'None'
+Preparing worktree (detached HEAD 4cecf30)
+Updating files:  98% (6886/7013)
+Updating files:  99% (6943/7013)
+Updating files: 100% (7013/7013)
+Updating files: 100% (7013/7013), done.
+HEAD is now at 4cecf30 Fixed #36865 -- Removed casting from exact lookups in admin searches.
+
+Exit: 0
+Command: ['/usr/bin/git', '-C', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-8jogvw6f/post', 'diff', '--name-only']
+CWD: 'None'
+
+Exit: 0

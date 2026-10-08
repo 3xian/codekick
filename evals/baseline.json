@@ -1,0 +1,13 @@
+{
+  "baseline_codekick_commit": "63afb2c9258bff513da51f7f0b3a9735b58de64b",
+  "baseline_policy": "A is the recorded commit; B is that commit plus exactly one candidate delta. Untracked .venv/ and src/ are excluded and must not be modified.",
+  "core_tasks": ["CK-REAL-01", "CK-REAL-02", "CK-REAL-03", "CK-REAL-04", "CK-REAL-05", "CK-REAL-06"],
+  "candidate_status": "GATED_ON_PHASE_0",
+  "branch_policy": "Single branch; independent candidate commits or external experiment copies, never stacked candidate deltas.",
+  "holdout_selection_rule": "Before any candidate implementation: choose the most recent eligible merged bugfix preceding each core reference commit in the same repository, excluding core tasks, requiring a problem-only report and a regression oracle reproducible FAIL/PASS. Freeze the chosen task before exposing candidate outcomes; keep task identity controller-only until confirmation.",
+  "observed_runtime_constraints": [
+    "codex, podman, uv, and go were not found by command -v",
+    "docker CLI is installed but docker info cannot connect to the daemon",
+    "GitHub git transport is available"
+  ]
+}

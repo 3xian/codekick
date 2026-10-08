@@ -1,0 +1,17 @@
+{
+  "task_id": "CK-REAL-04",
+  "kind": "interruption-before-edit",
+  "label": "state-interrupt-ck-real-04",
+  "status": "BLOCKED",
+  "timeout": true,
+  "exit_code": -15,
+  "wall_time_seconds": 180.0,
+  "tool_items_completed": 11,
+  "file_changes": 0,
+  "task_artifact_written": false,
+  "workspace_dirty": false,
+  "violations": [],
+  "contamination_check": "No reference PR or merge SHA. reset_bumped_at strings came from reading app/models/post.rb, not from the problem file.",
+  "reached": "Read PostDestroyer, topic bump helpers, and the destroyer spec, then invoked the mailbox test. No production edit.",
+  "resume": "Fresh Actor started on the same unchanged workspace. It cannot read the interrupted transcript."
+}

@@ -1,0 +1,21 @@
+{
+  "task_id": "CK-REAL-03",
+  "kind": "skill-mutation-actor-run",
+  "mutation": "remove-diff-driven-verification",
+  "label": "skill-mutation-verify-ck-real-03",
+  "violations": [],
+  "candidate_delta_sha256": "2c31e7b02d94faaa51d214a419f6cf0be5ab3c744abb2b6078a88df1285bbb1f",
+  "wall_time_seconds": 496.6,
+  "tool_items_completed": 24,
+  "hidden_tests": {
+    "passed": true,
+    "exit_code": 0,
+    "apply_mode": "production-files-only",
+    "tests": ["TestCodeKickGitlabHistoricalReleaseMigration", "TestAwardsToReactions"]
+  },
+  "baseline_hidden_tests": "PASS once",
+  "outcome_worse": false,
+  "process_signals_vs_baseline": "same: no production edit before the relative path appeared in a command; a mailbox test ran after the last production edit",
+  "contamination_check": "No reference PR, oracle path, or reference SHA. github.com strings are existing testify imports in test files.",
+  "note": "One mutation run. Hidden tests still passed and the recorded process signals did not move. Not a product change and not an ACCEPT."
+}

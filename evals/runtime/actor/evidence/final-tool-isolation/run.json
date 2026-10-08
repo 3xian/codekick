@@ -1,0 +1,250 @@
+{
+  "actor_input_tree_sha256": "c62664649006b53608a49c8af2698a35035b6a2945c76eff73decc3e25f29e88",
+  "actor_start_commit": "c203b5f698bb748b5450a8ea6b9853dd2e742ae6",
+  "candidate_delta_sha256": null,
+  "command": [
+    "/Users/mac/.npm/_npx/c8ab89660c602c20/node_modules/.bin/codex",
+    "exec",
+    "--ephemeral",
+    "--ignore-user-config",
+    "--ignore-rules",
+    "--json",
+    "--color",
+    "never",
+    "-m",
+    "gpt-6.1-sol",
+    "-C",
+    "/private/tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/workspace",
+    "-c",
+    "model_reasoning_effort=\"high\"",
+    "-c",
+    "web_search=\"disabled\"",
+    "-c",
+    "approval_policy=\"never\"",
+    "-c",
+    "default_permissions=\"codekick-actor\"",
+    "-c",
+    "permissions.codekick-actor.filesystem={\":minimal\"=\"read\",\":workspace_roots\"={\".\"=\"write\"},\"/Users/mac/code/codekick\"=\"deny\",\"/private/tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/actor-evidence\"=\"deny\",\"/Users/mac/.codex\"=\"deny\",\"/tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/controller\"=\"deny\",\"/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-auth-57b13e93a39143c598ddcf3c2e4ad7d9xxlk95sn\"=\"deny\",\"/tmp\"=\"deny\",\"/private/tmp\"=\"deny\",\"/var/folders\"=\"deny\",\"/private/var/folders\"=\"deny\"}",
+    "-c",
+    "permissions.codekick-actor.network.enabled=false",
+    "-c",
+    "shell_environment_policy.inherit=\"none\"",
+    "-c",
+    "shell_environment_policy.set={PATH=\"/usr/bin:/bin:/usr/sbin:/sbin\"}",
+    "-c",
+    "features.skip_host_skill_discovery=true",
+    "-c",
+    "features.apps=false",
+    "-c",
+    "features.browser_use=false",
+    "-c",
+    "features.browser_use_external=false",
+    "-c",
+    "features.computer_use=false",
+    "-c",
+    "features.image_generation=false",
+    "-c",
+    "features.hooks=false",
+    "-c",
+    "features.plugins=false",
+    "-c",
+    "features.remote_plugin=false",
+    "-c",
+    "features.memories=false",
+    "-c",
+    "features.multi_agent=false",
+    "-c",
+    "features.multi_agent_v2=false",
+    "-c",
+    "features.skill_search=false",
+    "-c",
+    "features.skill_mcp_dependency_install=false",
+    "-c",
+    "features.guardian_conversation_history_tools=false",
+    "-c",
+    "features.agent_message_board=false",
+    "-"
+  ],
+  "config": {
+    "additional_denied_paths": [
+      "/tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/controller"
+    ],
+    "approval_policy": "never",
+    "cli_version": "codex-cli 0.161.0",
+    "direct_external_network": false,
+    "disabled_features": [
+      "apps",
+      "browser_use",
+      "browser_use_external",
+      "computer_use",
+      "image_generation",
+      "hooks",
+      "plugins",
+      "remote_plugin",
+      "memories",
+      "multi_agent",
+      "multi_agent_v2",
+      "skill_search",
+      "skill_mcp_dependency_install",
+      "guardian_conversation_history_tools",
+      "agent_message_board"
+    ],
+    "ephemeral": true,
+    "filesystem": "minimal-read, active-workspace-write, explicit-controller-deny",
+    "host_temp_denials": [
+      "/tmp",
+      "/private/tmp",
+      "/var/folders",
+      "/private/var/folders"
+    ],
+    "ignore_rules": true,
+    "ignore_user_config": true,
+    "model": "gpt-6.1-sol",
+    "network": "Actor tools denied; native test services available only through fixed-operation mailbox in network-none container",
+    "reasoning_effort": "high",
+    "shell_environment_inherit": "none",
+    "shell_path": "/usr/bin:/bin:/usr/sbin:/sbin",
+    "skip_host_skill_discovery": true,
+    "test_backend": "Controller file-mailbox Docker dispatcher",
+    "tool_budget": "UNBOUNDED",
+    "wall_time_budget_seconds": 900,
+    "web_search": "disabled"
+  },
+  "config_sha256": "c223c602330e09ca011d107a118581570832c3dec46651adac9421ac85fc131a",
+  "environment": {
+    "backend": "native-macos-with-isolated-linux-test-mailbox"
+  },
+  "exit_code": 0,
+  "files_read": "UNKNOWN",
+  "invalid_jsonl_lines": [],
+  "kind": "benign-isolation-probe",
+  "label": "synthetic-final-isolation-tool-probe",
+  "mailbox_smoke_observed": true,
+  "patch_sha256": "2808ce2e6408943f1488401cfcce61bc199c6a91df4a380b9079bb53e45eba9c",
+  "probe_isolation_verified": true,
+  "probe_original_input_sha256": {
+    "codekick-test": "74cd54e8ed08e9329b2677f120b6dee54cea6579cde1b06f00af4a01e154273e",
+    "probe-paths.json": "cd858599ea9c023ec6b8e9c1de09430c499f50f62d9f5640a7eb77bd9c445615",
+    "probe.rb": "37804fe6052dbfa467a9f4e83c0deec64dc2524f85f8e451a6e76dedf8f366f4",
+    "visible.txt": "0eafc00d266ac879bc6d7cceeef1ed094718e6b6efa514695a8d8c4485c36b6f"
+  },
+  "probe_program_stdout": {
+    "direct_external_ip": {
+      "errno": 1,
+      "error": "Operation not permitted - connect(2) for 1.1.1.1:443",
+      "status": "DENIED"
+    },
+    "external_github": {
+      "class": "SocketError",
+      "error": "getaddrinfo: nodename nor servname provided, or not known",
+      "status": "UNVERIFIED"
+    },
+    "symlink_traversal": {
+      "errno": 1,
+      "error": "Operation not permitted @ rb_sysopen - escape.txt",
+      "status": "DENIED"
+    },
+    "synthetic_controller": {
+      "errno": 1,
+      "error": "Operation not permitted @ rb_sysopen - /tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/controller/hidden.txt",
+      "status": "DENIED"
+    },
+    "synthetic_other_host": {
+      "errno": 1,
+      "error": "Operation not permitted @ rb_sysopen - /tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/outside.txt",
+      "status": "DENIED"
+    },
+    "workspace_read": "ACTOR_VISIBLE_SENTINEL",
+    "workspace_write": "ACTOR_TOOL_WRITE_OK"
+  },
+  "probe_results": {
+    "direct_external_ip": {
+      "errno": 1,
+      "error": "Operation not permitted - connect(2) for 1.1.1.1:443",
+      "status": "DENIED"
+    },
+    "external_github": {
+      "class": "SocketError",
+      "error": "getaddrinfo: nodename nor servname provided, or not known",
+      "status": "UNVERIFIED"
+    },
+    "symlink_traversal": {
+      "errno": 1,
+      "error": "Operation not permitted @ rb_sysopen - escape.txt",
+      "status": "DENIED"
+    },
+    "synthetic_controller": {
+      "errno": 1,
+      "error": "Operation not permitted @ rb_sysopen - /tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/controller/hidden.txt",
+      "status": "DENIED"
+    },
+    "synthetic_other_host": {
+      "errno": 1,
+      "error": "Operation not permitted @ rb_sysopen - /tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/outside.txt",
+      "status": "DENIED"
+    },
+    "workspace_read": "ACTOR_VISIBLE_SENTINEL",
+    "workspace_write": "ACTOR_TOOL_WRITE_OK"
+  },
+  "prompt_sha256": "c1fbbf0acb45c272206cf1bf4c635fb96e00b244b7c951f0ace49aade9eec942",
+  "source": {
+    "codekick_archive_sha256": "f5623fda4ffd5fee3900cc6af01ce5a5392ead8adba049e1e7fa3ae291a23bb3",
+    "codekick_commit": "63afb2c9258bff513da51f7f0b3a9735b58de64b",
+    "codekick_paths": [
+      ".ai/KNOWLEDGE.md",
+      ".ai/PROJECT.md",
+      ".ai/tasks/README.md",
+      ".gitignore",
+      "AGENTS.md",
+      "LICENSE",
+      "QUICKSTART.md",
+      "README.md",
+      "examples/JIRA-1234.example.md",
+      "examples/KNOWLEDGE.example.md",
+      "examples/PROJECT.example.md",
+      "scripts/new-task.py",
+      "skills/bootstrap/SKILL.md",
+      "skills/change/SKILL.md",
+      "skills/understand/SKILL.md",
+      "skills/verify/SKILL.md",
+      "templates/TASK.md"
+    ],
+    "input_tree_sha256": "c62664649006b53608a49c8af2698a35035b6a2945c76eff73decc3e25f29e88",
+    "kind": "clean-actor-preparation",
+    "problem_sha256": "3fc6d8c137e820f00eff30cc63280e440eb24ff9ef0db69e6f80fe2722934b0e",
+    "source_archive_sha256": "97715f7be230e9608191b323a8360acfe65b1849c64b21f571d70f0d6162ce45",
+    "source_commit": "c17287849ebb6651da5484387895853c5ea10a0e"
+  },
+  "source_export_commit": "c203b5f698bb748b5450a8ea6b9853dd2e742ae6",
+  "source_files_read": "UNKNOWN",
+  "status": "PROBE_ONLY_INVALID/CONTAMINATED",
+  "tool_count_semantics": "completed command_execution/mcp_tool_call/web_search/file_change JSONL items; not internal shell operations",
+  "tool_items_completed": 5,
+  "tool_types_observed": [
+    "command_execution"
+  ],
+  "turn_completed": true,
+  "unverified": [
+    "Exact files read",
+    "Hosted tool catalogue is not exposed by exec JSONL; absence of hosted calls is transcript evidence, not catalogue introspection",
+    "No hidden Judge or benchmark correctness runs performed"
+  ],
+  "usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 45440,
+    "input_tokens": 51332,
+    "output_tokens": 322,
+    "reasoning_output_tokens": 26
+  },
+  "violations": [
+    {
+      "invocation": "/bin/zsh -lc '/usr/bin/ruby --disable-gems probe.rb'",
+      "kind": "controller-reference"
+    },
+    {
+      "invocation": "/bin/zsh -lc 'cat probe-results.json'",
+      "kind": "controller-reference"
+    }
+  ],
+  "wall_time_seconds": 165.448192208
+}

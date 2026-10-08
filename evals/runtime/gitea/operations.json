@@ -1,0 +1,9 @@
+{
+  "test": {
+    "argv": ["go", "test", "-p", "2", "-tags", "sqlite,sqlite_unlock_notify", "./services/migrations", "-run"],
+    "selector": {
+      "position": 8,
+      "pattern": "^[A-Za-z0-9_]+$"
+    }
+  }
+}

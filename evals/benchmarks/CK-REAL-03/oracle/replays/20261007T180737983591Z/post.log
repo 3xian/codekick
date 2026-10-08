@@ -1,0 +1,25 @@
+Revision: 1ee7f8e96635ea1768b1a8309918e2463fb607e6
+Image: sha256:344b4f56927a52b0f416a8c89349249b36791d0169704fd58e168d65dbf98a90
+Command: ['docker', 'run', '--rm', '--user', '1000:1000', '--network=none', '--cpus=2', '--memory=3g', '--mount', 'type=bind,src=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-gitea-replay-gt3yf94c/post,dst=/workspace,readonly', '--tmpfs', '/home/codekick/.cache:uid=1000,gid=1000,mode=700', '-w', '/workspace', 'codekick-gitea-runtime:1.25.5', 'go', 'test', '-p', '2', '-tags', 'sqlite,sqlite_unlock_notify', './services/migrations', '-run', '^(TestCodeKickGitlabHistoricalReleaseMigration|TestAwardsToReactions)$', '-count=1', '-v']
+2026/10/07 18:13:33 modules/storage/storage.go:180:initAttachments() [I] Initialising Attachment storage with type: local
+2026/10/07 18:13:33 modules/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /tmp/gitea-test/appdata1208637757/attachments
+2026/10/07 18:13:33 modules/storage/storage.go:170:initAvatars() [I] Initialising Avatar storage with type: local
+2026/10/07 18:13:33 modules/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /tmp/gitea-test/appdata1208637757/avatars
+2026/10/07 18:13:33 modules/storage/storage.go:196:initRepoAvatars() [I] Initialising Repository Avatar storage with type: local
+2026/10/07 18:13:33 modules/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /tmp/gitea-test/appdata1208637757/repo-avatars
+2026/10/07 18:13:33 modules/storage/storage.go:202:initRepoArchives() [I] Initialising Repository Archive storage with type: local
+2026/10/07 18:13:33 modules/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /tmp/gitea-test/appdata1208637757/repo-archive
+2026/10/07 18:13:33 modules/storage/storage.go:212:initPackages() [I] Initialising Packages storage with type: local
+2026/10/07 18:13:33 modules/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /tmp/gitea-test/appdata1208637757/packages
+2026/10/07 18:13:33 modules/storage/storage.go:223:initActions() [I] Initialising Actions storage with type: local
+2026/10/07 18:13:33 modules/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /tmp/gitea-test/appdata1208637757/actions_log
+2026/10/07 18:13:33 modules/storage/storage.go:227:initActions() [I] Initialising ActionsArtifacts storage with type: local
+2026/10/07 18:13:33 modules/storage/local.go:33:NewLocalStorage() [I] Creating new Local Storage at /tmp/go-build1207530360/b001/data/actions_artifacts
+=== RUN   TestCodeKickGitlabHistoricalReleaseMigration
+--- PASS: TestCodeKickGitlabHistoricalReleaseMigration (0.01s)
+=== RUN   TestAwardsToReactions
+--- PASS: TestAwardsToReactions (0.00s)
+PASS
+ok  	code.gitea.io/gitea/services/migrations	0.785s
+
+Exit: 0

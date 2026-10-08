@@ -1,0 +1,22 @@
+{
+  "operation": "smoke",
+  "argv": [
+    "docker",
+    "exec",
+    "--workdir",
+    "/workspace",
+    "codekick-actor-mailbox-smoke",
+    "timeout",
+    "--signal=TERM",
+    "--kill-after=5",
+    "60",
+    "python3",
+    "-c",
+    "import pathlib,socket; print(\"LINUX_CONTAINER_SMOKE_OK\"); print(pathlib.Path(\"visible.txt\").read_text().strip()); s=socket.socket(); s.bind((\"127.0.0.1\",0)); s.listen(1); print(\"LOCAL_TEST_BIND_OK\"); s.close()"
+  ],
+  "exit_code": 0,
+  "wall_time_seconds": 0.38199162500001194,
+  "stdout_base64": "TElOVVhfQ09OVEFJTkVSX1NNT0tFX09LCkFDVE9SX1ZJU0lCTEVfU0VOVElORUwKTE9DQUxfVEVTVF9CSU5EX09LCg==",
+  "stderr_base64": "",
+  "image_id": "sha256:eb1262aa90e30618e35f787f1ac444c0083e42dc6db79d9b4d80b9ce88b98f00"
+}

@@ -1,0 +1,10 @@
+$ docker exec codekick-zulip01-pre /usr/local/bin/codekick-prepare-workspace
+ * Starting PostgreSQL 14 database server
+   ...done.
+Starting redis-server: redis-server.
+Starting memcached: memcached.
+ * Starting RabbitMQ Messaging Server rabbitmq-server
+ * RabbitMQ Messaging Server already running
+   ...done.
+
+EXIT_CODE=0

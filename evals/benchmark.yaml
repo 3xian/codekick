@@ -1,0 +1,64 @@
+{
+  "baseline_codekick_commit": "63afb2c9258bff513da51f7f0b3a9735b58de64b",
+  "protocol_sha256": "a2dcbf1c508470d0c688a3d5ad8c6ad70db9e1a1d294b466e08f6844933f4e9f",
+  "format": "JSON syntax, valid YAML 1.2",
+  "core_tasks": [
+    {
+      "id": "CK-REAL-01",
+      "manifest": "benchmarks/CK-REAL-01/manifest.yaml",
+      "repo": "zulip/zulip",
+      "pre_fix_sha": "8b8ccfbe79853488760c51f0f820295b279ad40b",
+      "reference_merge_sha": "45f98143be706567f03b9e229d5ef8d43a2940f4",
+      "status": "VALID"
+    },
+    {
+      "id": "CK-REAL-02",
+      "manifest": "benchmarks/CK-REAL-02/manifest.yaml",
+      "repo": "zulip/zulip",
+      "pre_fix_sha": "e3de6394b0dc45288286366bd10acff5a7a08fa2",
+      "reference_merge_sha": "dfad942eb931c3df75c9479856603ac610d97795",
+      "status": "VALID"
+    },
+    {
+      "id": "CK-REAL-03",
+      "manifest": "benchmarks/CK-REAL-03/manifest.yaml",
+      "repo": "go-gitea/gitea",
+      "pre_fix_sha": "426bb491c0c2a92de8e25bfd5d1d3bc4b3e5922f",
+      "reference_merge_sha": "1ee7f8e96635ea1768b1a8309918e2463fb607e6",
+      "status": "VALID"
+    },
+    {
+      "id": "CK-REAL-04",
+      "manifest": "benchmarks/CK-REAL-04/manifest.yaml",
+      "repo": "discourse/discourse",
+      "pre_fix_sha": "ffbf6cb8837e9e8d5012f6e215ff035fa11e8c8e",
+      "reference_merge_sha": "ae0188e7d41a693626f1413275694309198ed75f",
+      "status": "VALID"
+    },
+    {
+      "id": "CK-REAL-05",
+      "manifest": "benchmarks/CK-REAL-05/manifest.yaml",
+      "repo": "django/django",
+      "pre_fix_sha": "73c5e94521c5b97e27cd2fe2d5b5c2e65f402755",
+      "reference_merge_sha": "040bb3eba72eb45020dd025d3f83094a0fcaf22f",
+      "status": "VALID"
+    },
+    {
+      "id": "CK-REAL-06",
+      "manifest": "benchmarks/CK-REAL-06/manifest.yaml",
+      "repo": "django/django",
+      "pre_fix_sha": "b25bc2441827a31b5629e9f79ad7296b992648a2",
+      "reference_merge_sha": "4cecf3039586ea738afafb9a28c946bff42c37c1",
+      "status": "VALID"
+    }
+  ],
+  "extensions": [],
+  "phase_0_status": "ORACLES_VALID_ACTOR_NOT_RUN",
+  "valid_replays": 6,
+  "minimum_valid_replays_before_candidate_conclusions": 3,
+  "core_screening_requires_all_six_tasks": true,
+  "actor_shell_isolation_probe": "actor-isolation-probe.json",
+  "actor_connectivity_probe": "actor-connectivity.json",
+  "actor_full_run_isolation": "SYNTHETIC_PROBE_ONLY",
+  "holdout_rule": "Identities selected in evals/holdout-selection.json before candidate implementation. None replayed. No candidate implemented.",
+}

@@ -172,7 +172,13 @@ Tests / Checks
 
 ## 安装到已有项目
 
-最简单的方式是复制以下内容到项目根目录：
+用安装器，不要整目录覆盖复制：
+
+```bash
+python scripts/install.py /path/to/project
+```
+
+安装内容：
 
 ```text
 AGENTS.md
@@ -181,6 +187,8 @@ skills/
 templates/
 scripts/
 ```
+
+项目里已经存在、且和本次安装内容不同的 `AGENTS.md`、`.ai/PROJECT.md`、`.ai/KNOWLEDGE.md` 会保留。直接复制会覆盖它们。安装记录里的哈希是磁盘上实际留下的内容；被保留的文件不会被标成这次模板的版本。同版本再运行不会改写未变化的文件。如果上次安装中断并留下 `.ai/.codekick-install.pending`，下次运行会补齐其余 CodeKick 文件，仍然不覆盖这三份内容，也不会覆盖安装后被改过的 skill。
 
 如果你的 Agent/IDE 对 skill 路径有自己的约定，可以只复制 `SKILL.md` 内容到对应目录。
 
@@ -208,3 +216,9 @@ scripts/
 - 多项目知识检索成为瓶颈 → 再考虑搜索/向量层。
 
 先拿真实遗留系统跑 10~20 个任务，根据 AI 实际犯的错误修改规则，比预先设计完整平台更有效。
+
+## 真实任务改进评估
+
+Controller/Judge 的历史 benchmark、隐藏 oracle 和运行证据位于 [`evals/`](evals/README.md)；当前门禁与逐项决策见 [`IMPROVEMENT-DECISIONS.md`](IMPROVEMENT-DECISIONS.md)。
+
+该目录不是 CodeKick runtime，也不属于上述安装列表。它含有真实历史解法，禁止向 benchmark Coding Actor 暴露。当前只有两项 oracle 完成真实 pre-fix FAIL / reference PASS，Phase 0 仍受阻；没有 Candidate 被 ACCEPT 或进入产品。

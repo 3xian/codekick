@@ -1,0 +1,47 @@
+﻿id	summary	reporter	owner	description	type	status	component	version	severity	resolution	keywords	cc	stage	has_patch	needs_docs	needs_tests	needs_better_patch	easy	ui_ux
+35442	QuerySet.only() causes n+1 queries with reverse foreign key relation when related id is not included.	REGNIER Guillaume	Samriddha Kumar Tripathi	"When iterating over a queryset constructed from a RelatedManager and a  {{{.only(...)}}} call that does not include the related field, a query occurs when instances are produced from the queryset.
+
+=== Steps to Reproduce:
+{{{#!python
+class Company(models.Model):
+    pass
+
+class Employee(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name=""employees"")
+}}}   
+
+{{{#!python
+company = Company.objects.create()
+Employee.objects.bulk_create(Employee(company=company) for _ in range(10))
+
+for employee in company.employees.only(""pk""):
+    # Some code that only access pk
+    _ = employee.pk
+}}}  
+
+=== Expected Behavior:
+One query like  
+{{{#!sql
+SELECT ""employee"".""id"" FROM ""employee"" WHERE ""employee"".""company_id"" = {COMPANY_ID}
+}}}  
+
+=== Actual Behavior:
+10 additional queries like:  
+{{{#!sql
+SELECT ""employee"".""id"", ""employee"".""company_id"" FROM ""employee"" WHERE ""employee"".""id"" = {EMPLOYEE_ID}
+}}}  
+
+=== Analysis:
+My understanding is that there is an optimization that fills the parent model on related instances without needing additional SQL join/query. However, when only a subset of fields is selected (in this case, only the primary key), the parent ID might not be loaded from the database, resulting in additional queries to perform said optimization.
+
+=== Workaround:  
+{{{#!python
+company = Company.objects.create()
+Employee.objects.bulk_create(Employee(company=company) for _ in range(10))
+
+for employee in Employee.objects.filter(company=company).only(""pk""):
+    # Some code that only access pk
+    _ = employee.pk
+}}}  
+
+"	Bug	closed	Database layer (models, ORM)	4.2	Normal	fixed		Simon Charette	Ready for checkin	1	0	0	0	0	0

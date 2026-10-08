@@ -1,0 +1,20 @@
+{
+  "id": "CK-REAL-03",
+  "repo": "go-gitea/gitea",
+  "pre_fix_sha": "426bb491c0c2a92de8e25bfd5d1d3bc4b3e5922f",
+  "reference_pr": 36295,
+  "reference_merge_sha": "1ee7f8e96635ea1768b1a8309918e2463fb607e6",
+  "language": "Go",
+  "task_class": "external-data integration panic",
+  "test_command": ["go", "test", "-p", "2", "-tags", "sqlite,sqlite_unlock_notify", "./services/migrations", "-run", "^(TestCodeKickGitlabHistoricalReleaseMigration|TestAwardsToReactions)$", "-count=1", "-v"],
+  "focused_test_command": ["go", "test", "-p", "2", "-tags", "sqlite,sqlite_unlock_notify", "./services/migrations", "-run", "^TestCodeKickGitlabHistoricalReleaseMigration$", "-count=1", "-v"],
+  "status": "REPLAY_VERIFIED",
+  "evidence_manifest": "manifest.json",
+  "actor_input": "task.md",
+  "actor_run_status": "NOT_RUN",
+  "controller_only": [
+    "manifest.yaml",
+    "manifest.json",
+    "oracle/"
+  ]
+}

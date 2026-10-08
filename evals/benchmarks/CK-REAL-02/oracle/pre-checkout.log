@@ -1,0 +1,13 @@
+$ git -C /tmp/codekick-zulip-oracles.JS2a2B/repo worktree add --detach /tmp/codekick-zulip-oracles.JS2a2B/CK-REAL-02/pre e3de6394b0dc45288286366bd10acff5a7a08fa2
+Preparing worktree (detached HEAD e3de639)
+Updating files:  94% (8518/9002)
+Updating files:  95% (8552/9002)
+Updating files:  96% (8642/9002)
+Updating files:  97% (8732/9002)
+Updating files:  98% (8822/9002)
+Updating files:  99% (8912/9002)
+Updating files: 100% (9002/9002)
+Updating files: 100% (9002/9002), done.
+HEAD is now at e3de639 api: Increment API feature level to 512.
+
+EXIT_CODE=0

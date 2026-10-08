@@ -1,0 +1,18 @@
+{
+  "image_id": "sha256:eb1262aa90e30618e35f787f1ac444c0083e42dc6db79d9b4d80b9ce88b98f00",
+  "network_mode": "none",
+  "privileged": false,
+  "cap_add": null,
+  "security_opt": null,
+  "mounts": [
+    {
+      "Type": "bind",
+      "Source": "/tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/workspace",
+      "Destination": "/workspace",
+      "Mode": "",
+      "RW": true,
+      "Propagation": "rprivate"
+    }
+  ],
+  "config_user": "discourse"
+}

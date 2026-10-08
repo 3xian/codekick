@@ -1,0 +1,14 @@
+$ docker exec -u vagrant -w /workspace -e CONTINUOUS_INTEGRATION=1 -e PUPPETEER_SKIP_DOWNLOAD=1 codekick-zulip01-provision tools/provision --skip-dev-db-build
+[91mError: No Zulip Git repository present![0m
+To set up the Zulip development environment, you should clone the code
+from GitHub, rather than using a Zulip production release tarball.
+[91m
+Provisioning failed (exit code 1)!
+
+* Look at the traceback(s) above to find more about the errors.
+* Resolve the errors or get help on chat.
+* If you can fix this yourself, you can re-run tools/provision at any time.
+* Logs are here: zulip/var/log/provision.log
+[0m
+
+EXIT_CODE=1

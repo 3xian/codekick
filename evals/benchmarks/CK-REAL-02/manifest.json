@@ -1,0 +1,140 @@
+{
+  "task_id": "CK-REAL-02",
+  "repository": "zulip/zulip",
+  "repository_url": "https://github.com/zulip/zulip.git",
+  "codekick_baseline_sha": "63afb2c9258bff513da51f7f0b3a9735b58de64b",
+  "language": "Python",
+  "class": "partial topic move visibility-policy state regression",
+  "original_issue": {
+    "number": 35224,
+    "url": "https://github.com/zulip/zulip/issues/35224",
+    "metadata": "oracle/original-issue.json"
+  },
+  "reference": {
+    "pull_request": 37212,
+    "url": "https://github.com/zulip/zulip/pull/37212",
+    "sha": "dfad942eb931c3df75c9479856603ac610d97795",
+    "verified_parent_sha": "e3de6394b0dc45288286366bd10acff5a7a08fa2",
+    "parents": [
+      "e3de6394b0dc45288286366bd10acff5a7a08fa2"
+    ],
+    "identity_status": "VERIFIED",
+    "merge_verified": true,
+    "identity_evidence": [
+      "oracle/reference-pr.json",
+      "oracle/reference-commit.json",
+      "oracle/identity.log"
+    ]
+  },
+  "status": "VALID",
+  "valid": true,
+  "blocking_phase": null,
+  "validity_scope": "Historical focused oracle replay only; no Actor, Candidate, screening, or product acceptance conclusion.",
+  "actor_input": "task.md",
+  "actor_isolation": {
+    "status": "NOT_VERIFIED",
+    "controller_disqualified_as_coding_actor": true,
+    "allowed_task_artifacts": [
+      "task.md"
+    ],
+    "controller_only": [
+      "manifest.json",
+      "oracle/"
+    ],
+    "requirement": "A separate fresh Coding Actor may receive only task.md and the original verified-parent source, without oracle, manifest, future git objects/history, PR metadata, or access to historical solution artifacts. Export original parent using git archive before adding the controller test-only patch. No actor or product candidate has been run."
+  },
+  "commands": {
+    "acquisition": [
+      "git init <temporary-repository>",
+      "git remote add origin https://github.com/zulip/zulip.git",
+      "git fetch --depth=2 origin dfad942eb931c3df75c9479856603ac610d97795",
+      "git worktree add --detach <pre-checkout> e3de6394b0dc45288286366bd10acff5a7a08fa2",
+      "git worktree add --detach <post-checkout> dfad942eb931c3df75c9479856603ac610d97795"
+    ],
+    "test_backport": [
+      "git",
+      "apply",
+      "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-02/oracle/regression.patch"
+    ],
+    "native_regression": [
+      "./tools/test-backend",
+      "--parallel=1",
+      "zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move",
+      "zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move"
+    ],
+    "observed_replays": {
+      "pre": ["docker", "exec", "-u", "vagrant", "-w", "/workspace", "codekick-zulip02-pre-oracle", ".venv/bin/python", "tools/test-backend", "--parallel=1", "zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move", "zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move"],
+      "post": ["docker", "exec", "-u", "vagrant", "-w", "/workspace", "codekick-zulip02-post-oracle", ".venv/bin/python", "tools/test-backend", "--parallel=1", "zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move", "zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move"]
+    },
+    "future_actor_source_export": [
+      "git",
+      "archive",
+      "e3de6394b0dc45288286366bd10acff5a7a08fa2"
+    ]
+  },
+  "runtime": {
+    "image": "sha256:00a439bffd9d631bca77124823413d29329db133ebc92a558c96707afc7f5de9",
+    "recipe": "../../runtime/zulip/recipe.json",
+    "platform": "linux/arm64",
+    "source_free_evidence": "../../runtime/zulip/source-free-image-final.log",
+    "network": "none; native local services remain available on isolated loopback",
+    "pre_export": "/tmp/codekick-zulip-linux-20261008/CK-REAL-02/pre",
+    "reference_export": "/tmp/codekick-zulip-linux-20261008/CK-REAL-02/post"
+  },
+  "replay": {
+    "pre_fix": {
+      "command": ["docker", "exec", "-u", "vagrant", "-w", "/workspace", "codekick-zulip02-pre-oracle", ".venv/bin/python", "tools/test-backend", "--parallel=1", "zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move", "zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move"],
+      "cwd": "/workspace",
+      "exit_code": 1,
+      "status": "FAIL",
+      "assertions_executed": true,
+      "tests_run": 2,
+      "failures": 2,
+      "semantic_failures": 1,
+      "query_count_failures": 1,
+      "evidence": "oracle/docker-pre-replay.log",
+      "reason": "Independent endpoint test at test_message_edit.py:2907 observed target-topic UNMUTED (2) != FOLLOWED (3). The other historical test also failed its preserved exact query-count assertion (33 expected, 18 actual); that count mismatch is not the semantic evidence."
+    },
+    "reference": {
+      "command": ["docker", "exec", "-u", "vagrant", "-w", "/workspace", "codekick-zulip02-post-oracle", ".venv/bin/python", "tools/test-backend", "--parallel=1", "zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move", "zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move"],
+      "cwd": "/workspace",
+      "exit_code": 0,
+      "status": "PASS",
+      "assertions_executed": true,
+      "tests_run": 2,
+      "failures": 0,
+      "evidence": "oracle/docker-post-replay.log",
+      "reason": "Exact verified reference commit passed both unchanged historical focused tests, including actual visibility policies and the original exact query-count assertion."
+    },
+    "observed_fail_pass": true,
+    "reason": "Genuine native pre-fix visibility-policy semantic FAIL and exact-reference PASS observed with real PostgreSQL/cache/queue services. Semantic evidence is independent of the preserved query-count mismatch; no historical assertion was removed or weakened.",
+    "prior_blocked_replay_logs": ["oracle/pre-replay.log", "oracle/post-replay.log"],
+    "resolved_infrastructure_evidence": "../../runtime/zulip/storage-blocker.json"
+  },
+  "evidence": {
+    "acquisition": "oracle/acquisition.log",
+    "pre_checkout": "oracle/pre-checkout.log",
+    "post_checkout": "oracle/post-checkout.log",
+    "test_backport": "oracle/test-backport.log",
+    "regression_patch": "oracle/regression.patch",
+    "reference_patch": "oracle/reference.patch",
+    "runtime_sources": "oracle/runtime-sources.json",
+    "environment": "oracle/environment.json",
+    "pre_replay": "oracle/docker-pre-replay.log",
+    "post_replay": "oracle/docker-post-replay.log",
+    "oracle_specification": "oracle/replay.json",
+    "original_reproduction_attachments": "oracle/original-attachments.json",
+    "native_linux_test_backport": "oracle/linux-test-backport.log",
+    "runtime_recipe": "../../runtime/zulip/recipe.json",
+    "python_dependency_pins": "../../runtime/zulip/python-dependencies.log",
+    "system_dependency_pins": "../../runtime/zulip/environment.log",
+    "pre_prepare": "../../runtime/zulip/CK-REAL-02-pre-oracle-prepare.log",
+    "reference_prepare": "../../runtime/zulip/CK-REAL-02-post-oracle-prepare.log"
+  },
+  "temporary_checkouts": {
+    "repository": "/tmp/codekick-zulip-oracles.JS2a2B/repo",
+    "pre": "/tmp/codekick-zulip-oracles.JS2a2B/CK-REAL-02/pre",
+    "post": "/tmp/codekick-zulip-oracles.JS2a2B/CK-REAL-02/post"
+  },
+  "completion_policy": "Historical focused oracle VALID from observed native visibility-policy semantic pre-fix FAIL and exact-reference PASS, not merely a query-count difference. Independently verify full Actor isolation before candidate execution; this evidence does not imply an Actor or product acceptance result."
+}

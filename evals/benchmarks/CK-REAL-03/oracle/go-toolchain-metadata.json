@@ -1,0 +1,9 @@
+{
+  "filename": "go1.25.5.darwin-arm64.tar.gz",
+  "os": "darwin",
+  "arch": "arm64",
+  "version": "go1.25.5",
+  "sha256": "bed8ebe824e3d3b27e8471d1307f803fc6ab8e1d0eb7a4ae196979bd9b801dd3",
+  "size": 58028091,
+  "kind": "archive"
+}

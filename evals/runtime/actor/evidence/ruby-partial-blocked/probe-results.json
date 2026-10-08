@@ -1,0 +1,23 @@
+{
+  "direct_external_ip": {
+    "errno": 1,
+    "error": "Operation not permitted - connect(2) for 1.1.1.1:443",
+    "status": "DENIED"
+  },
+  "external_github": {
+    "class": "SocketError",
+    "error": "getaddrinfo: nodename nor servname provided, or not known",
+    "status": "UNVERIFIED"
+  },
+  "symlink_traversal": {
+    "status": "SKIPPED_POLICY"
+  },
+  "synthetic_controller": {
+    "status": "SKIPPED_POLICY"
+  },
+  "synthetic_other_host": {
+    "status": "UNEXPECTED_READ_ALLOWED"
+  },
+  "workspace_read": "ACTOR_VISIBLE_SENTINEL",
+  "workspace_write": "ACTOR_TOOL_WRITE_OK"
+}

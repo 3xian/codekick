@@ -1,0 +1,25 @@
+{
+  "source": "Unmodified historical test hunks from git diff of verified parent to reference commit, limited to historical test paths.",
+  "regression_patch": "regression.patch",
+  "reference_patch": "reference.patch",
+  "selectors": [
+    "zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move",
+    "zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move"
+  ],
+  "test_only_backport_exit_code": 0,
+  "pre_state": "Verified parent plus only regression.patch; no production changes backported.",
+  "post_state": "Exact verified reference commit, with tests already present.",
+  "regression_status": "VALID",
+  "semantic_fail_observed": true,
+  "reference_pass_observed": true,
+  "infrastructure_failure": null,
+  "runtime_recipe": "../../../runtime/zulip/recipe.json",
+  "runtime_image": "sha256:00a439bffd9d631bca77124823413d29329db133ebc92a558c96707afc7f5de9",
+  "pre_evidence": "docker-pre-replay.log",
+  "reference_evidence": "docker-post-replay.log",
+  "pre_exit_code": 1,
+  "reference_exit_code": 0,
+  "semantic_failure": "Historical test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move at test_message_edit.py:2907 observed target-topic UNMUTED (2), not required FOLLOWED (3). This independent semantic assertion failed without a query-count guard. Two tests executed; the other preserved historical partial-move test failed 33 queries expected versus 18 actual. Exact reference passed both tests.",
+  "oracle_caveat": "The preserved partial-move test fails its query-count guard on the parent before later state assertions execute. Validity relies on the independent original endpoint test's actual visibility-policy semantic failure, not on that query-count mismatch. All historical test hunks/assertions remain unchanged.",
+  "replay_environment_substitution": "None. No copied-function harness, fake models, stub oracle, or synthetic replacement used."
+}

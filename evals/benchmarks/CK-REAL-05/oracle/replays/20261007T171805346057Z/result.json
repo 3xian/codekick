@@ -1,0 +1,14 @@
+{
+  "pre": {
+    "exit_code": 1,
+    "expected_exit_code": 1,
+    "behavioral_result_observed": true,
+    "log": "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-05/oracle/replays/20261007T171805346057Z/pre.log"
+  },
+  "post": {
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "behavioral_result_observed": true,
+    "log": "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-05/oracle/replays/20261007T171805346057Z/post.log"
+  }
+}

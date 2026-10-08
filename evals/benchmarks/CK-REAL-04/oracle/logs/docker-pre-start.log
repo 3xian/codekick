@@ -1,0 +1,7 @@
+$ docker run -d --name codekick-discourse-pre --memory 3g --cpus 2 --network none --mount type=bind,source=/tmp/ck-real-04.ShZwzV/pre-fix,target=/workspace codekick-discourse-runtime:ck-real-04
+--- stdout ---
+e16f1e32eba399fba563f4ba90fbc3acab517b69d97298360ff31bcb20a03502
+
+--- stderr ---
+
+exit_code=0

@@ -1,0 +1,23 @@
+{
+  "task_id": "CK-REAL-03",
+  "kind": "baseline-actor-run",
+  "label": "baseline-ck-real-03",
+  "status": "COMPLETED_UNSCORED",
+  "violations": [],
+  "exit_code": 0,
+  "turn_completed": true,
+  "wall_time_seconds": 521.6,
+  "tool_items_completed": 30,
+  "tool_types_observed": ["command_execution", "file_change"],
+  "usage": {"input_tokens": 734200, "output_tokens": 5517, "reasoning_output_tokens": 1633, "cached_input_tokens": 698112},
+  "patch_sha256": "ef45b6d48ff1af6df3a3301ff25e843bdb3a06630947801557daa3390773ab0c",
+  "production_files": ["services/migrations/gitlab.go"],
+  "hidden_tests": {
+    "passed": true,
+    "exit_code": 0,
+    "apply_mode": "production-files-only",
+    "tests": ["TestCodeKickGitlabHistoricalReleaseMigration", "TestAwardsToReactions"]
+  },
+  "contamination_check": "No reference PR, issue, commit, oracle path, or reference SHA in the transcript.",
+  "note": "One baseline run. Hidden migration test passed after applying only the production change. Not a Candidate A/B or product ACCEPT."
+}

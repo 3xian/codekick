@@ -1,0 +1,29 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index 0000000..0000000 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -78,23 +78,7 @@
+ 
+ ## 6. Diff-Driven Verification
+ 
+-验证必须基于真实 diff，而不是只验证原计划。
+-
+-流程：
+-
+-```text
+-Requirement
+-   +
+-Actual Diff
+-   ↓
+-Changed Behavior
+-   ↓
+-Plausible Failure Modes
+-   ↓
+-Tests / Checks
+-```
+-
+-只检查实际改动触发的风险，不机械执行无关 checklist。
++按最初计划验证即可，不必根据实际 diff 重新检查行为。
+ 
+ ## 7. Project Knowledge Maintenance
+ 

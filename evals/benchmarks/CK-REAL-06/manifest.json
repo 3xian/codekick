@@ -1,0 +1,140 @@
+{
+  "task_id": "CK-REAL-06",
+  "role": "BENCHMARK_CONTROLLER",
+  "repo": "django/django",
+  "repo_url": "https://github.com/django/django.git",
+  "baseline_sha": "63afb2c9258bff513da51f7f0b3a9735b58de64b",
+  "language": "Python",
+  "class": "performance_regression",
+  "reference_pr": 20538,
+  "reference_url": "https://github.com/django/django/pull/20538",
+  "reference_sha": "4cecf3039586ea738afafb9a28c946bff42c37c1",
+  "verified_parent_sha": "b25bc2441827a31b5629e9f79ad7296b992648a2",
+  "problem_ticket": 36865,
+  "problem_url": "https://code.djangoproject.com/ticket/36865",
+  "status": "VALID",
+  "status_scope": "Historical behavioral regression on SQLite plus actual SQL shape and SQLite primary-key query-plan regression",
+  "reference_identity": {
+    "api_metadata": "oracle/commit.json",
+    "git_identity": "oracle/identity.txt",
+    "verified_single_parent": true,
+    "pr_metadata": "oracle/pr.json"
+  },
+  "test_only_backport": "oracle/regression-tests.patch",
+  "reference_diff": "oracle/reference.diff",
+  "supplemental_test": "oracle/test_codekick_index.py",
+  "pre": {
+    "exit_code": 1,
+    "command": "/tmp/codekick-django.NJ981A/venv/bin/python tests/runtests.py admin_changelist.tests.ChangeListTests.test_exact_lookup_with_invalid_value admin_changelist.tests.ChangeListTests.test_exact_lookup_mixed_terms admin_changelist.tests.ChangeListTests.test_exact_lookup_with_more_lenient_formfield admin_changelist.tests.ChangeListTests.test_exact_lookup_validates_each_field_independently admin_changelist.tests.ChangeListTests.test_search_with_exact_lookup_for_non_string_field admin_changelist.test_codekick_index.ExactSearchIndexTests.test_numeric_primary_key_search_shape --settings=test_sqlite --parallel=1 --verbosity=2",
+    "cwd": "/tmp/codekick-django.NJ981A/06-pre",
+    "log": "oracle/pre-replay.log",
+    "status": "FAIL",
+    "tests_run": 6,
+    "failures": 3
+  },
+  "post": {
+    "exit_code": 0,
+    "command": "/tmp/codekick-django.NJ981A/venv/bin/python tests/runtests.py admin_changelist.tests.ChangeListTests.test_exact_lookup_with_invalid_value admin_changelist.tests.ChangeListTests.test_exact_lookup_mixed_terms admin_changelist.tests.ChangeListTests.test_exact_lookup_with_more_lenient_formfield admin_changelist.tests.ChangeListTests.test_exact_lookup_validates_each_field_independently admin_changelist.tests.ChangeListTests.test_search_with_exact_lookup_for_non_string_field admin_changelist.test_codekick_index.ExactSearchIndexTests.test_numeric_primary_key_search_shape --settings=test_sqlite --parallel=1 --verbosity=2",
+    "cwd": "/tmp/codekick-django.NJ981A/06-post",
+    "log": "oracle/post-replay.log",
+    "status": "PASS",
+    "tests_run": 6,
+    "failures": 0
+  },
+  "observations": [
+    "Pre-fix: two actual upstream behavioral tests fail; three historical behavior tests pass.",
+    "Pre-fix real admin SQL casts the primary key AS text; SQLite EXPLAIN QUERY PLAN reports SCAN.",
+    "Reference: all five historical behavior tests pass, SQL compares the uncast primary key to integer parameter, SQLite EXPLAIN QUERY PLAN reports SEARCH USING INTEGER PRIMARY KEY."
+  ],
+  "environment": {
+    "python": "3.12.14",
+    "backend": "SQLite",
+    "environment_evidence": "oracle/environment.txt",
+    "install_log": "oracle/environment-install.log",
+    "requirements_lock": "oracle/requirements.lock",
+    "python_no_user_site": true,
+    "temporary_workspace": "/tmp/codekick-django.NJ981A",
+    "venv": "/tmp/codekick-django.NJ981A/venv"
+  },
+  "commands": {
+    "fetch": [
+      "git init --bare <workspace>/repo",
+      "git --git-dir=<workspace>/repo fetch --depth=2 https://github.com/django/django.git 4cecf3039586ea738afafb9a28c946bff42c37c1"
+    ],
+    "identity": "git --git-dir=<workspace>/repo rev-parse 4cecf3039586ea738afafb9a28c946bff42c37c1^ # must equal b25bc2441827a31b5629e9f79ad7296b992648a2",
+    "preparation": [
+      "python3.12 -m venv <workspace>/venv",
+      "<workspace>/venv/bin/python -m pip install -r oracle/requirements.lock",
+      "git --git-dir=<workspace>/repo worktree add --detach <workspace>/pre b25bc2441827a31b5629e9f79ad7296b992648a2",
+      "git --git-dir=<workspace>/repo worktree add --detach <workspace>/post 4cecf3039586ea738afafb9a28c946bff42c37c1",
+      "git -C <workspace>/pre apply <absolute task directory>/oracle/regression-tests.patch",
+      "Copy oracle/test_codekick_index.py to tests/admin_changelist/test_codekick_index.py in both checkouts."
+    ],
+    "tests": [
+      "admin_changelist.tests.ChangeListTests.test_exact_lookup_with_invalid_value",
+      "admin_changelist.tests.ChangeListTests.test_exact_lookup_mixed_terms",
+      "admin_changelist.tests.ChangeListTests.test_exact_lookup_with_more_lenient_formfield",
+      "admin_changelist.tests.ChangeListTests.test_exact_lookup_validates_each_field_independently",
+      "admin_changelist.tests.ChangeListTests.test_search_with_exact_lookup_for_non_string_field",
+      "admin_changelist.test_codekick_index.ExactSearchIndexTests.test_numeric_primary_key_search_shape"
+    ],
+    "runner_flags": [
+      "--settings=test_sqlite",
+      "--parallel=1",
+      "--verbosity=2"
+    ],
+    "runner_environment": {
+      "PYTHONPATH": "<stage checkout>",
+      "PYTHONNOUSERSITE": "1"
+    },
+    "portable_replay": "python3.12 oracle/replay.py"
+  },
+  "isolation": {
+    "pre_evidence": "oracle/pre-isolation.txt",
+    "post_evidence": "oracle/post-isolation.txt",
+    "production_fix_backported": false,
+    "reference_exposure_disqualifies_controller_as_actor": true,
+    "actor_visible_artifacts": [
+      "task.md"
+    ],
+    "controller_only_artifacts": [
+      "manifest.json",
+      "oracle/"
+    ],
+    "actor_run_status": "NOT_RUN",
+    "candidate_implementation_status": "NOT_STARTED",
+    "candidate_allowed_before_separate_actor_isolation": false,
+    "requirements": "Separate Actor process/session with only task.md and clean verified-parent checkout; never mount controller oracle, manifest, reference checkout, git objects/history or network reference access."
+  },
+  "limitations": [
+    "PostgreSQL query planning and large-table performance: UNKNOWN (no PostgreSQL server used).",
+    "SQLite tests establish behavioral regression, SQL cast removal and actual SQLite index lookup; they do not establish PostgreSQL index selection, timeout elimination or performance under production statistics.",
+    "Upstream tests alone do not assert index usage; the separately identified controller supplement inspects actual admin SQL and SQLite EXPLAIN."
+  ],
+  "blockers": [],
+  "artifact_sha256": {
+    "oracle/pre-replay.log": "797ff373c4fa037f3dbb6b66d4c75bd935ec5e5cd9e8712b2405b9f164e9293d",
+    "oracle/pr.json": "25a709c524adf82673ac92fb614544699b75e5c66246c26e4ed8d99cf77cd5f8",
+    "oracle/test_codekick_index.py": "72c2540e726a34e8edf804e482e871726cb7b453cc44908a60cb2d2811f574bd",
+    "oracle/post-isolation.txt": "8c8403f565105af46ac548b19bc0b3d22040bcf86e0be9fff6de41b0a1da943d",
+    "oracle/test-backport.log": "eb38428f3bcbc6e9ea3b1083986d1c682d37c65e1f42965452ead884112e70d2",
+    "oracle/pre-isolation.txt": "12f9199f0576cf65d4f44fa427cda82e589ace101e5dd8558329006c6e9ba7da",
+    "oracle/ticket.rss": "eee067511071399bdc6e85b552d1a9c699320e24e38a87e16deefdffbe1df31e",
+    "oracle/reference.diff": "b2b1aaa62335eaa107241596ce168596d750124ae28e849ecdd7352f84c47bfb",
+    "oracle/environment-install.log": "5aff06125d35ef482ed3241fa09cd88f2c3b052f6c3b7b792fe45ad7ca4b1a62",
+    "oracle/commit.json": "71a19162703a8b0cb00b3c245229eb82eca1382f2a8500a34ad901afd9633914",
+    "oracle/post-replay.log": "66657b081bd812ec4983e4524ab6135baeb35aa96951851b88c98fd2775e1987",
+    "oracle/ticket.html": "5df18a8f48a220bb9e595c3cbf380cc2fa553f61192a4739818c7b1e82d1b10f",
+    "oracle/environment.txt": "0152f633599fa50f35a0c751e00fc044451d4c44b32ae66c195047f425f98ac6",
+    "oracle/pr.diff": "e211397316d08fe156a41009b848ae2ac5528cf5b972af017b0e02ac97672002",
+    "oracle/regression-tests.patch": "7c49183f4345dd16eb4363c649d7f7ef454971324c0bdbd165cf6f12fca95628",
+    "oracle/identity.txt": "ef1733bbeae670298627ff11283e4c6e6dbc9f607097209b35382ddbe4d37acf",
+    "oracle/requirements.lock": "a97f6471a28583b6cb17733ec42f360814310ee41aab73a0353e016b3bf5eb60",
+    "oracle/sources/post/tests/admin_changelist/models.py": "477363e2ac4cc19f276cd6e4387dae3d5264608a560af23f339a6916c63ca2a8",
+    "oracle/sources/post/tests/admin_changelist/tests.py": "6a1aaf22423ff64962e6e8984dd8b2d3f2bc36248a5397ae0930a5ddd0dbd03c",
+    "oracle/sources/post/django/contrib/admin/options.py": "f972bb0e6eb720231a0cc044b7383b1fba868c0c462fa357392c626684220784",
+    "oracle/sources/pre/tests/admin_changelist/models.py": "08284e973a528a3b4f0f10a018b9cd2509de3052ae7e284bad3c087231a44142",
+    "oracle/sources/pre/tests/admin_changelist/tests.py": "029b1f0db252f0b586d202a8d42780d3fac31a7d7c0ce68a10474deec87dd7fd",
+    "oracle/sources/pre/django/contrib/admin/options.py": "63868378c1775338716679c21a1a04ef27827df1920288cd3bb72d1213f1f573"
+  }
+}

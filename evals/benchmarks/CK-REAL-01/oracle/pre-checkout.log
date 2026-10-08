@@ -1,0 +1,19 @@
+$ git -C /tmp/codekick-zulip-oracles.JS2a2B/repo worktree add --detach /tmp/codekick-zulip-oracles.JS2a2B/CK-REAL-01/pre 8b8ccfbe79853488760c51f0f820295b279ad40b
+Preparing worktree (detached HEAD 8b8ccfb)
+Updating files:  88% (7896/8957)
+Updating files:  89% (7972/8957)
+Updating files:  90% (8062/8957)
+Updating files:  91% (8151/8957)
+Updating files:  92% (8241/8957)
+Updating files:  93% (8331/8957)
+Updating files:  94% (8420/8957)
+Updating files:  95% (8510/8957)
+Updating files:  96% (8599/8957)
+Updating files:  97% (8689/8957)
+Updating files:  98% (8778/8957)
+Updating files:  99% (8868/8957)
+Updating files: 100% (8957/8957)
+Updating files: 100% (8957/8957), done.
+HEAD is now at 8b8ccfb portico: Link to /case-studies/ from home page.
+
+EXIT_CODE=0

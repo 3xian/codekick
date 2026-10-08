@@ -1,0 +1,4 @@
+HEAD: b25bc2441827a31b5629e9f79ad7296b992648a2
+Tracked changes: ['tests/admin_changelist/models.py', 'tests/admin_changelist/tests.py']
+Production changes: none
+Supplement: tests/admin_changelist/test_codekick_index.py

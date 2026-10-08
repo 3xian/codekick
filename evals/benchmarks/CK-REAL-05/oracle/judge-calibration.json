@@ -1,0 +1,14 @@
+{
+  "task_id": "CK-REAL-05",
+  "kind": "controller-judge-calibration",
+  "parent": "73c5e94521c5b97e27cd2fe2d5b5c2e65f402755",
+  "reference_sha": "040bb3eba72eb45020dd025d3f83094a0fcaf22f",
+  "hidden_test_patch": "oracle/regression-tests.patch",
+  "tests": [
+    "defer.tests.DeferTests.test_only",
+    "defer.tests.DeferTests.test_only_related_manager_optimization"
+  ],
+  "parent_plus_hidden_test": {"exit_code": 1, "failures": 2, "status": "FAIL"},
+  "reference_result": {"exit_code": 0, "status": "PASS"},
+  "note": "Local venv calibration of the same historical tests. Not an Actor or Candidate result."
+}

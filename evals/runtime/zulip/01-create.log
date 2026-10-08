@@ -1,0 +1,4 @@
+$ docker run -d --name codekick-zulip01-provision --memory 4g --cpus 2 --mount type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/clean,target=/workspace codekick-zulip-base:20261008
+ff5379d325ab1aa0dac99e98b08f142943ffebd81f4262ff99760607622c8223
+
+EXIT_CODE=0

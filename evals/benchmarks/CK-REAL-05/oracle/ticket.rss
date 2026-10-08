@@ -1,0 +1,832 @@
+<?xml version="1.0"?>
+
+
+
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+  <channel>
+    <title>Django: Ticket #35442: QuerySet.only() causes n+1 queries with reverse foreign key relation when related id is not included.</title>
+    <link>https://code.djangoproject.com/ticket/35442</link>
+    <description>&lt;p&gt;
+When iterating over a queryset constructed from a RelatedManager and a  &lt;code&gt;.only(...)&lt;/code&gt; call that does not include the related field, a query occurs when instances are produced from the queryset.
+&lt;/p&gt;
+&lt;h3 class=&#34;section&#34; id=&#34;StepstoReproduce:&#34;&gt;Steps to Reproduce:&lt;/h3&gt;
+&lt;div class=&#34;wiki-code&#34;&gt;&lt;div class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;Company&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;models&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Model&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nc&#34;&gt;Employee&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;models&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Model&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;company&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;models&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ForeignKey&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Company&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;on_delete&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;models&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CASCADE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;related_name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;employees&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;wiki-code&#34;&gt;&lt;div class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;company&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Company&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;objects&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;create&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;Employee&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;objects&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bulk_create&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Employee&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;company&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;company&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;employee&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;company&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;employees&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;only&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;pk&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# Some code that only access pk&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;employee&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pk&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;h3 class=&#34;section&#34; id=&#34;ExpectedBehavior:&#34;&gt;Expected Behavior:&lt;/h3&gt;
+&lt;p&gt;
+One query like  
+&lt;/p&gt;
+&lt;div class=&#34;wiki-code&#34;&gt;&lt;div class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;k&#34;&gt;SELECT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;&amp;quot;employee&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;FROM&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;&amp;quot;employee&amp;quot;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;WHERE&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;&amp;quot;employee&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;&amp;quot;company_id&amp;quot;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;COMPANY_ID&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;h3 class=&#34;section&#34; id=&#34;ActualBehavior:&#34;&gt;Actual Behavior:&lt;/h3&gt;
+&lt;p&gt;
+10 additional queries like:  
+&lt;/p&gt;
+&lt;div class=&#34;wiki-code&#34;&gt;&lt;div class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;k&#34;&gt;SELECT&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;&amp;quot;employee&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;&amp;quot;employee&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;&amp;quot;company_id&amp;quot;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;FROM&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;&amp;quot;employee&amp;quot;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;WHERE&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;&amp;quot;employee&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;EMPLOYEE_ID&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;h3 class=&#34;section&#34; id=&#34;Analysis:&#34;&gt;Analysis:&lt;/h3&gt;
+&lt;p&gt;
+My understanding is that there is an optimization that fills the parent model on related instances without needing additional SQL join/query. However, when only a subset of fields is selected (in this case, only the primary key), the parent ID might not be loaded from the database, resulting in additional queries to perform said optimization.
+&lt;/p&gt;
+&lt;h3 class=&#34;section&#34; id=&#34;Workaround:&#34;&gt;Workaround:&lt;/h3&gt;
+&lt;div class=&#34;wiki-code&#34;&gt;&lt;div class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;company&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Company&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;objects&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;create&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;Employee&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;objects&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bulk_create&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Employee&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;company&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;company&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;employee&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Employee&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;objects&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;filter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;company&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;company&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;only&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;pk&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# Some code that only access pk&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;_&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;employee&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pk&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</description>
+    <language>en-us</language>
+    <image>
+      <title>Django</title>
+      <url>https://www.djangoproject.com/s/img/site/hdr_logo.gif</url>
+      <link>https://code.djangoproject.com/ticket/35442</link>
+    </image>
+    <generator>Trac 1.6</generator>
+
+    <item>
+
+      <dc:creator>Simon Charette</dc:creator>
+      <pubDate>Fri, 10 May 2024 18:04:42 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:1      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:1</guid>
+      <description>
+        &lt;p&gt;
+This relates to &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/20927&#34; title=&#34;#20927: Bug: Include known related fields for subclassed &amp;#34;QuerySet.only&amp;#34; (closed: wontfix)&#34;&gt;#20927&lt;/a&gt;, &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/18177&#34; title=&#34;#18177: New feature: Discovering a relation should cache the originator if applicable (closed: fixed)&#34;&gt;#18177&lt;/a&gt;, and at least another ticket that asked for &lt;code&gt;&#34;company_id&#34;&lt;/code&gt; to be implicitly included in the &lt;code&gt;only&lt;/code&gt; call that I just can&#39;t find anymore.
+&lt;/p&gt;
+&lt;p&gt;
+I think we should try to resolve that in a different way and a potential solution could be something like
+&lt;/p&gt;
+&lt;div class=&#34;wiki-code&#34;&gt;
+&lt;div class=&#34;diff&#34;&gt;
+
+  &lt;ul class=&#34;entries&#34;&gt;
+    &lt;li class=&#34;entry&#34;&gt;
+      &lt;h2&gt;
+        &lt;a&gt;django/db/models/query.py&lt;/a&gt;
+      &lt;/h2&gt;
+      &lt;pre&gt;diff --git a/django/db/models/query.py b/django/db/models/query.py
+index cb5c63c0d1..9390d2242d 100644&lt;/pre&gt;
+      &lt;table class=&#34;trac-diff inline&#34; cellspacing=&#34;0&#34;&gt;
+        &lt;colgroup&gt;
+          &lt;col class=&#34;lineno&#34;/&gt;&lt;col class=&#34;lineno&#34;/&gt;&lt;col class=&#34;content&#34;/&gt;
+        &lt;/colgroup&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th title=&#34;File a/django/db/models/query.py&#34;&gt;
+              a
+            &lt;/th&gt;
+            &lt;th title=&#34;File b/django/db/models/query.py&#34;&gt;
+              b
+            &lt;/th&gt;
+            &lt;td&gt;
+              &lt;em&gt; def __iter__(self):&lt;/em&gt;
+              &amp;nbsp;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody class=&#34;unmod&#34;&gt;
+
+          &lt;tr&gt;
+            &lt;th&gt;119&lt;/th&gt;&lt;th&gt;119&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; ),&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;120&lt;/th&gt;&lt;th&gt;120&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; )&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;121&lt;/th&gt;&lt;th&gt;121&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; for field, related_objs in queryset._known_related_objects.items()&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+        &lt;tbody class=&#34;add&#34;&gt;
+
+          &lt;tr class=&#34;first last&#34;&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;122&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;ins&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; # if not is_deferred(field)&lt;/ins&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+        &lt;tbody class=&#34;unmod&#34;&gt;
+
+          &lt;tr&gt;
+            &lt;th&gt;122&lt;/th&gt;&lt;th&gt;123&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; ]&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;123&lt;/th&gt;&lt;th&gt;124&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; for row in compiler.results_iter(results):&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;124&lt;/th&gt;&lt;th&gt;125&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; obj = model_cls.from_db(&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;p&gt;
+But in order to work properly it would require a refactor of &lt;code&gt;known_related_objects&lt;/code&gt; as the current approach is naive wrt/ to how it namespace related objects by field as the same model field can be included multiple times in the the same queryset (e.g. see &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/35356&#34; title=&#34;#35356: Bug: Issue with OneToOneField and recursive relationships in ... (closed: fixed)&#34;&gt;#35356&lt;/a&gt;)
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Natalia Bidart</dc:creator>
+      <pubDate>Fri, 10 May 2024 18:08:25 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:2      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:2</guid>
+      <description>
+        &lt;p&gt;
+Hello Guillaume!
+&lt;/p&gt;
+&lt;p&gt;
+I&#39;m having a hard time understanding the goal of your code. I assume you have provided a simplified version to be used as a small example, which I appreciate, but with the information given, the proper way to fetch records from the database without generating N+1 queries would be:
+&lt;/p&gt;
+&lt;div class=&#34;wiki-code&#34;&gt;&lt;div class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;nn&#34;&gt;django.db&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;connection&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reset_queries&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reset_queries&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;connection&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;queries&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;company&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Company&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;objects&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;prefetch_related&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;employees&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;last&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;company&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;employees&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;all&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;     &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pk&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;mi&#34;&gt;7&lt;/span&gt;
+&lt;span class=&#34;mi&#34;&gt;8&lt;/span&gt;
+&lt;span class=&#34;mi&#34;&gt;9&lt;/span&gt;
+&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;connection&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;queries&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;[{&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;sql&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;SELECT &amp;quot;ticket_35442_company&amp;quot;.&amp;quot;id&amp;quot;, &amp;quot;ticket_35442_company&amp;quot;.&amp;quot;name&amp;quot; FROM &amp;quot;ticket_35442_company&amp;quot; ORDER BY &amp;quot;ticket_35442_company&amp;quot;.&amp;quot;id&amp;quot; DESC LIMIT 1&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+  &lt;span class=&#34;s1&#34;&gt;&amp;#39;time&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;0.002&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+ &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;sql&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;SELECT &amp;quot;ticket_35442_employee&amp;quot;.&amp;quot;id&amp;quot;, &amp;quot;ticket_35442_employee&amp;quot;.&amp;quot;company_id&amp;quot; FROM &amp;quot;ticket_35442_employee&amp;quot; WHERE &amp;quot;ticket_35442_employee&amp;quot;.&amp;quot;company_id&amp;quot; IN (5)&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+  &lt;span class=&#34;s1&#34;&gt;&amp;#39;time&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;0.001&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;
+Or, my preferred (a single query and the same workaround as was posted originally):
+&lt;/p&gt;
+&lt;div class=&#34;wiki-code&#34;&gt;&lt;div class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;e&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Employee&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;objects&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;filter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;company&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;company&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;only&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;pk&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pk&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;mi&#34;&gt;7&lt;/span&gt;
+&lt;span class=&#34;mi&#34;&gt;8&lt;/span&gt;
+&lt;span class=&#34;mi&#34;&gt;9&lt;/span&gt;
+&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;connection&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;queries&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;[{&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;sql&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;SELECT &amp;quot;ticket_35442_employee&amp;quot;.&amp;quot;id&amp;quot; FROM &amp;quot;ticket_35442_employee&amp;quot; WHERE &amp;quot;ticket_35442_employee&amp;quot;.&amp;quot;company_id&amp;quot; = 5&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+  &lt;span class=&#34;s1&#34;&gt;&amp;#39;time&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;0.000&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Natalia Bidart</dc:creator>
+      <pubDate>Fri, 10 May 2024 18:17:33 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:3      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:3</guid>
+      <description>
+        &lt;p&gt;
+Hey Simon, thank you for your message. I fail to see how Django is at fault here, considering that there are alternative usages of the ORM and its queries to accomplish the same result (as far as we understand the use case) that would not execute N+1 queries. This seems like a (likely?) dupe of &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/20923&#34; title=&#34;#20923: New feature: Unable to use fields from prefetch_related() in only() and defer() (closed: wontfix)&#34;&gt;#20923&lt;/a&gt; which was closed as &lt;code&gt;wontfix&lt;/code&gt;.
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Natalia Bidart</dc:creator>
+      <pubDate>Fri, 10 May 2024 19:27:56 GMT</pubDate>
+      <title>status changed; resolution set</title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:4      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:4</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;resolution&lt;/strong&gt;
+        → &lt;span class=&#34;trac-field-new&#34;&gt;duplicate&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;status&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;new&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;closed&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;
+I&#39;ll close as &lt;code&gt;duplicate&lt;/code&gt; of &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/20923&#34; title=&#34;#20923: New feature: Unable to use fields from prefetch_related() in only() and defer() (closed: wontfix)&#34;&gt;#20923&lt;/a&gt; for now following the &lt;a class=&#34;ext-link&#34; href=&#34;https://docs.djangoproject.com/en/dev/internals/contributing/triaging-tickets/#closing-tickets&#34;&gt;&lt;span class=&#34;icon&#34;&gt;​&lt;/span&gt;ticket triaging process&lt;/a&gt;, but any further commenting is welcomed and I&#39;m happy to reconsider the ticket status with more information.
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>REGNIER Guillaume</dc:creator>
+      <pubDate>Fri, 10 May 2024 19:38:19 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:5      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:5</guid>
+      <description>
+        &lt;p&gt;
+Thank you both for answering!  
+&lt;/p&gt;
+&lt;p&gt;
+Yes, i did provide a minimal exemple. Here i just wanted to use  &lt;code&gt;company.employees.all()&lt;/code&gt; instead of &lt;code&gt;Employee.objects.filter(company=company)&lt;/code&gt;.  
+I often use RelatedManagers this way to avoid importing the related model and i do find the final code easier to read.  
+I thought the two pieces of code above were meant to be equivalent.  
+&lt;/p&gt;
+&lt;p&gt;
+I might have understood the RelatedManager wrong but when i&#39;m passing a queryset along, i have no way to know if it originated from a RelatedManager or a regular Manager, meaning i have no way to know if &lt;code&gt;.only()&lt;/code&gt; is safe to use or if it&#39;ll cause N+1 queries.  
+&lt;/p&gt;
+&lt;p&gt;
+If this behavior is intended/not an issue, it means that i either need to ban &lt;code&gt;.only()&lt;/code&gt; or RelatedManagers from my coding habbits since i don&#39;t have any way to ensure this won&#39;t happen again.  
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Simon Charette</dc:creator>
+      <pubDate>Fri, 10 May 2024 20:19:32 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:6      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:6</guid>
+      <description>
+        &lt;p&gt;
+Accessing objects though a related manager should still allow for &lt;code&gt;only&lt;/code&gt; to work as expected. The fact that the ORM doesn&#39;t even warn you when it silently issues queries on field deferral leaks (&lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/22492&#34; title=&#34;#22492: New feature: provide a way to prevent database queries on model objects (closed: duplicate)&#34;&gt;#22492&lt;/a&gt;) makes this behavior really insidious and prevents safe usage of related managers as Guillaume brought up.
+&lt;/p&gt;
+&lt;p&gt;
+I think the the ORM should either have &lt;code&gt;RelatedManager.only&lt;/code&gt; include the reverse field implicitly (which we&#39;ve kind of rules out against in &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/33835&#34; title=&#34;#33835: New feature: Select_related().only() in the Prefetch() should automatically add ... (closed: wontfix)&#34;&gt;#33835&lt;/a&gt;) or we should find a way to more safely assign known related objects in the face of deferred fields (e.g. make sure required &lt;code&gt;attrs&lt;/code&gt; are in &lt;code&gt;obj.__dict__&lt;/code&gt;).
+&lt;/p&gt;
+&lt;p&gt;
+Potentially naive patch
+&lt;/p&gt;
+&lt;div class=&#34;wiki-code&#34;&gt;
+&lt;div class=&#34;diff&#34;&gt;
+
+  &lt;ul class=&#34;entries&#34;&gt;
+    &lt;li class=&#34;entry&#34;&gt;
+      &lt;h2&gt;
+        &lt;a&gt;django/db/models/query.py&lt;/a&gt;
+      &lt;/h2&gt;
+      &lt;pre&gt;diff --git a/django/db/models/query.py b/django/db/models/query.py
+index cb5c63c0d1..883a7a71e4 100644&lt;/pre&gt;
+      &lt;table class=&#34;trac-diff inline&#34; cellspacing=&#34;0&#34;&gt;
+        &lt;colgroup&gt;
+          &lt;col class=&#34;lineno&#34;/&gt;&lt;col class=&#34;lineno&#34;/&gt;&lt;col class=&#34;content&#34;/&gt;
+        &lt;/colgroup&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th title=&#34;File a/django/db/models/query.py&#34;&gt;
+              a
+            &lt;/th&gt;
+            &lt;th title=&#34;File b/django/db/models/query.py&#34;&gt;
+              b
+            &lt;/th&gt;
+            &lt;td&gt;
+              &lt;em&gt; def __iter__(self): (this hunk was shorter than expected)&lt;/em&gt;
+              &amp;nbsp;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody class=&#34;unmod&#34;&gt;
+
+          &lt;tr&gt;
+            &lt;th&gt;107&lt;/th&gt;&lt;th&gt;107&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; (&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;108&lt;/th&gt;&lt;th&gt;108&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; field,&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;109&lt;/th&gt;&lt;th&gt;109&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; related_objs,&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+        &lt;tbody class=&#34;mod&#34;&gt;
+
+
+          &lt;tr class=&#34;first&#34;&gt;
+            &lt;th&gt;110&lt;/th&gt;&lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; operator.attrgetter(&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;111&lt;/th&gt;&lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; *[&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;112&lt;/th&gt;&lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; (&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;113&lt;/th&gt;&lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; field.attname&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;114&lt;/th&gt;&lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; if from_field == &#34;self&#34;&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;115&lt;/th&gt;&lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; else queryset.model._meta.get_field(from_field).attname&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;116&lt;/th&gt;&lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; )&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;117&lt;/th&gt;&lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; for from_field in field.from_fields&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;118&lt;/th&gt;&lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; ]&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;119&lt;/th&gt;&lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; ),&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+
+          &lt;tr&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;110&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; attnames := [&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;111&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; (&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;112&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; field.attname&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;113&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; if from_field == &#34;self&#34;&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;114&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; else queryset.model._meta.get_field(from_field).attname&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;115&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; )&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;116&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; for from_field in field.from_fields&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;117&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; ],&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr class=&#34;last&#34;&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;118&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; operator.attrgetter(*attnames),&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+        &lt;tbody class=&#34;unmod&#34;&gt;
+
+          &lt;tr&gt;
+            &lt;th&gt;120&lt;/th&gt;&lt;th&gt;119&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; )&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;121&lt;/th&gt;&lt;th&gt;120&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; for field, related_objs in queryset._known_related_objects.items()&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;122&lt;/th&gt;&lt;th&gt;121&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; ]&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;123&lt;/th&gt;&lt;th&gt;122&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; for row in compiler.results_iter(results):&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;124&lt;/th&gt;&lt;th&gt;123&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; obj = model_cls.from_db(&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+        &lt;tbody class=&#34;add&#34;&gt;
+
+        &lt;/tbody&gt;
+        &lt;tbody class=&#34;skipped&#34;&gt;
+          &lt;tr&gt;
+            &lt;th&gt;&lt;a href=&#34;#L131&#34;&gt;&amp;hellip;&lt;/a&gt;&lt;/th&gt;
+            &lt;th&gt;&lt;a href=&#34;#L131&#34;&gt;&amp;hellip;&lt;/a&gt;&lt;/th&gt;
+            &lt;td&gt;
+              &lt;em&gt; def __iter__(self):&lt;/em&gt;
+              &amp;nbsp;
+            &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+        &lt;tbody class=&#34;unmod&#34;&gt;
+
+          &lt;tr&gt;
+            &lt;th&gt;131&lt;/th&gt;&lt;th&gt;131&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; setattr(obj, attr_name, row[col_pos])&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;132&lt;/th&gt;&lt;th&gt;132&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;133&lt;/th&gt;&lt;th&gt;133&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; # Add the known related objects to the model.&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+        &lt;tbody class=&#34;mod&#34;&gt;
+
+
+          &lt;tr class=&#34;first&#34;&gt;
+            &lt;th&gt;134&lt;/th&gt;&lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; for field, rel_objs, rel_&lt;del&gt;&lt;/del&gt;getter in known_related_objects:&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+
+          &lt;tr class=&#34;last&#34;&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;134&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; for field, rel_objs, rel_&lt;ins&gt;attnames, rel_&lt;/ins&gt;getter in known_related_objects:&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+        &lt;tbody class=&#34;unmod&#34;&gt;
+
+          &lt;tr&gt;
+            &lt;th&gt;135&lt;/th&gt;&lt;th&gt;135&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; # Avoid overwriting objects loaded by, e.g., select_related().&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;136&lt;/th&gt;&lt;th&gt;136&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; if field.is_cached(obj):&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;137&lt;/th&gt;&lt;th&gt;137&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; continue&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+        &lt;tbody class=&#34;add&#34;&gt;
+
+          &lt;tr class=&#34;first&#34;&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;138&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;ins&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; # Avoid fetching potentially deferred attributes that would&lt;/ins&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr class=&#34;&#34;&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;139&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;ins&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; # result in unexpected queries.&lt;/ins&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr class=&#34;&#34;&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;140&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;ins&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; if any(attname not in obj.__dict__ for attname in rel_attnames):&lt;/ins&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr class=&#34;last&#34;&gt;
+            &lt;th&gt;&amp;nbsp;&lt;/th&gt;&lt;th&gt;141&lt;/th&gt;&lt;td class=&#34;r&#34;&gt;&lt;ins&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; continue&lt;/ins&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+        &lt;tbody class=&#34;unmod&#34;&gt;
+
+          &lt;tr&gt;
+            &lt;th&gt;138&lt;/th&gt;&lt;th&gt;142&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; rel_obj_id = rel_getter(obj)&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;139&lt;/th&gt;&lt;th&gt;143&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; try:&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th&gt;140&lt;/th&gt;&lt;th&gt;144&lt;/th&gt;&lt;td class=&#34;l&#34;&gt;&lt;span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; rel_obj = rel_objs[rel_obj_id]&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;&lt;/div&gt;
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Simon Charette</dc:creator>
+      <pubDate>Fri, 10 May 2024 22:59:27 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:7      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:7</guid>
+      <description>
+        &lt;p&gt;
+So I tried running the suite against the above patch and it delivered!
+&lt;/p&gt;
+&lt;p&gt;
+I was pointed at a single failure being &lt;code&gt;defer.tests.DeferTests.test_only&lt;/code&gt;
+&lt;/p&gt;
+&lt;div class=&#34;wiki-code&#34;&gt;&lt;div class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;o&#34;&gt;======================================================================&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;FAIL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_only&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;defer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tests&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DeferTests&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;----------------------------------------------------------------------&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;Traceback&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;most&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;recent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;call&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;last&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;File&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;/Users/charettes/Workspace/django/tests/defer/tests.py&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;line&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;52&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_only&lt;/span&gt;
+    &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;assert_delayed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;primary_set&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;only&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;pk&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;File&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;/Users/charettes/Workspace/django/tests/defer/tests.py&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;line&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;24&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;assert_delayed&lt;/span&gt;
+    &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;assertEqual&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;count&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;num&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;ne&#34;&gt;AssertionError&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;p&gt;
+What&#39;s interesting though is that &lt;a class=&#34;ext-link&#34; href=&#34;https://github.com/django/django/commit/7f51876f99851fdc3fef63aecdfbcffa199c26b9#diff-51d1f447d95c1f21d5253801dc116988967499bafa107339257bcb58b2513e42L48-R47&#34;&gt;&lt;span class=&#34;icon&#34;&gt;​&lt;/span&gt;it might have a been a sneaky regression caused by the field deferral refactor in Django 1.10&lt;/a&gt; that flew under the radar.
+&lt;/p&gt;
+&lt;p&gt;
+It was not discussed at all in the two PRs where &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/26207&#34; title=&#34;#26207: Cleanup/optimization: Replace dynamic classes with non-data descriptors for deferred ... (closed: fixed)&#34;&gt;#26207&lt;/a&gt; was resolved
+&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;&lt;a class=&#34;ext-link&#34; href=&#34;https://github.com/django/django/pull/6118&#34;&gt;&lt;span class=&#34;icon&#34;&gt;​&lt;/span&gt;https://github.com/django/django/pull/6118&lt;/a&gt;
+&lt;/li&gt;&lt;li&gt;&lt;a class=&#34;ext-link&#34; href=&#34;https://github.com/django/django/pull/6491&#34;&gt;&lt;span class=&#34;icon&#34;&gt;​&lt;/span&gt;https://github.com/django/django/pull/6491&lt;/a&gt;
+&lt;/li&gt;&lt;/ul&gt;
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Simon Charette</dc:creator>
+      <pubDate>Sat, 11 May 2024 22:45:53 GMT</pubDate>
+      <title>cc set</title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:8      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:8</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;cc&lt;/strong&gt;
+        &lt;span class=&#34;trac-author&#34;&gt;Simon Charette&lt;/span&gt; added
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Simon Charette</dc:creator>
+      <pubDate>Sun, 12 May 2024 20:49:17 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:9      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:9</guid>
+      <description>
+        &lt;p&gt;
+For the record, I checked out I checked out Django 1.9 and it seems the issue is present there so while the commit mentioned above that landed in 1.10 did alter a related test it didn&#39;t actually break anything in this regard.
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Sarah Boyce</dc:creator>
+      <pubDate>Wed, 15 May 2024 14:42:22 GMT</pubDate>
+      <title>stage, status changed; resolution deleted</title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:10      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:10</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;resolution&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-deleted&#34;&gt;duplicate&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;stage&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;Unreviewed&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;Accepted&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;status&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;closed&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;new&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;
+Thank you for the investigation Simon, reopening 👍
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Sarah Boyce</dc:creator>
+      <pubDate>Wed, 15 May 2024 14:43:13 GMT</pubDate>
+      <title>type changed</title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:11      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:11</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;type&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;Uncategorized&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;Bug&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Rish</dc:creator>
+      <pubDate>Fri, 28 Jun 2024 15:17:04 GMT</pubDate>
+      <title>owner, status changed</title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:12      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:12</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;owner&lt;/strong&gt;
+        changed from &lt;span class=&#34;trac-author&#34;&gt;nobody&lt;/span&gt; to &lt;span class=&#34;trac-author&#34;&gt;Rish&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;status&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;new&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;assigned&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Jacob Walls</dc:creator>
+      <pubDate>Sun, 27 Jul 2025 01:23:28 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:13      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:13</guid>
+      <description>
+        &lt;p&gt;
+Replying to &lt;a class=&#34;ticket&#34; href=&#34;https://code.djangoproject.com/ticket/35442#comment:1&#34; title=&#34;Comment 1&#34;&gt;Simon Charette&lt;/a&gt;:
+&lt;/p&gt;
+&lt;blockquote class=&#34;citation&#34;&gt;
+&lt;p&gt;
+another ticket that asked for &lt;code&gt;&#34;company_id&#34;&lt;/code&gt; to be implicitly included in the &lt;code&gt;only&lt;/code&gt; call that I just can&#39;t find anymore.
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+Could it be &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/30124&#34; title=&#34;#30124: Bug: QuerySet.only() on reverse many-to-one relationship causes extra ... (closed: duplicate)&#34;&gt;#30124&lt;/a&gt;?
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Simon Charette</dc:creator>
+      <pubDate>Tue, 29 Jul 2025 04:09:33 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:14      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:14</guid>
+      <description>
+        &lt;p&gt;
+Replying to &lt;a class=&#34;ticket&#34; href=&#34;https://code.djangoproject.com/ticket/35442#comment:13&#34; title=&#34;Comment 13&#34;&gt;Jacob Walls&lt;/a&gt;:
+&lt;/p&gt;
+&lt;blockquote class=&#34;citation&#34;&gt;
+&lt;p&gt;
+Replying to &lt;a class=&#34;ticket&#34; href=&#34;https://code.djangoproject.com/ticket/35442#comment:1&#34; title=&#34;Comment 1&#34;&gt;Simon Charette&lt;/a&gt;:
+&lt;/p&gt;
+&lt;blockquote class=&#34;citation&#34;&gt;
+&lt;p&gt;
+another ticket that asked for &lt;code&gt;&#34;company_id&#34;&lt;/code&gt; to be implicitly included in the &lt;code&gt;only&lt;/code&gt; call that I just can&#39;t find anymore.
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+Could it be &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/30124&#34; title=&#34;#30124: Bug: QuerySet.only() on reverse many-to-one relationship causes extra ... (closed: duplicate)&#34;&gt;#30124&lt;/a&gt;?
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+Yep it was, thanks for the sleuthing Jacob!
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Simon Charette</dc:creator>
+      <pubDate>Tue, 02 Dec 2025 15:38:15 GMT</pubDate>
+      <title>summary changed</title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:15      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:15</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;summary&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;N+1 queries from RelatedManager + only(&#34;pk&#34;)&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;QuerySet.only() causes n+1 queries with reverse foreign key relation when related id is not included.&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;
+&lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/36764&#34; title=&#34;#36764: Bug: QuerySet.only() causes n+1 queries with reverse foreign key relation (closed: duplicate)&#34;&gt;#36764&lt;/a&gt; was a duplicate.
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Samriddha Kumar Tripathi</dc:creator>
+      <pubDate>Sat, 03 Jan 2026 07:53:58 GMT</pubDate>
+      <title>owner changed</title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:16      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:16</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;owner&lt;/strong&gt;
+        changed from &lt;span class=&#34;trac-author&#34;&gt;Rish&lt;/span&gt; to &lt;span class=&#34;trac-author&#34;&gt;Samriddha Kumar Tripathi&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;
+I would like to work on this ticket 
+( I will change the owner to me but if someone wants to work on this ticket they are welcome to change the ownership to themselves )
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Samriddha Kumar Tripathi</dc:creator>
+      <pubDate>Mon, 05 Jan 2026 05:53:29 GMT</pubDate>
+      <title>has_patch changed</title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:17      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:17</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;has_patch&lt;/strong&gt;
+        set
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;
+PR - &lt;a class=&#34;ext-link&#34; href=&#34;https://github.com/django/django/pull/20495&#34;&gt;&lt;span class=&#34;icon&#34;&gt;​&lt;/span&gt;https://github.com/django/django/pull/20495&lt;/a&gt;
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Jacob Walls</dc:creator>
+      <pubDate>Mon, 12 Jan 2026 19:39:44 GMT</pubDate>
+      <title>needs_better_patch changed</title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:18      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:18</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;needs_better_patch&lt;/strong&gt;
+        set
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Jacob Walls</dc:creator>
+      <pubDate>Mon, 12 Jan 2026 19:52:47 GMT</pubDate>
+      <title></title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:19      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:19</guid>
+      <description>
+        &lt;p&gt;
+Replying to &lt;a class=&#34;ticket&#34; href=&#34;https://code.djangoproject.com/ticket/35442#comment:14&#34; title=&#34;Comment 14&#34;&gt;Simon Charette&lt;/a&gt;:
+&lt;/p&gt;
+&lt;blockquote class=&#34;citation&#34;&gt;
+&lt;p&gt;
+Replying to &lt;a class=&#34;ticket&#34; href=&#34;https://code.djangoproject.com/ticket/35442#comment:13&#34; title=&#34;Comment 13&#34;&gt;Jacob Walls&lt;/a&gt;:
+&lt;/p&gt;
+&lt;blockquote class=&#34;citation&#34;&gt;
+&lt;p&gt;
+Replying to &lt;a class=&#34;ticket&#34; href=&#34;https://code.djangoproject.com/ticket/35442#comment:1&#34; title=&#34;Comment 1&#34;&gt;Simon Charette&lt;/a&gt;:
+&lt;/p&gt;
+&lt;blockquote class=&#34;citation&#34;&gt;
+&lt;p&gt;
+another ticket that asked for &lt;code&gt;&#34;company_id&#34;&lt;/code&gt; to be implicitly included in the &lt;code&gt;only&lt;/code&gt; call that I just can&#39;t find anymore.
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+Could it be &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/30124&#34; title=&#34;#30124: Bug: QuerySet.only() on reverse many-to-one relationship causes extra ... (closed: duplicate)&#34;&gt;#30124&lt;/a&gt;?
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+Yep it was, thanks for the sleuthing Jacob!
+&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+The discussion went in another direction, but the underlying case presented was a duplicate.
+&lt;/p&gt;
+
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Samriddha Kumar Tripathi</dc:creator>
+      <pubDate>Mon, 12 Jan 2026 20:32:34 GMT</pubDate>
+      <title>needs_better_patch changed</title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:20      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:20</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;needs_better_patch&lt;/strong&gt;
+        unset
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <dc:creator>Jacob Walls</dc:creator>
+      <pubDate>Mon, 12 Jan 2026 21:58:41 GMT</pubDate>
+      <title>stage changed</title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:21      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:21</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;stage&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;Accepted&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;Ready for checkin&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        
+      </description>
+      <category>Ticket</category>
+    </item>
+    <item>
+
+      <author>Jacob Walls &lt;jacobtylerwalls@…&gt;</author>
+      <pubDate>Tue, 13 Jan 2026 18:18:17 GMT</pubDate>
+      <title>status changed; resolution set</title>
+      <link>https://code.djangoproject.com/ticket/35442#comment:22      </link>
+      <guid isPermaLink="false">https://code.djangoproject.com/ticket/35442#comment:22</guid>
+      <description>
+        &lt;ul&gt;
+          &lt;li&gt;&lt;strong&gt;resolution&lt;/strong&gt;
+        → &lt;span class=&#34;trac-field-new&#34;&gt;fixed&lt;/span&gt;
+          &lt;/li&gt;
+          &lt;li&gt;&lt;strong&gt;status&lt;/strong&gt;
+        &lt;span class=&#34;trac-field-old&#34;&gt;assigned&lt;/span&gt; → &lt;span class=&#34;trac-field-new&#34;&gt;closed&lt;/span&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;
+In &lt;a class=&#34;changeset&#34; href=&#34;https://code.djangoproject.com/changeset/040bb3eba72eb45020dd025d3f83094a0fcaf22f&#34; title=&#34;Fixed #35442 -- Prevented N+1 queries in RelatedManager with only().
+ ...&#34;&gt;040bb3eb&lt;/a&gt;:
+&lt;/p&gt;
+&lt;div class=&#34;message&#34;&gt;&lt;p&gt;
+Fixed &lt;a class=&#34;closed ticket&#34; href=&#34;https://code.djangoproject.com/ticket/35442&#34; title=&#34;#35442: Bug: QuerySet.only() causes n+1 queries with reverse foreign key relation ... (closed: fixed)&#34;&gt;#35442&lt;/a&gt; -- Prevented N+1 queries in RelatedManager with only().&lt;br /&gt;
+&lt;/p&gt;
+&lt;p&gt;
+Co-authored-by: Simon Charette &amp;lt;charette.s@…&amp;gt;&lt;br /&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+      </description>
+      <category>Ticket</category>
+    </item>
+ </channel>
+</rss>

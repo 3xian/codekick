@@ -1,0 +1,75 @@
+Command: ['/usr/bin/git', 'init', '--bare', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/repo']
+CWD: 'None'
+Initialized empty Git repository in /private/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/repo/
+
+Exit: 0
+Command: ['/usr/bin/git', '--git-dir=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/repo', 'fetch', '--depth=2', 'https://github.com/django/django.git', '040bb3eba72eb45020dd025d3f83094a0fcaf22f']
+CWD: 'None'
+From https://github.com/django/django
+ * branch            040bb3eba72eb45020dd025d3f83094a0fcaf22f -> FETCH_HEAD
+
+Exit: 0
+Command: ['/usr/bin/git', '--git-dir=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/repo', 'rev-parse', '040bb3eba72eb45020dd025d3f83094a0fcaf22f']
+CWD: 'None'
+040bb3eba72eb45020dd025d3f83094a0fcaf22f
+
+Exit: 0
+Command: ['/usr/bin/git', '--git-dir=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/repo', 'rev-parse', '040bb3eba72eb45020dd025d3f83094a0fcaf22f^']
+CWD: 'None'
+73c5e94521c5b97e27cd2fe2d5b5c2e65f402755
+
+Exit: 0
+Command: ['/private/tmp/codekick-django.NJ981A/venv/bin/python', '-m', 'venv', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/venv']
+CWD: 'None'
+
+Exit: 0
+Command: ['/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/venv/bin/python', '-m', 'pip', 'install', '-r', '/Users/mac/code/codekick/evals/benchmarks/CK-REAL-05/oracle/requirements.lock']
+CWD: 'None'
+Collecting asgiref==3.12.1 (from -r /Users/mac/code/codekick/evals/benchmarks/CK-REAL-05/oracle/requirements.lock (line 1))
+  Using cached asgiref-3.12.1-py3-none-any.whl.metadata (9.4 kB)
+Collecting pillow==12.3.0 (from -r /Users/mac/code/codekick/evals/benchmarks/CK-REAL-05/oracle/requirements.lock (line 2))
+  Using cached pillow-12.3.0-cp312-cp312-macosx_11_0_arm64.whl.metadata (9.1 kB)
+Collecting sqlparse==0.6.0 (from -r /Users/mac/code/codekick/evals/benchmarks/CK-REAL-05/oracle/requirements.lock (line 3))
+  Using cached sqlparse-0.6.0-py3-none-any.whl.metadata (6.0 kB)
+Using cached asgiref-3.12.1-py3-none-any.whl (25 kB)
+Using cached pillow-12.3.0-cp312-cp312-macosx_11_0_arm64.whl (4.8 MB)
+Using cached sqlparse-0.6.0-py3-none-any.whl (50 kB)
+Installing collected packages: sqlparse, pillow, asgiref
+
+Successfully installed asgiref-3.12.1 pillow-12.3.0 sqlparse-0.6.0
+
+Exit: 0
+Command: ['/usr/bin/git', '--git-dir=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/repo', 'worktree', 'add', '--detach', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/pre', '73c5e94521c5b97e27cd2fe2d5b5c2e65f402755']
+CWD: 'None'
+Preparing worktree (detached HEAD 73c5e94)
+Updating files:  97% (6868/7009)
+Updating files:  98% (6869/7009)
+Updating files:  99% (6939/7009)
+Updating files: 100% (7009/7009)
+Updating files: 100% (7009/7009), done.
+HEAD is now at 73c5e94 Refs #36769 -- Raised SuspiciousOperation for unexpected nested tags in XML Deserializer.
+
+Exit: 0
+Command: ['/usr/bin/git', '-C', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/pre', 'apply', '/Users/mac/code/codekick/evals/benchmarks/CK-REAL-05/oracle/regression-tests.patch']
+CWD: 'None'
+
+Exit: 0
+Command: ['/usr/bin/git', '-C', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/pre', 'diff', '--name-only']
+CWD: 'None'
+tests/defer/tests.py
+
+Exit: 0
+Command: ['/usr/bin/git', '--git-dir=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/repo', 'worktree', 'add', '--detach', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/post', '040bb3eba72eb45020dd025d3f83094a0fcaf22f']
+CWD: 'None'
+Preparing worktree (detached HEAD 040bb3e)
+Updating files:  98% (6913/7009)
+Updating files:  99% (6939/7009)
+Updating files: 100% (7009/7009)
+Updating files: 100% (7009/7009), done.
+HEAD is now at 040bb3e Fixed #35442 -- Prevented N+1 queries in RelatedManager with only().
+
+Exit: 0
+Command: ['/usr/bin/git', '-C', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/post', 'diff', '--name-only']
+CWD: 'None'
+
+Exit: 0

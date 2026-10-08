@@ -1,0 +1,4 @@
+CWD=/tmp/codekick-zulip-oracles.JS2a2B/CK-REAL-02/pre
+$ git apply /Users/mac/code/codekick/evals/benchmarks/CK-REAL-02/oracle/regression.patch
+
+EXIT_CODE=0

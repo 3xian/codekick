@@ -1,0 +1,70 @@
+{
+  "original_freeze": "evals/freeze.json",
+  "original_freeze_sha256": "see file bytes; this record does not replace it",
+  "rule": "Original freeze.json was not overwritten.",
+  "compared_at": "2026-10-08",
+  "freeze_mtime": "2026-10-08 01:35:23 +0800",
+  "summary": "63 frozen files still match. Five controller files were edited after the freeze. None of those edits changed task.md, reference patches, or the commands recorded in the successful replay logs.",
+  "files": [
+    {
+      "path": "evals/benchmarks/CK-REAL-01/manifest.yaml",
+      "frozen_sha256": "da5e134b6581ba364c52832b19810521186830c06d32bbd00335cadf794baa1b",
+      "frozen_bytes": 775,
+      "current_sha256": "5b3a73406de306ac9a05dcaa84835811416728d0091c8e485729d18f0101a51c",
+      "current_bytes": 773,
+      "current_mtime": "2026-10-08 02:57:38 +0800",
+      "change": "Only status BLOCKED -> VALID. Replacing VALID with BLOCKED restores the frozen hash.",
+      "affects_actor_input_or_oracle_command": false,
+      "order": "docker-post-replay.log mtime is before this edit. Replay command is in manifest.json and the log, not this status label.",
+      "prior_run": "VALID as historical oracle evidence. Not re-executed in this audit."
+    },
+    {
+      "path": "evals/benchmarks/CK-REAL-02/manifest.yaml",
+      "frozen_sha256": "696dc0a93b47bcf370182b5b5181f22734aca996137c1613b8780c9cb581fda6",
+      "frozen_bytes": 1122,
+      "current_sha256": "8a1c112be873128139e0dce84465991c7af6acd080c42fa6a5aa4c7dc8f1d38b",
+      "current_bytes": 1120,
+      "current_mtime": "2026-10-08 03:02:41 +0800",
+      "change": "Only status BLOCKED -> VALID. Replacing VALID with BLOCKED restores the frozen hash.",
+      "affects_actor_input_or_oracle_command": false,
+      "order": "docker-post-replay.log mtime is before this edit.",
+      "prior_run": "VALID as historical oracle evidence. Not re-executed in this audit."
+    },
+    {
+      "path": "evals/benchmarks/CK-REAL-03/manifest.yaml",
+      "frozen_sha256": "86ede6564a9f023da4a6b8e15fa39362980f0eb9e11af4daf996d6317048a343",
+      "frozen_bytes": 543,
+      "current_sha256": "b6b01eca3bf6ce09a3e87a217615ef54eeb1a017fd67b9fe2d2200b272a5a0a5",
+      "current_bytes": 899,
+      "current_mtime": "2026-10-08 02:14:00 +0800",
+      "change": "Current file adds test_command and focused_test_command and sets status REPLAY_VERIFIED. The exact 543-byte predecessor was not recovered.",
+      "affects_actor_input_or_oracle_command": false,
+      "order": "Successful replay result.json mtime 2026-10-07 18:13:35Z is before the yaml mtime. The replay log command matches the current yaml test_command.",
+      "prior_run": "Oracle evidence remains the replay log, not the later yaml. Actor input task.md still matches freeze."
+    },
+    {
+      "path": "evals/benchmarks/CK-REAL-04/manifest.yaml",
+      "frozen_sha256": "d15054a5d887c9488e880282b82357e91bc0a261b83bcfd99628b359f5816fcd",
+      "frozen_bytes": 798,
+      "current_sha256": "f0501045adb684aaff4cf841cc98e0bb8295a883c0960fd15a28691c951d4e2f",
+      "current_bytes": 806,
+      "current_mtime": "2026-10-08 02:06:17 +0800",
+      "change": "Only status BLOCKED -> REPLAY_VERIFIED. Replacing REPLAY_VERIFIED with BLOCKED restores the frozen hash.",
+      "affects_actor_input_or_oracle_command": false,
+      "order": "pre-fix and post-fix replay logs are before this edit.",
+      "prior_run": "VALID as historical oracle evidence. Not re-executed in this audit."
+    },
+    {
+      "path": "evals/benchmarks/CK-REAL-04/oracle/runtime-requirements.json",
+      "frozen_sha256": "03767c21403be3c70761315a11914d99b981831f47927d7583bbefd986bea397",
+      "frozen_bytes": 181,
+      "current_sha256": "ded16b9cfb6d470ac550f4173db6886a5270b4e2d1a2c7895f5d2ae7336f9d69",
+      "current_bytes": 2788,
+      "current_mtime": "2026-10-08 02:05:56 +0800",
+      "change": "Expanded from an unrecovered 181-byte stub to the pinned linux/arm64 recipe after the replay logs were written.",
+      "affects_actor_input_or_oracle_command": false,
+      "order": "pre-fix-replay.log and post-fix-replay.log mtimes are before this file.",
+      "prior_run": "Replay evidence is the logs and manifest.json runtime image id. This JSON is controller documentation, not the actor input."
+    }
+  ]
+}

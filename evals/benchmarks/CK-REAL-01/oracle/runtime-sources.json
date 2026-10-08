@@ -1,0 +1,44 @@
+[
+  {
+    "source_path": "docs/testing/testing-with-django.md",
+    "start_line": 1,
+    "end_line": 44,
+    "reference_sha": "45f98143be706567f03b9e229d5ef8d43a2940f4",
+    "text": "# Backend Django tests\n\n## Overview\n\nZulip uses the Django framework for its Python backend. We\nuse the testing framework from\n[django.test](https://docs.djangoproject.com/en/5.0/topics/testing/)\nto test our code. We have thousands of automated tests that verify that\nour backend works as expected.\n\nAll changes to the Zulip backend code should be supported by tests. We\nenforce our testing culture during code review, and we also use\ncoverage tools to measure how well we test our code. We mostly use\ntests to prevent regressions in our code, but the tests can have\nancillary benefits such as documenting interfaces and influencing\nthe design of our software.\n\nIf you have worked on other Django projects that use unit testing, you\nwill probably find familiar patterns in Zulip's code. This document\ndescribes how to write tests for the Zulip backend, with a particular\nemphasis on areas where we have either wrapped Django's test framework\nor just done things that are kind of unique in Zulip.\n\n## Running tests\n\nOur tests live in `zerver/tests/`. You can run them with\n`./tools/test-backend`. The tests run in parallel using multiple\nthreads in your development environment, and can finish in under 30s\non a fast machine. When you are in iterative mode, you can run\nindividual tests or individual modules, following the dotted.test.name\nconvention below:\n\n```bash\ncd /srv/zulip\n./tools/test-backend zerver.tests.test_queue_worker.WorkerTest\n```\n\nThere are many command line options for running Zulip tests, such\nas a `--verbose` option. The\nbest way to learn the options is to use the online help:\n\n```bash\n./tools/test-backend --help\n```\n\n[Showing lines 1-44 of 500. Use :45 to continue]"
+  },
+  {
+    "source_path": "docs/development/setup-recommended.md",
+    "start_line": 131,
+    "end_line": 142,
+    "reference_sha": "45f98143be706567f03b9e229d5ef8d43a2940f4",
+    "text": "\n1. Launch the Ubuntu shell as an administrator and run the following command:\n\n   ```console\n   $ sudo apt update && sudo apt upgrade\n   ```\n\n1. Install dependencies with the following command:\n\n   ```console\n   $ sudo apt install rabbitmq-server memcached redis-server postgresql\n   ```\n\n[Showing lines 131-142 of 1057. Use :143 to continue]"
+  },
+  {
+    "source_path": "docs/development/setup-recommended.md",
+    "start_line": 182,
+    "end_line": 192,
+    "reference_sha": "45f98143be706567f03b9e229d5ef8d43a2940f4",
+    "text": ":::{tab-item} macOS\n:sync: os-mac\n\n1. Install [Vagrant][vagrant-dl] (latest).\n2. Install [Docker Desktop](https://docs.docker.com/desktop/mac/install/) (latest).\n\n:::{note}\nWe recommend installing the latest version of Docker Desktop. If for some\nreason you must run an older version of Docker Desktop, you might need to uncheck\n\"Use gRPC FUSE for file sharing\" to use `osxfs (legacy)` file sharing before\nattempting to provision.\n\n[Showing lines 182-192 of 1057. Use :193 to continue]"
+  },
+  {
+    "source_path": "docs/development/setup-advanced.md",
+    "start_line": 10,
+    "end_line": 26,
+    "reference_sha": "45f98143be706567f03b9e229d5ef8d43a2940f4",
+    "text": "## Installing directly on Ubuntu, Debian, CentOS, or Fedora\n\n:::{warning}\nThere is no supported uninstallation process with the direct-install\nmethod. If you want that, use [the Vagrant environment](setup-recommended.md),\nwhere you can just do `vagrant destroy` to clean up the development environment.\n:::\n\nOne can install the Zulip development environment directly on a Linux\nhost by following these instructions. Currently supported platforms\nare:\n\n- Ubuntu 22.04, 24.04, 26.04\n- Debian 12, 13\n- CentOS 7 (beta)\n- Fedora 43, 44 (beta)\n- RHEL 7 (beta)\n\n[Showing lines 10-26 of 296. Use :27 to continue]"
+  },
+  {
+    "source_path": "tools/lib/sanity_check.py",
+    "start_line": 1,
+    "end_line": 19,
+    "reference_sha": "45f98143be706567f03b9e229d5ef8d43a2940f4",
+    "text": "import os\nimport pwd\nimport sys\n\n\ndef check_venv(filename: str) -> None:\n    BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))\n    venv = os.path.realpath(os.path.join(BASE_DIR, \".venv\"))\n    if sys.prefix != venv:\n        print(f\"You need to run {filename} inside a Zulip dev environment.\")\n        user_id = os.getuid()\n        user_name = pwd.getpwuid(user_id).pw_name\n\n        print(f\"You can `source {venv}/bin/activate` to enter the development environment.\")\n\n        if user_name not in (\"vagrant\", \"zulipdev\"):\n            print()\n            print(\"If you are using Vagrant, first run `vagrant ssh` to enter the Vagrant guest.\")\n        sys.exit(1)\n\n[Showing lines 1-19 of 20. Use :20 to continue]"
+  },
+  {
+    "source_path": "tools/test-backend",
+    "start_line": 21,
+    "end_line": 35,
+    "reference_sha": "45f98143be706567f03b9e229d5ef8d43a2940f4",
+    "text": "multiprocessing.set_start_method(\"fork\")\n\nTOOLS_DIR = os.path.dirname(os.path.abspath(__file__))\nos.chdir(os.path.dirname(TOOLS_DIR))\nsys.path.insert(0, os.path.dirname(TOOLS_DIR))\n\n# check for the venv\nfrom tools.lib import sanity_check\n\nsanity_check.check_venv(__file__)\n\nimport django\nimport orjson\nimport responses\nfrom django.conf import settings\n\n[Showing lines 21-35 of 558. Use :36 to continue]"
+  }
+]

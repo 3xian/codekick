@@ -1,0 +1,9 @@
+{
+  "test": {
+    "argv": ["python", "tests/runtests.py", "--settings=test_sqlite", "--parallel=1", "--verbosity=2"],
+    "selector": {
+      "position": 5,
+      "pattern": "^[A-Za-z0-9_.]+$"
+    }
+  }
+}

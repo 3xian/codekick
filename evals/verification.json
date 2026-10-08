@@ -1,0 +1,95 @@
+{
+  "kind": "Controller evidence and documentation verification, not Candidate evaluation",
+  "canonical_manifest_identity_checks": 6,
+  "reference_parent_metadata_checks": 6,
+  "actor_task_reference_leak_checks": 6,
+  "raw_artifact_hashes_verified": 47,
+  "frozen_inputs": 68,
+  "local_markdown_links_checked": [
+    {
+      "document": "README.md",
+      "target": "evals/README.md"
+    },
+    {
+      "document": "README.md",
+      "target": "IMPROVEMENT-DECISIONS.md"
+    },
+    {
+      "document": "IMPROVEMENT-DECISIONS.md",
+      "target": "evals/results/skill-behavioral-eval.md"
+    },
+    {
+      "document": "IMPROVEMENT-DECISIONS.md",
+      "target": "evals/results/install-update.md"
+    },
+    {
+      "document": "IMPROVEMENT-DECISIONS.md",
+      "target": "evals/results/doctor.md"
+    },
+    {
+      "document": "IMPROVEMENT-DECISIONS.md",
+      "target": "evals/results/risk-router.md"
+    },
+    {
+      "document": "IMPROVEMENT-DECISIONS.md",
+      "target": "evals/results/task-state-machine.md"
+    },
+    {
+      "document": "IMPROVEMENT-DECISIONS.md",
+      "target": "evals/results/project-snapshot.md"
+    },
+    {
+      "document": "IMPROVEMENT-DECISIONS.md",
+      "target": "evals/results/diff-context.md"
+    },
+    {
+      "document": "IMPROVEMENT-DECISIONS.md",
+      "target": "evals/results/focused-test-discovery.md"
+    },
+    {
+      "document": "IMPROVEMENT-DECISIONS.md",
+      "target": "evals/results/knowledge-provenance.md"
+    }
+  ],
+  "portable_replay_smokes": [
+    {
+      "task": "CK-REAL-05",
+      "command": "/tmp/codekick-django.NJ981A/venv/bin/python evals/benchmarks/CK-REAL-05/oracle/replay.py",
+      "runner_exit_code": 0,
+      "evidence": "benchmarks/CK-REAL-05/oracle/replays/20261007T171805346057Z",
+      "pre": "FAIL: 2 failures, query count 6 versus 1; deferred field count 2 versus 3",
+      "post": "PASS: 2 tests"
+    },
+    {
+      "task": "CK-REAL-06",
+      "command": "/tmp/codekick-django.NJ981A/venv/bin/python evals/benchmarks/CK-REAL-06/oracle/replay.py",
+      "runner_exit_code": 0,
+      "evidence": "benchmarks/CK-REAL-06/oracle/replays/20261007T171805346080Z",
+      "pre": "FAIL: 3 of 6 tests; actual numeric-column CAST and SQLite SCAN",
+      "post": "PASS: 6 tests; uncast numeric equality and SQLite SEARCH USING INTEGER PRIMARY KEY"
+    }
+  ],
+  "sandbox_probe": {
+    "exit_code": 0,
+    "evidence": "actor-isolation-probe.json",
+    "workspace_read_write": "ALLOWED",
+    "controller_read": "DENIED",
+    "command_network": "DENIED"
+  },
+  "fresh_model_probe": {
+    "evidence": "actor-connectivity.json",
+    "message": "ACTOR_PROBE_OK",
+    "benchmark_task": "NOT_RUN"
+  },
+  "candidate_runs": 0,
+  "candidate_implementations": 0,
+  "accepted_candidates": 0,
+  "phase_0": "BLOCKED",
+  "limits": [
+    "Only two valid historical oracles; not the required three.",
+    "Full six-task screening not possible in the observed environment.",
+    "Full real-Actor all-channel isolation remains NOT_VERIFIED.",
+    "No Candidate net-benefit, regression or confirmation result exists.",
+    "PostgreSQL execution-plan/performance evidence for CK-REAL-06 is UNKNOWN."
+  ]
+}

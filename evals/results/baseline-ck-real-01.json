@@ -1,0 +1,24 @@
+{
+  "task_id": "CK-REAL-01",
+  "kind": "baseline-actor-run",
+  "label": "baseline-ck-real-01",
+  "status": "COMPLETED_UNSCORED",
+  "violations": [],
+  "exit_code": 0,
+  "turn_completed": true,
+  "wall_time_seconds": 281.3,
+  "tool_items_completed": 15,
+  "tool_types_observed": ["command_execution", "file_change"],
+  "usage": {"input_tokens": 314544, "output_tokens": 2131, "reasoning_output_tokens": 430, "cached_input_tokens": 286336},
+  "patch_sha256": "fc97a6d1ca17d69673ee48c310c6ba4377a45eb59f8966c5f8b18bb31572951f",
+  "production_files": ["zerver/lib/users.py"],
+  "hidden_tests": {
+    "passed": true,
+    "exit_code": 0,
+    "apply_mode": "production-files-only",
+    "selector": "zerver.tests.test_users.PermissionTest.test_not_allowed_format",
+    "tests_run": 1
+  },
+  "contamination_check": "No reference PR, commit, oracle path, or reference SHA. The existing parent method name appeared because it is already in the frozen source.",
+  "note": "One baseline run. Hidden regression passed after applying only the production change. Not a Candidate A/B or product ACCEPT."
+}

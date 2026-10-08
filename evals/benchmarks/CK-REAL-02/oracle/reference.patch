@@ -1,0 +1,395 @@
+diff --git a/zerver/actions/message_edit.py b/zerver/actions/message_edit.py
+index f123784..53eb1b0 100644
+--- a/zerver/actions/message_edit.py
++++ b/zerver/actions/message_edit.py
+@@ -45,6 +45,7 @@ from zerver.lib.message import (
+     check_user_group_mention_allowed,
+     event_recipient_ids_for_action_on_messages,
+     normalize_body,
++    should_change_visibility_policy,
+     stream_wildcard_mention_allowed,
+     topic_wildcard_mention_allowed,
+     truncate_topic,
+@@ -633,19 +634,33 @@ def update_user_topic_visibility_policies_on_move(
+     target_stream: Stream,
+     target_topic_name: str,
+     target_topic_has_messages: bool,
++    remove_orig_topic_visibility_policy: bool,
++    filter_to_user_ids: set[int] | None = None,
+ ) -> dict[UserProfile, int]:
+     stream_inaccessible_to_user_profiles: list[UserProfile] = []
+     orig_topic_user_profile_to_visibility_policy: dict[UserProfile, int] = {}
+     target_topic_user_profile_to_visibility_policy: dict[UserProfile, int] = {}
+ 
++    orig_topic_user_topics_query = get_users_with_user_topic_visibility_policy(
++        stream_being_edited.id, orig_topic_name
++    )
++    target_topic_user_topics_query = get_users_with_user_topic_visibility_policy(
++        target_stream.id, target_topic_name
++    )
++    if filter_to_user_ids is not None:
++        orig_topic_user_topics_query = orig_topic_user_topics_query.filter(
++            user_profile_id__in=filter_to_user_ids
++        )
++        target_topic_user_topics_query = target_topic_user_topics_query.filter(
++            user_profile_id__in=filter_to_user_ids
++        )
++
+     # We annotate whether each user is subscribed to the target
+     # channel, so user_has_content_access below needs no extra
+     # per-user or subscriber query.
+     assert target_stream.recipient_id is not None
+     orig_topic_user_topics = list(
+-        get_users_with_user_topic_visibility_policy(
+-            stream_being_edited.id, orig_topic_name
+-        ).annotate(
++        orig_topic_user_topics_query.annotate(
+             is_target_stream_subscriber=Exists(
+                 Subscription.objects.filter(
+                     recipient_id=target_stream.recipient_id,
+@@ -685,9 +700,7 @@ def update_user_topic_visibility_policies_on_move(
+                 orig_user_topic.visibility_policy
+             )
+ 
+-    for user_topic in get_users_with_user_topic_visibility_policy(
+-        target_stream.id, target_topic_name
+-    ):
++    for user_topic in target_topic_user_topics_query:
+         target_topic_user_profile_to_visibility_policy[user_topic.user_profile] = (
+             user_topic.visibility_policy
+         )
+@@ -723,18 +736,19 @@ def update_user_topic_visibility_policies_on_move(
+             (orig_topic_visibility_policy, target_topic_visibility_policy)
+         ].append(user_profile_with_policy)
+ 
+-    # If the messages are being moved to a stream the user
+-    # cannot access, then we treat this as the
+-    # messages/topic being deleted for this user. This is
+-    # important for security reasons; we don't want to
+-    # give users a UserTopic row in a stream they cannot
+-    # access. Remove the user topic rows for such users.
+-    bulk_do_set_user_topic_visibility_policy(
+-        stream_inaccessible_to_user_profiles,
+-        stream_being_edited,
+-        orig_topic_name,
+-        visibility_policy=UserTopic.VisibilityPolicy.INHERIT,
+-    )
++    if remove_orig_topic_visibility_policy:
++        # If the messages are being moved to a stream the user
++        # cannot access, then we treat this as the
++        # messages/topic being deleted for this user. This is
++        # important for security reasons; we don't want to
++        # give users a UserTopic row in a stream they cannot
++        # access. Remove the user topic rows for such users.
++        bulk_do_set_user_topic_visibility_policy(
++            stream_inaccessible_to_user_profiles,
++            stream_being_edited,
++            orig_topic_name,
++            visibility_policy=UserTopic.VisibilityPolicy.INHERIT,
++        )
+ 
+     # A case-only rename within the same channel resolves to the
+     # same UserTopic rows for both the original and target topic,
+@@ -762,7 +776,10 @@ def update_user_topic_visibility_policies_on_move(
+     ) in user_profiles_for_visibility_policy_pair.items():
+         orig_topic_visibility_policy, target_topic_visibility_policy = visibility_policy_pair
+ 
+-        if orig_topic_visibility_policy != UserTopic.VisibilityPolicy.INHERIT:
++        if (
++            remove_orig_topic_visibility_policy
++            and orig_topic_visibility_policy != UserTopic.VisibilityPolicy.INHERIT
++        ):
+             bulk_do_set_user_topic_visibility_policy(
+                 user_profiles,
+                 stream_being_edited,
+@@ -853,16 +870,12 @@ def apply_automatic_unmute_follow_topics_policy(
+     target_stream: Stream,
+     target_topic_name: str,
+ ) -> None:
++    visibility_policy = None
+     if (
+         user_profile.automatically_follow_topics_policy
+         == UserProfile.AUTOMATICALLY_CHANGE_VISIBILITY_POLICY_ON_INITIATION
+     ):
+-        bulk_do_set_user_topic_visibility_policy(
+-            [user_profile],
+-            target_stream,
+-            target_topic_name,
+-            visibility_policy=UserTopic.VisibilityPolicy.FOLLOWED,
+-        )
++        visibility_policy = UserTopic.VisibilityPolicy.FOLLOWED
+     elif (
+         user_profile.automatically_unmute_topics_in_muted_streams_policy
+         == UserProfile.AUTOMATICALLY_CHANGE_VISIBILITY_POLICY_ON_INITIATION
+@@ -875,12 +888,24 @@ def apply_automatic_unmute_follow_topics_policy(
+         ).first()
+ 
+         if subscription is not None and subscription.is_muted:
+-            bulk_do_set_user_topic_visibility_policy(
+-                [user_profile],
+-                target_stream,
+-                target_topic_name,
+-                visibility_policy=UserTopic.VisibilityPolicy.UNMUTED,
+-            )
++            visibility_policy = UserTopic.VisibilityPolicy.UNMUTED
++
++    # These automatic policies may only increase the user's visibility
++    # policy for the topic. In particular, the partial-move logic above
++    # may already have carried the user's FOLLOWED policy over from the
++    # original topic, and we must not downgrade that to UNMUTED.
++    if visibility_policy is not None and should_change_visibility_policy(
++        visibility_policy,
++        user_profile,
++        target_stream.id,
++        target_topic_name,
++    ):
++        bulk_do_set_user_topic_visibility_policy(
++            [user_profile],
++            target_stream,
++            target_topic_name,
++            visibility_policy=visibility_policy,
++        )
+ 
+ 
+ # This must be called already in a transaction, with a write lock on
+@@ -1348,6 +1373,7 @@ def do_update_message(
+                 target_stream=target_stream,
+                 target_topic_name=target_topic_name,
+                 target_topic_has_messages=target_topic_has_messages,
++                remove_orig_topic_visibility_policy=True,
+             )
+         )
+ 
+@@ -1359,6 +1385,21 @@ def do_update_message(
+ 
+         assert target_stream.recipient_id is not None
+ 
++        participant_user_ids_in_moved_messages = get_participant_user_ids_in_moved_messages(
++            changed_message_ids
++        )
++
++        update_user_topic_visibility_policies_on_move(
++            is_stream_edited=message_edit_request.is_stream_edited,
++            stream_being_edited=stream_being_edited,
++            orig_topic_name=orig_topic_name,
++            target_stream=target_stream,
++            target_topic_name=target_topic,
++            target_topic_has_messages=target_topic_has_messages,
++            remove_orig_topic_visibility_policy=False,
++            filter_to_user_ids=participant_user_ids_in_moved_messages,
++        )
++
+         messages_in_target_topic = messages_for_topic(
+             realm.id, target_stream.recipient_id, target_topic
+         ).exclude(id__in=[*changed_message_ids])
+diff --git a/zerver/tests/test_message_edit.py b/zerver/tests/test_message_edit.py
+index 8f41072..f64df3f 100644
+--- a/zerver/tests/test_message_edit.py
++++ b/zerver/tests/test_message_edit.py
+@@ -2853,6 +2853,62 @@ class EditMessageTest(ZulipTestCase):
+             True,
+         )
+ 
++    def test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move(self) -> None:
++        # Moving a message copies the sender's visibility policy for the
++        # original topic over to the target topic. The automatic
++        # unmute-on-initiation policy must not then downgrade an
++        # already-FOLLOWED policy to UNMUTED, since these automatic
++        # policies may only increase visibility.
++        self.login("iago")
++        iago = self.example_user("iago")
++        cordelia = self.example_user("cordelia")
++        hamlet = self.example_user("hamlet")
++
++        stream = self.make_stream("new_stream")
++        recipient = stream.recipient
++        original_topic = "original"
++        post_move = "post-move"
++
++        do_change_user_setting(
++            hamlet,
++            "automatically_unmute_topics_in_muted_streams_policy",
++            UserProfile.AUTOMATICALLY_CHANGE_VISIBILITY_POLICY_ON_INITIATION,
++            acting_user=None,
++        )
++
++        for user in [iago, cordelia, hamlet]:
++            self.subscribe(user, stream.name)
++
++        for user in [cordelia, hamlet]:
++            subscription = Subscription.objects.get(recipient=recipient, user_profile=user)
++            subscription.is_muted = True
++            subscription.save()
++
++        # Two messages in the topic, so that moving Hamlet's message is
++        # a partial move.
++        self.send_stream_message(cordelia, stream.name, topic_name=original_topic)
++        message_id = self.send_stream_message(hamlet, stream.name, topic_name=original_topic)
++
++        # Hamlet follows the original topic, so the partial-move logic
++        # copies FOLLOWED over to the target topic.
++        do_set_user_topic_visibility_policy(
++            user_profile=hamlet,
++            stream=stream,
++            topic_name=original_topic,
++            visibility_policy=UserTopic.VisibilityPolicy.FOLLOWED,
++        )
++
++        result = self.client_patch(f"/json/messages/{message_id}", {"topic": post_move})
++        self.assert_json_success(result)
++
++        # FOLLOWED is preserved on the target topic, not overwritten with
++        # UNMUTED by the automatic unmute-on-initiation policy.
++        stream_topic_target = StreamTopicTarget(stream_id=stream.id, topic_name=post_move)
++        self.assertEqual(
++            stream_topic_target.user_id_to_visibility_policy_dict().get(hamlet.id),
++            UserTopic.VisibilityPolicy.FOLLOWED,
++        )
++
+     def test_automatic_follow_policy_in_channel_with_protected_history(self) -> None:
+         self.login("iago")
+         iago = self.example_user("iago")
+diff --git a/zerver/tests/test_message_move_topic.py b/zerver/tests/test_message_move_topic.py
+index 68fee5c..99e78f2 100644
+--- a/zerver/tests/test_message_move_topic.py
++++ b/zerver/tests/test_message_move_topic.py
+@@ -758,29 +758,6 @@ class MessageMoveTopicTest(ZulipTestCase):
+         assert_is_topic_muted(cordelia, new_public_stream.id, "changed topic name", muted=True)
+         assert_is_topic_muted(aaron, new_public_stream.id, "changed topic name", muted=False)
+ 
+-        # Moving only half the messages doesn't move UserTopic records.
+-        second_message_id = self.send_stream_message(
+-            hamlet, stream_name, topic_name="changed topic name", content="Second message"
+-        )
+-        with self.assert_database_query_count(24):
+-            check_update_message(
+-                user_profile=desdemona,
+-                message_id=second_message_id,
+-                stream_id=new_public_stream.id,
+-                topic_name="final topic name",
+-                propagate_mode="change_later",
+-                send_notification_to_old_thread=False,
+-                send_notification_to_new_thread=False,
+-                content=None,
+-            )
+-
+-        assert_is_topic_muted(desdemona, new_public_stream.id, "changed topic name", muted=True)
+-        assert_is_topic_muted(cordelia, new_public_stream.id, "changed topic name", muted=True)
+-        assert_is_topic_muted(aaron, new_public_stream.id, "changed topic name", muted=False)
+-        assert_is_topic_muted(desdemona, new_public_stream.id, "final topic name", muted=False)
+-        assert_is_topic_muted(cordelia, new_public_stream.id, "final topic name", muted=False)
+-        assert_is_topic_muted(aaron, new_public_stream.id, "final topic name", muted=False)
+-
+     def test_move_topic_to_private_stream_migrates_policy_by_content_access(self) -> None:
+         # When a topic is moved to a channel, its visibility policies are
+         # migrated for exactly the users who have content access to the
+@@ -995,6 +972,109 @@ class MessageMoveTopicTest(ZulipTestCase):
+             aaron, change_all_topic_name, stream, UserTopic.VisibilityPolicy.MUTED, expected=False
+         )
+ 
++    def test_visibility_policy_partial_topic_move(self) -> None:
++        # We don't need to test each stream type variation (public, private,
++        # cross-stream, etc.) since those are already covered by the full
++        # topic move tests above. This single test verifies the two key
++        # behaviors unique to partial moves:
++        # 1. Policies on the original topic are NOT removed (remain unchanged).
++        # 2. Only moved message participant policies are updated on the target topic.
++        # This includes senders, mentioned users, reaction senders, and
++        # submessage senders in the moved messages.
++        stream_name = "Stream 123"
++        stream = self.make_stream(stream_name)
++
++        hamlet = self.example_user("hamlet")
++        cordelia = self.example_user("cordelia")
++        aaron = self.example_user("aaron")
++        othello = self.example_user("othello")
++        desdemona = self.example_user("desdemona")
++        iago = self.example_user("iago")
++
++        for user in [hamlet, cordelia, aaron, othello, desdemona, iago]:
++            self.subscribe(user, stream_name)
++
++        self.send_stream_message(
++            cordelia, stream_name, topic_name="partial move topic", content="First message"
++        )
++        second_message_id = self.send_stream_message(
++            hamlet,
++            stream_name,
++            topic_name="partial move topic",
++            content=f"Second message @**{aaron.full_name}**",
++        )
++
++        check_add_reaction(
++            user_profile=desdemona,
++            message_id=second_message_id,
++            emoji_name="smile",
++            emoji_code=None,
++            reaction_type=None,
++        )
++        do_add_submessage(
++            realm=iago.realm,
++            sender_id=iago.id,
++            message_id=second_message_id,
++            msg_type="whatever",
++            content='"stuff"',
++        )
++
++        # Distribute all four visibility policies among the participants of the moved message:
++        # hamlet (sender) -- UNMUTED, aaron (mentioned) -- MUTED, iago (submessage) -- FOLLOWED,
++        # desdemona (reaction) -- INHERIT (by default).
++        for user, policy in [
++            (hamlet, UserTopic.VisibilityPolicy.UNMUTED),
++            (aaron, UserTopic.VisibilityPolicy.MUTED),
++            (iago, UserTopic.VisibilityPolicy.FOLLOWED),
++        ]:
++            set_topic_visibility_policy(user, [[stream_name, "partial move topic"]], policy)
++
++        # Non-participants cordelia (only on first message) and othello (no stake in moved message)
++        # have MUTED on the original topic.
++        for user in [cordelia, othello]:
++            set_topic_visibility_policy(
++                user, [[stream_name, "partial move topic"]], UserTopic.VisibilityPolicy.MUTED
++            )
++
++        with self.assert_database_query_count(33):
++            check_update_message(
++                user_profile=hamlet,
++                message_id=second_message_id,
++                stream_id=None,
++                topic_name="final topic name",
++                propagate_mode="change_later",
++                send_notification_to_old_thread=False,
++                send_notification_to_new_thread=False,
++                content=None,
++            )
++
++        # Visibility policy for all users on the original topic should remain unchanged.
++        for user, policy in [
++            (hamlet, UserTopic.VisibilityPolicy.UNMUTED),
++            (aaron, UserTopic.VisibilityPolicy.MUTED),
++            (iago, UserTopic.VisibilityPolicy.FOLLOWED),
++            (desdemona, UserTopic.VisibilityPolicy.INHERIT),
++            (cordelia, UserTopic.VisibilityPolicy.MUTED),
++            (othello, UserTopic.VisibilityPolicy.MUTED),
++        ]:
++            self.assert_has_visibility_policy(user, "partial move topic", stream, policy)
++
++        # Moved message participants should have their policy on the target topic.
++        for user, policy in [
++            (hamlet, UserTopic.VisibilityPolicy.UNMUTED),
++            (aaron, UserTopic.VisibilityPolicy.MUTED),
++            (iago, UserTopic.VisibilityPolicy.FOLLOWED),
++            (desdemona, UserTopic.VisibilityPolicy.INHERIT),
++        ]:
++            self.assert_has_visibility_policy(user, "final topic name", stream, policy)
++
++        # cordelia (only on first message) and othello (no stake in moved message)
++        # should NOT have policies on the target topic.
++        for user in [cordelia, othello]:
++            self.assert_has_visibility_policy(
++                user, "final topic name", stream, UserTopic.VisibilityPolicy.INHERIT
++            )
++
+     def test_merge_user_topic_states_on_move_messages(self) -> None:
+         stream_name = "Stream 123"
+         stream = self.make_stream(stream_name)

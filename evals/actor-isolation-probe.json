@@ -1,0 +1,27 @@
+{
+  "kind": "deterministic sandbox command probe, not a benchmark Actor run",
+  "command": [
+    "npx",
+    "--yes",
+    "@openai/codex",
+    "sandbox",
+    "--permission-profile",
+    "codekick-actor",
+    "-C",
+    "/tmp/codekick-actor-probe.10fNgY",
+    "-c",
+    "default_permissions=\"codekick-actor\"",
+    "-c",
+    "permissions.codekick-actor.filesystem={\":minimal\"=\"read\",\":workspace_roots\"={\".\"=\"write\"},\"/Users/mac/code/codekick\"=\"deny\",\"/tmp/codekick-controller-probe.VKVmTD\"=\"deny\"}",
+    "-c",
+    "permissions.codekick-actor.network.enabled=false",
+    "--",
+    "/usr/bin/ruby",
+    "--disable-gems",
+    "-e",
+    "require 'json'; require 'socket'\nr = {}\nr['actor_read'] = File.read('visible.txt').strip\nFile.write('actor-written.txt', \"WRITE_ALLOWED\\n\")\nr['actor_write'] = File.read('actor-written.txt').strip\n{'hidden_controller'=>'/tmp/codekick-controller-probe.VKVmTD/hidden.txt', 'product_controller'=>'/Users/mac/code/codekick/evals/baseline.json'}.each do |label,path|\n  begin\n    File.read(path)\n    r[label] = 'UNEXPECTED_READ_ALLOWED'\n  rescue Errno::EPERM, Errno::EACCES\n    r[label] = 'DENIED'\n  rescue => e\n    r[label] = e.class.to_s + ':' + e.message\n  end\nend\nbegin\n  s = Socket.tcp('1.1.1.1', 443, connect_timeout: 2)\n  s.close\n  r['network'] = 'UNEXPECTED_CONNECTION_ALLOWED'\nrescue Errno::EPERM, Errno::EACCES\n  r['network'] = 'DENIED'\nrescue => e\n  r['network'] = e.class.to_s + ':' + e.message\nend\nputs JSON.generate(r)\n"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"actor_read\":\"ACTOR_VISIBLE_SENTINEL\",\"actor_write\":\"WRITE_ALLOWED\",\"hidden_controller\":\"DENIED\",\"product_controller\":\"DENIED\",\"network\":\"DENIED\"}\n",
+  "stderr": ""
+}

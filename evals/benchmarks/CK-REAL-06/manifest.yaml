@@ -1,0 +1,44 @@
+{
+  "id": "CK-REAL-06",
+  "repo": "django/django",
+  "pre_fix_sha": "b25bc2441827a31b5629e9f79ad7296b992648a2",
+  "reference_pr": 20538,
+  "reference_merge_sha": "4cecf3039586ea738afafb9a28c946bff42c37c1",
+  "language": "Python",
+  "task_class": "admin exact lookup/index performance",
+  "test_command": [
+    "<isolated-python>",
+    "tests/runtests.py",
+    "admin_changelist.tests.ChangeListTests.test_exact_lookup_with_invalid_value",
+    "admin_changelist.tests.ChangeListTests.test_exact_lookup_mixed_terms",
+    "admin_changelist.tests.ChangeListTests.test_exact_lookup_with_more_lenient_formfield",
+    "admin_changelist.tests.ChangeListTests.test_exact_lookup_validates_each_field_independently",
+    "admin_changelist.tests.ChangeListTests.test_search_with_exact_lookup_for_non_string_field",
+    "admin_changelist.test_codekick_index.ExactSearchIndexTests.test_numeric_primary_key_search_shape",
+    "--settings=test_sqlite",
+    "--parallel=1",
+    "--verbosity=2"
+  ],
+  "focused_test_command": [
+    "<isolated-python>",
+    "tests/runtests.py",
+    "admin_changelist.tests.ChangeListTests.test_exact_lookup_with_invalid_value",
+    "admin_changelist.tests.ChangeListTests.test_exact_lookup_mixed_terms",
+    "admin_changelist.tests.ChangeListTests.test_exact_lookup_with_more_lenient_formfield",
+    "admin_changelist.tests.ChangeListTests.test_exact_lookup_validates_each_field_independently",
+    "admin_changelist.tests.ChangeListTests.test_search_with_exact_lookup_for_non_string_field",
+    "admin_changelist.test_codekick_index.ExactSearchIndexTests.test_numeric_primary_key_search_shape",
+    "--settings=test_sqlite",
+    "--parallel=1",
+    "--verbosity=2"
+  ],
+  "status": "VALID",
+  "evidence_manifest": "manifest.json",
+  "actor_input": "task.md",
+  "actor_run_status": "NOT_RUN",
+  "controller_only": [
+    "manifest.yaml",
+    "manifest.json",
+    "oracle/"
+  ]
+}

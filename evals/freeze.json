@@ -1,0 +1,278 @@
+{
+  "baseline_codekick_commit": "63afb2c9258bff513da51f7f0b3a9735b58de64b",
+  "scope": "Frozen Controller inputs only; no Candidate accepted. Regenerating inputs requires explicit re-freeze before new runs. Actor task statements manually reviewed and mechanically checked for reference IDs/SHAs/changed paths. Not a complete Actor isolation proof. SHA-256 covers raw file bytes, including original HTTP line endings.",
+  "files": {
+    "evals/baseline.json": {
+      "sha256": "f10dfec5f48d1d0b0a1a0fbf766f73f7d149fd6245fb1a8104dff0784037d436",
+      "bytes": 1127
+    },
+    "evals/benchmarks/CK-REAL-01/manifest.yaml": {
+      "sha256": "da5e134b6581ba364c52832b19810521186830c06d32bbd00335cadf794baa1b",
+      "bytes": 775
+    },
+    "evals/benchmarks/CK-REAL-01/oracle/original-issue.json": {
+      "sha256": "6bd664bb0ded34ee92d0cbe96359141ef50e3c15ed4b9551ffa77e63475b3e03",
+      "bytes": 5481
+    },
+    "evals/benchmarks/CK-REAL-01/oracle/reference-commit.json": {
+      "sha256": "5d3218f65c3ea05475b95ffadf6bff456d09da713e4fa4ceaa7a2ee9e9c216f4",
+      "bytes": 5984
+    },
+    "evals/benchmarks/CK-REAL-01/oracle/reference-pr.json": {
+      "sha256": "d705e8e263eca8f5c8af65e63495242b56d6625d87cdd920caf0e9a034a38824",
+      "bytes": 21870
+    },
+    "evals/benchmarks/CK-REAL-01/oracle/reference.patch": {
+      "sha256": "b687de29b5b41aa2a46719a474384cf4eda9985bdd52d2823f9990b4717aa491",
+      "bytes": 1319
+    },
+    "evals/benchmarks/CK-REAL-01/oracle/regression.patch": {
+      "sha256": "3bf2c656a9600968349249078c1ddd32b21bf2a3c1c0f03df18c78d5aeb413e8",
+      "bytes": 810
+    },
+    "evals/benchmarks/CK-REAL-01/oracle/runtime-sources.json": {
+      "sha256": "d684cbb4b392e9dd5ab12d01d07f21a4bddb4caae498c7b5713992dcb0788f70",
+      "bytes": 5525
+    },
+    "evals/benchmarks/CK-REAL-01/task.md": {
+      "sha256": "fe273d07642984a81d7237efa198c839db64ad873642b78ddf0403b71b9f2ad8",
+      "bytes": 971
+    },
+    "evals/benchmarks/CK-REAL-02/manifest.yaml": {
+      "sha256": "696dc0a93b47bcf370182b5b5181f22734aca996137c1613b8780c9cb581fda6",
+      "bytes": 1122
+    },
+    "evals/benchmarks/CK-REAL-02/oracle/original-issue.json": {
+      "sha256": "c7481e82b50bf353527732374e394535530d56bae9755b01ddf5cc4d5ec45464",
+      "bytes": 5626
+    },
+    "evals/benchmarks/CK-REAL-02/oracle/reference-commit.json": {
+      "sha256": "6a0816253c07c2073f143d5dd96ff4fce850fd1d4ca9811e60cedab6df66731f",
+      "bytes": 23567
+    },
+    "evals/benchmarks/CK-REAL-02/oracle/reference-pr.json": {
+      "sha256": "2a5ab3df6004e4f2ff4db5138a83e9eb925a687cbee00678f3512c8af141c218",
+      "bytes": 23725
+    },
+    "evals/benchmarks/CK-REAL-02/oracle/reference.patch": {
+      "sha256": "15f98eddf2dfd40141067e246f3a65815ced762633ebbf92ee63c7d5b0da3468",
+      "bytes": 17893
+    },
+    "evals/benchmarks/CK-REAL-02/oracle/regression.patch": {
+      "sha256": "45d89ec5f0d5cb4b6a590820bdac66f01900eeb63dbe7097db6f17c79c61d266",
+      "bytes": 9903
+    },
+    "evals/benchmarks/CK-REAL-02/oracle/runtime-sources.json": {
+      "sha256": "2a09ee6ce099d1c9ed160ff113061b24514b13479593bd425db7e0c7d41f3f1f",
+      "bytes": 5525
+    },
+    "evals/benchmarks/CK-REAL-02/task.md": {
+      "sha256": "cbd91090a560b396d880187e271e1911325b88836f82403e9667f535fa1bf5fa",
+      "bytes": 1623
+    },
+    "evals/benchmarks/CK-REAL-03/manifest.yaml": {
+      "sha256": "86ede6564a9f023da4a6b8e15fa39362980f0eb9e11af4daf996d6317048a343",
+      "bytes": 543
+    },
+    "evals/benchmarks/CK-REAL-03/oracle/gitlab-release-fixture.json": {
+      "sha256": "94037adb4c3f165432b172eb859f6f03ece63772e8442f51ca8ea797ae81ac7f",
+      "bytes": 7274
+    },
+    "evals/benchmarks/CK-REAL-03/oracle/go-toolchain-metadata.json": {
+      "sha256": "0a2243d732d4f421b4977a493c15c34533cefedc004469a4e5bea3c4a9e6847c",
+      "bytes": 232
+    },
+    "evals/benchmarks/CK-REAL-03/oracle/issue-linked-releases.json": {
+      "sha256": "7d443bcb60d410cdc98d7a8fb737bc3e4336aa94e98ab5fdbc06f5c6968f78b7",
+      "bytes": 167549
+    },
+    "evals/benchmarks/CK-REAL-03/oracle/issue-log.json": {
+      "sha256": "fe0f1a840d235078912e56864eb7b4429dc1f6316842ee5a0f90b09018b66c40",
+      "bytes": 10147
+    },
+    "evals/benchmarks/CK-REAL-03/oracle/issue.json": {
+      "sha256": "10a47b3f18e0d43077b654522929bd60aaca99f8923a701e6100e7b160d38307",
+      "bytes": 5774
+    },
+    "evals/benchmarks/CK-REAL-03/oracle/reference-commit.json": {
+      "sha256": "8c34fe77ac7eb5a1a3c9e4ca30007e3f47d6fb07de7cb265856af7c248ba51fa",
+      "bytes": 9409
+    },
+    "evals/benchmarks/CK-REAL-03/oracle/reference-pr.json": {
+      "sha256": "73d3eb36b239dc2d81d8c508b62027c95827ed86cdefb709ad6a50013f3ba98a",
+      "bytes": 19993
+    },
+    "evals/benchmarks/CK-REAL-03/oracle/reference.patch": {
+      "sha256": "c1b61d99353722ab16429020e1a327c2641415620b2df786c4352531772085fe",
+      "bytes": 3632
+    },
+    "evals/benchmarks/CK-REAL-03/task.md": {
+      "sha256": "43a194c0ccced1bc9b63d978f822ab11b84525f04332eafdb3a81ef31c4e2f64",
+      "bytes": 967
+    },
+    "evals/benchmarks/CK-REAL-04/manifest.yaml": {
+      "sha256": "d15054a5d887c9488e880282b82357e91bc0a261b83bcfd99628b359f5816fcd",
+      "bytes": 798
+    },
+    "evals/benchmarks/CK-REAL-04/oracle/pull-request.json": {
+      "sha256": "9610fd225510a57128be9f811db463e64def1e32a6b6f3a23379838dc18c6e98",
+      "bytes": 18059
+    },
+    "evals/benchmarks/CK-REAL-04/oracle/reference-commit.json": {
+      "sha256": "3ac5bc71b6b78ebd9a43905492c8f6325deb11f597de6dd0e6c22bd5ddd2f80b",
+      "bytes": 9198
+    },
+    "evals/benchmarks/CK-REAL-04/oracle/reference.patch": {
+      "sha256": "10d037d8c8460d62998c20c43b90d6ef13c0f4e0a4d748a9caa6b79c928f62ba",
+      "bytes": 2065
+    },
+    "evals/benchmarks/CK-REAL-04/oracle/regression.patch": {
+      "sha256": "05dc1894b7a489aed43315b82464cda1e0a56705eb79e3dbf162548de1ecddb8",
+      "bytes": 1498
+    },
+    "evals/benchmarks/CK-REAL-04/oracle/runtime-requirements.json": {
+      "sha256": "03767c21403be3c70761315a11914d99b981831f47927d7583bbefd986bea397",
+      "bytes": 181
+    },
+    "evals/benchmarks/CK-REAL-04/task.md": {
+      "sha256": "325a1ac32b59289f7a1861cebc945f7e5776ebc39801a17349225b1cc699195c",
+      "bytes": 1065
+    },
+    "evals/benchmarks/CK-REAL-05/manifest.yaml": {
+      "sha256": "f9190cf968fe27e568779668385b774942e4326ff87d0241fc31e9e82c5b8b18",
+      "bytes": 1003
+    },
+    "evals/benchmarks/CK-REAL-05/oracle/commit.json": {
+      "sha256": "b4f95f5d4525a883542774bae3a11307c3e306f2fcde1d8d7e68d652a884a292",
+      "bytes": 7862
+    },
+    "evals/benchmarks/CK-REAL-05/oracle/pr.diff": {
+      "sha256": "bee9925087bd9c5b37c4fafd95b7f36e5af062dc96e86ffd51f537ee0597b235",
+      "bytes": 3478
+    },
+    "evals/benchmarks/CK-REAL-05/oracle/pr.json": {
+      "sha256": "6386fd12385fb18c19d2ec7f505518e236ae5c87a21cfa89f4e0ec06e316d5b7",
+      "bytes": 18361
+    },
+    "evals/benchmarks/CK-REAL-05/oracle/reference.diff": {
+      "sha256": "1fcfd78c8a5969f47796d03da2c01ebaca19bbcc0a959c692e3125676c629959",
+      "bytes": 3528
+    },
+    "evals/benchmarks/CK-REAL-05/oracle/regression-tests.patch": {
+      "sha256": "4bf8704157de727bd148fc09b922462d944976d40d88f63ebd81eaf14fa5354d",
+      "bytes": 1512
+    },
+    "evals/benchmarks/CK-REAL-05/oracle/replay.py": {
+      "sha256": "d5a84ee20dd7d1a4444535a56bbc16fd61995ff10ccd4aa1cb0e22107ab0848f",
+      "bytes": 4663
+    },
+    "evals/benchmarks/CK-REAL-05/oracle/requirements.lock": {
+      "sha256": "a97f6471a28583b6cb17733ec42f360814310ee41aab73a0353e016b3bf5eb60",
+      "bytes": 47
+    },
+    "evals/benchmarks/CK-REAL-05/oracle/sources/post/django/db/models/query.py": {
+      "sha256": "36645a6ab33579e100a234cc3951dd9bc8893e4c8dc5df29a2c1b88059a91134",
+      "bytes": 111966
+    },
+    "evals/benchmarks/CK-REAL-05/oracle/sources/post/tests/defer/tests.py": {
+      "sha256": "3b9bdd7e207dd21785ea072bf9e46d69b8f06dee2a8a4c8532e45fe7efb9a451",
+      "bytes": 17596
+    },
+    "evals/benchmarks/CK-REAL-05/oracle/sources/pre/django/db/models/query.py": {
+      "sha256": "37c80fb12c57aab4dfabaffffba4d6da34953a0d0930bc1d66a0655d00b502cb",
+      "bytes": 111746
+    },
+    "evals/benchmarks/CK-REAL-05/oracle/sources/pre/tests/defer/tests.py": {
+      "sha256": "78de9298774df549a73834179bd6d152912bd836b338e6401e608885ea84d957",
+      "bytes": 17250
+    },
+    "evals/benchmarks/CK-REAL-05/oracle/ticket.html": {
+      "sha256": "a93ad2f4a3a643ae4cf3dc32b9b129b7ecf11eb282dae088838c39abce2bc7a7",
+      "bytes": 2084
+    },
+    "evals/benchmarks/CK-REAL-05/oracle/ticket.rss": {
+      "sha256": "84d06bc512a9b5d9209e4fcd8742fa4b929d60c5a58f8fb6804d832b909e6b71",
+      "bytes": 63792
+    },
+    "evals/benchmarks/CK-REAL-05/task.md": {
+      "sha256": "bef301bd8071a4b6db36b5731eb92ab6800ab53de523b444b963278af6a615d3",
+      "bytes": 1147
+    },
+    "evals/benchmarks/CK-REAL-06/manifest.yaml": {
+      "sha256": "de07222ad9cede23193fbd9af9548d1a1c21aad9e966eee3cd76f829fa1d88a6",
+      "bytes": 1893
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/commit.json": {
+      "sha256": "71a19162703a8b0cb00b3c245229eb82eca1382f2a8500a34ad901afd9633914",
+      "bytes": 15158
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/pr.diff": {
+      "sha256": "e211397316d08fe156a41009b848ae2ac5528cf5b972af017b0e02ac97672002",
+      "bytes": 10147
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/pr.json": {
+      "sha256": "25a709c524adf82673ac92fb614544699b75e5c66246c26e4ed8d99cf77cd5f8",
+      "bytes": 17896
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/reference.diff": {
+      "sha256": "b2b1aaa62335eaa107241596ce168596d750124ae28e849ecdd7352f84c47bfb",
+      "bytes": 9694
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/regression-tests.patch": {
+      "sha256": "7c49183f4345dd16eb4363c649d7f7ef454971324c0bdbd165cf6f12fca95628",
+      "bytes": 4359
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/replay.py": {
+      "sha256": "d5a84ee20dd7d1a4444535a56bbc16fd61995ff10ccd4aa1cb0e22107ab0848f",
+      "bytes": 4663
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/requirements.lock": {
+      "sha256": "a97f6471a28583b6cb17733ec42f360814310ee41aab73a0353e016b3bf5eb60",
+      "bytes": 47
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/sources/post/django/contrib/admin/options.py": {
+      "sha256": "f972bb0e6eb720231a0cc044b7383b1fba868c0c462fa357392c626684220784",
+      "bytes": 101939
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/sources/post/tests/admin_changelist/models.py": {
+      "sha256": "477363e2ac4cc19f276cd6e4387dae3d5264608a560af23f339a6916c63ca2a8",
+      "bytes": 3730
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/sources/post/tests/admin_changelist/tests.py": {
+      "sha256": "6a1aaf22423ff64962e6e8984dd8b2d3f2bc36248a5397ae0930a5ddd0dbd03c",
+      "bytes": 101215
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/sources/pre/django/contrib/admin/options.py": {
+      "sha256": "63868378c1775338716679c21a1a04ef27827df1920288cd3bb72d1213f1f573",
+      "bytes": 101284
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/sources/pre/tests/admin_changelist/models.py": {
+      "sha256": "08284e973a528a3b4f0f10a018b9cd2509de3052ae7e284bad3c087231a44142",
+      "bytes": 3500
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/sources/pre/tests/admin_changelist/tests.py": {
+      "sha256": "029b1f0db252f0b586d202a8d42780d3fac31a7d7c0ce68a10474deec87dd7fd",
+      "bytes": 98131
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/test_codekick_index.py": {
+      "sha256": "72c2540e726a34e8edf804e482e871726cb7b453cc44908a60cb2d2811f574bd",
+      "bytes": 1562
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/ticket.html": {
+      "sha256": "5df18a8f48a220bb9e595c3cbf380cc2fa553f61192a4739818c7b1e82d1b10f",
+      "bytes": 1347
+    },
+    "evals/benchmarks/CK-REAL-06/oracle/ticket.rss": {
+      "sha256": "eee067511071399bdc6e85b552d1a9c699320e24e38a87e16deefdffbe1df31e",
+      "bytes": 22365
+    },
+    "evals/benchmarks/CK-REAL-06/task.md": {
+      "sha256": "9513f7a33d9820aa7ba6e2c2e80b7a5149e4f727305a814c4fda54f77800b801",
+      "bytes": 1273
+    },
+    "evals/protocol.md": {
+      "sha256": "a2dcbf1c508470d0c688a3d5ad8c6ad70db9e1a1d294b466e08f6844933f4e9f",
+      "bytes": 25782
+    }
+  }
+}

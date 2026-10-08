@@ -1,0 +1,86 @@
+PATH=/Users/mac/code/codekick/.venv/bin:/Users/mac/.local/bin:/Users/mac/.mimocode/bin:/Users/mac/.grok/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/Users/mac/.cargo/bin:/Applications/Tern.app/Contents/MacOS:/Users/mac/.docker/bin
+ruby=/usr/bin/ruby
+bundle=/usr/bin/bundle
+gem=/usr/bin/gem
+rbenv=None
+asdf=None
+mise=None
+ruby-build=None
+postgres=None
+pg_ctl=None
+initdb=None
+psql=None
+pg_isready=None
+redis-server=None
+redis-cli=None
+docker=/opt/homebrew/bin/docker
+brew=/opt/homebrew/bin/brew
+clang=/usr/bin/clang
+make=/usr/bin/make
+$ ruby --version
+ruby 2.6.10p210 (2022-04-12 revision 67958) [universal.arm64e-darwin25]
+
+exit_code=0
+$ bundle --version
+No entry for terminal type "xterm-kitty";
+using dumb terminal settings.
+Bundler version 1.17.2
+
+exit_code=0
+$ gem env
+RubyGems Environment:
+  - RUBYGEMS VERSION: 3.0.3.1
+  - RUBY VERSION: 2.6.10 (2022-04-12 patchlevel 210) [universal.arm64e-darwin25]
+  - INSTALLATION DIRECTORY: /Library/Ruby/Gems/2.6.0
+  - USER INSTALLATION DIRECTORY: /Users/mac/.gem/ruby/2.6.0
+  - RUBY EXECUTABLE: /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/bin/ruby
+  - GIT EXECUTABLE: /usr/bin/git
+  - EXECUTABLE DIRECTORY: /usr/local/bin
+  - SPEC CACHE DIRECTORY: /Users/mac/.gem/specs
+  - SYSTEM CONFIGURATION DIRECTORY: /Library/Ruby/Site
+  - RUBYGEMS PLATFORMS:
+    - ruby
+    - universal-darwin-25
+  - GEM PATHS:
+     - /Library/Ruby/Gems/2.6.0
+     - /Users/mac/.gem/ruby/2.6.0
+     - /System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/gems/2.6.0
+  - GEM CONFIGURATION:
+     - :update_sources => true
+     - :verbose => true
+     - :backtrace => false
+     - :bulk_threshold => 1000
+  - REMOTE SOURCES:
+     - https://rubygems.org/
+  - SHELL PATH:
+     - /Users/mac/code/codekick/.venv/bin
+     - /Users/mac/.local/bin
+     - /Users/mac/.mimocode/bin
+     - /Users/mac/.grok/bin
+     - /usr/local/bin
+     - /System/Cryptexes/App/usr/bin
+     - /usr/bin
+     - /bin
+     - /usr/sbin
+     - /sbin
+     - /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin
+     - /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin
+     - /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
+     - /pkg/env/global/bin
+     - /Library/Apple/usr/bin
+     - /opt/homebrew/bin
+     - /Users/mac/.cargo/bin
+     - /Applications/Tern.app/Contents/MacOS
+     - /Users/mac/.docker/bin
+
+exit_code=0
+$ docker info
+Client:
+ Version:    29.7.2
+ Context:    desktop-linux
+ Debug Mode: false
+
+Server:
+Cannot connect to the Docker daemon at unix:///Users/mac/.docker/run/docker.sock. Is the docker daemon running?
+
+exit_code=1

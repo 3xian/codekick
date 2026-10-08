@@ -1,0 +1,4 @@
+$ docker create --name codekick-zulip02-post-oracle --network none --memory 3g --cpus 2 --mount type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-02/post,target=/workspace sha256:00a439bffd9d631bca77124823413d29329db133ebc92a558c96707afc7f5de9
+0a197ffab6b4c8b88de90a81e3e8f81ebc85d771ca4d7752bc3357cd3104dba6
+
+EXIT_CODE=0

@@ -1,0 +1,4 @@
+$ docker start codekick-zulip01-pre-recovered
+codekick-zulip01-pre-recovered
+
+EXIT_CODE=0

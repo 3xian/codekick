@@ -1,0 +1,228 @@
+$ docker exec codekick-zulip02-post-oracle /usr/local/bin/codekick-prepare-workspace
+pg_controldata: fatal: could not read file "/var/lib/postgresql/14/main/global/pg_control": read 0 of 296
+Creating new PostgreSQL cluster 14/main ...
+/usr/lib/postgresql/14/bin/initdb -D /var/lib/postgresql/14/main --auth-local peer --auth-host scram-sha-256 --no-instructions
+The files belonging to this database system will be owned by user "postgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "C.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /var/lib/postgresql/14/main ... ok
+creating subdirectories ... ok
+selecting dynamic shared memory implementation ... posix
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting default time zone ... Etc/UTC
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+Ver Cluster Port Status Owner    Data directory              Log file
+14  main    5432 down   postgres /var/lib/postgresql/14/main /var/log/postgresql/postgresql-14-main.log
+ * Starting PostgreSQL 14 database server
+   ...done.
+Starting redis-server: redis-server.
+Starting memcached: memcached.
+Setting a more secure RabbitMQ distribution magic cookie
+ * Starting RabbitMQ Messaging Server rabbitmq-server
+   ...done.
+Ping succeeded
+Deleting user "zulip" ...
+Error:
+User "zulip" does not exist
+Deleting user "zulip" ...
+Error:
+User "zulip" does not exist
+Deleting user "guest" ...
+Adding user "zulip" ...
+Done. Don't forget to grant the user permissions to some virtual hosts! See 'rabbitmqctl help set_permissions' to learn more.
+Setting tags for user "zulip" to [administrator] ...
+Setting permissions for user "zulip" in vhost "/" ...
+sudo: unable to resolve host 0a197ffab6b4: Temporary failure in name resolution
++ POSTGRES_USER=postgres
+++ uname
++ '[' Linux = OpenBSD ']'
++ ROOT_POSTGRES=(sudo -i -u "$POSTGRES_USER" psql)
++ DEFAULT_DB=
+++ uname
++ '[' Linux = Darwin ']'
+++ uname
++ '[' Linux = OpenBSD ']'
+++ whoami
++ VAGRANTUSERNAME=vagrant
++++ dirname tools/setup/postgresql-init-dev-db
+++ tools/setup/../../scripts/get-django-setting LOCAL_DATABASE_PASSWORD
++ PASSWORD=2bbca192290dae60bb0a3c55cea1ca9087b7183cd4bba88b309cb75c5322211b
++ DBNAME_BASE=zulip_base
++ pg_isready -U postgres -q
+++++ dirname tools/setup/postgresql-init-dev-db
++++ readlink -f tools/setup/../../scripts/lib/zulip_tools.py
+++ /workspace/scripts/lib/zulip_tools.py get_dev_uuid
++ uuid_var_path=/workspace/var/fc920d11-f8d9-4639-9b66-b761b956df9c
++ rm -f /workspace/var/fc920d11-f8d9-4639-9b66-b761b956df9c/migration_status_dev
++ sudo -i -u postgres psql -v ON_ERROR_STOP=1 -e ''
+sudo: unable to resolve host 0a197ffab6b4: Temporary failure in name resolution
+DO $$BEGIN
+    CREATE USER zulip;
+EXCEPTION WHEN duplicate_object THEN
+    RAISE NOTICE 'zulip user already exists';
+END$$;
+DO
+ALTER USER zulip PASSWORD '2bbca192290dae60bb0a3c55cea1ca9087b7183cd4bba88b309cb75c5322211b';
+ALTER ROLE
+ALTER USER zulip CREATEDB;
+ALTER ROLE
++ '[' zulip '!=' vagrant ']'
++ sudo -i -u postgres psql -v ON_ERROR_STOP=1 -e ''
+sudo: unable to resolve host 0a197ffab6b4: Temporary failure in name resolution
+DO $$BEGIN
+        CREATE USER "vagrant"; 
+    EXCEPTION WHEN duplicate_object THEN
+        RAISE NOTICE 'vagrant user already exists';
+    END$$;
+DO
+GRANT zulip TO "vagrant";
+GRANT ROLE
++ sudo -i -u postgres psql -v ON_ERROR_STOP=1 -e ''
+sudo: unable to resolve host 0a197ffab6b4: Temporary failure in name resolution
+ALTER ROLE "vagrant" SET search_path TO zulip,public;
+ALTER ROLE
++ umask go-rw
++ PGPASS_PREFIX='*:*:*:zulip:'
++ PGPASS_ESCAPED_PREFIX='*:\*:\*:zulip:'
++ grep -q '*:\*:\*:zulip:' /home/vagrant/.pgpass
++ sed -i 's/*:\*:\*:zulip:.*$/*:*:*:zulip:2bbca192290dae60bb0a3c55cea1ca9087b7183cd4bba88b309cb75c5322211b/' /home/vagrant/.pgpass
++ chmod go-rw /home/vagrant/.pgpass
+++ dirname tools/setup/postgresql-init-dev-db
++ PGHOST=localhost
++ PGUSER=zulip
++ tools/setup/../../scripts/setup/terminate-psql-sessions zulip zulip_base
+ pg_terminate_backend 
+----------------------
+(0 rows)
+
++ psql -v ON_ERROR_STOP=1 -e -h localhost postgres zulip
+DROP DATABASE IF EXISTS zulip;
+NOTICE:  database "zulip" does not exist, skipping
+NOTICE:  database "zulip_base" does not exist, skipping
+DROP DATABASE
+DROP DATABASE IF EXISTS zulip_base;
+DROP DATABASE
+CREATE DATABASE zulip_base
+CREATE DATABASE
++ sudo -i -u postgres psql -v ON_ERROR_STOP=1 -e zulip_base
+sudo: unable to resolve host 0a197ffab6b4: Temporary failure in name resolution
+CREATE EXTENSION pgroonga;
+CREATE EXTENSION
+SELECT unnest(
+    CASE WHEN current_setting('server_version_num')::integer >= 150000
+        AND current_setting('pgroonga.enable_wal', TRUE) = 'on' IS NOT TRUE THEN
+        ARRAY['ALTER SYSTEM SET pgroonga.enable_wal = ''on''', 'SELECT pg_reload_conf()']
+    END
+) 
++ psql -v ON_ERROR_STOP=1 -e -h localhost postgres zulip
+CREATE DATABASE zulip TEMPLATE zulip_base;
+CREATE DATABASE
+++ dirname tools/setup/postgresql-init-dev-db
++ tools/setup/../../scripts/setup/flush-memcached
++ echo 'Database created'
+Database created
+sudo: unable to resolve host 0a197ffab6b4: Temporary failure in name resolution
++ set -e
+++ dirname tools/setup/postgresql-init-test-db
++ tools/setup/postgresql-init-dev-db test
++ POSTGRES_USER=postgres
+++ uname
++ '[' Linux = OpenBSD ']'
++ ROOT_POSTGRES=(sudo -i -u "$POSTGRES_USER" psql)
++ DEFAULT_DB=
+++ uname
++ '[' Linux = Darwin ']'
+++ uname
++ '[' Linux = OpenBSD ']'
+++ whoami
++ VAGRANTUSERNAME=vagrant
++++ dirname tools/setup/postgresql-init-dev-db
+++ tools/setup/../../scripts/get-django-setting LOCAL_DATABASE_PASSWORD
++ PASSWORD=2bbca192290dae60bb0a3c55cea1ca9087b7183cd4bba88b309cb75c5322211b
++ DBNAME_BASE=zulip_test_base
++ pg_isready -U postgres -q
+++++ dirname tools/setup/postgresql-init-dev-db
++++ readlink -f tools/setup/../../scripts/lib/zulip_tools.py
+++ /workspace/scripts/lib/zulip_tools.py get_dev_uuid
++ uuid_var_path=/workspace/var/fc920d11-f8d9-4639-9b66-b761b956df9c
++ rm -f /workspace/var/fc920d11-f8d9-4639-9b66-b761b956df9c/migration_status_test
++ sudo -i -u postgres psql -v ON_ERROR_STOP=1 -e ''
+sudo: unable to resolve host 0a197ffab6b4: Temporary failure in name resolution
+DO $$BEGIN
+    CREATE USER zulip_test;
+EXCEPTION WHEN duplicate_object THEN
+    RAISE NOTICE 'zulip_test user already exists';
+END$$;
+DO
+ALTER USER zulip_test PASSWORD '2bbca192290dae60bb0a3c55cea1ca9087b7183cd4bba88b309cb75c5322211b';
+ALTER ROLE
+ALTER USER zulip_test CREATEDB;
+ALTER ROLE
++ '[' zulip_test '!=' vagrant ']'
++ sudo -i -u postgres psql -v ON_ERROR_STOP=1 -e ''
+sudo: unable to resolve host 0a197ffab6b4: Temporary failure in name resolution
+DO $$BEGIN
+        CREATE USER "vagrant"; 
+    EXCEPTION WHEN duplicate_object THEN
+        RAISE NOTICE 'vagrant user already exists';
+    END$$;
+NOTICE:  vagrant user already exists
+DO
+GRANT zulip_test TO "vagrant";
+GRANT ROLE
++ sudo -i -u postgres psql -v ON_ERROR_STOP=1 -e ''
+sudo: unable to resolve host 0a197ffab6b4: Temporary failure in name resolution
+ALTER ROLE "vagrant" SET search_path TO zulip,public;
+ALTER ROLE
++ umask go-rw
++ PGPASS_PREFIX='*:*:*:zulip_test:'
++ PGPASS_ESCAPED_PREFIX='*:\*:\*:zulip_test:'
++ grep -q '*:\*:\*:zulip_test:' /home/vagrant/.pgpass
++ sed -i 's/*:\*:\*:zulip_test:.*$/*:*:*:zulip_test:2bbca192290dae60bb0a3c55cea1ca9087b7183cd4bba88b309cb75c5322211b/' /home/vagrant/.pgpass
++ chmod go-rw /home/vagrant/.pgpass
+++ dirname tools/setup/postgresql-init-dev-db
++ PGHOST=localhost
++ PGUSER=zulip_test
++ tools/setup/../../scripts/setup/terminate-psql-sessions zulip_test zulip_test_base
+ pg_terminate_backend 
+----------------------
+(0 rows)
+
++ psql -v ON_ERROR_STOP=1 -e -h localhost postgres zulip_test
+DROP DATABASE IF EXISTS zulip_test;
+NOTICE:  database "zulip_test" does not exist, skipping
+DROP DATABASE
+DROP DATABASE IF EXISTS zulip_test_base;
+NOTICE:  database "zulip_test_base" does not exist, skipping
+DROP DATABASE
+CREATE DATABASE zulip_test_base
+CREATE DATABASE
++ sudo -i -u postgres psql -v ON_ERROR_STOP=1 -e zulip_test_base
+sudo: unable to resolve host 0a197ffab6b4: Temporary failure in name resolution
+CREATE EXTENSION pgroonga;
+CREATE EXTENSION
+SELECT unnest(
+    CASE WHEN current_setting('server_version_num')::integer >= 150000
+        AND current_setting('pgroonga.enable_wal', TRUE) = 'on' IS NOT TRUE THEN
+        ARRAY['ALTER SYSTEM SET pgroonga.enable_wal = ''on''', 'SELECT pg_reload_conf()']
+    END
+) 
++ psql -v ON_ERROR_STOP=1 -e -h localhost postgres zulip_test
+CREATE DATABASE zulip_test TEMPLATE zulip_test_base;
+CREATE DATABASE
+++ dirname tools/setup/postgresql-init-dev-db
++ tools/setup/../../scripts/setup/flush-memcached
++ echo 'Database created'
+Database created
+
+EXIT_CODE=0

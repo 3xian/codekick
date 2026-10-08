@@ -1,0 +1,12 @@
+{
+  "synthetic_controller_file": "/tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/controller/hidden.txt",
+  "synthetic_other_host_file": "/tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/outside.txt",
+  "escape_symlink": "workspace/escape.txt -> /tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a/outside.txt",
+  "contents": "Controller-generated dummy sentinels only; no real metadata/oracle",
+  "workspace_client": "codekick-test; exact bytes retained in fixture-inputs/",
+  "temporary_workspaces_removed": [
+    "/tmp/codekick-actor-smoke-858d101d7269445797434a67d91501e5",
+    "/tmp/codekick-actor-smoke-ruby-4886a81c3d9b478bbd233ea1ac6052f2",
+    "/tmp/codekick-actor-final-smoke-e586c56f9f77429181ee591cb46b950a"
+  ]
+}

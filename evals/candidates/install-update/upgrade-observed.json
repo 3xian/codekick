@@ -1,0 +1,7 @@
+{
+  "upgrade_preserved_upstream_agents": true,
+  "upgrade_updated_skill": true,
+  "upgrade_action": "install",
+  "missing_stamp_still_preserves_agents": true,
+  "stamp_restored": true
+}

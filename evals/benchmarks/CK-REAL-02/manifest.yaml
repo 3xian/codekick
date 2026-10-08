@@ -1,0 +1,30 @@
+{
+  "id": "CK-REAL-02",
+  "repo": "zulip/zulip",
+  "pre_fix_sha": "e3de6394b0dc45288286366bd10acff5a7a08fa2",
+  "reference_pr": 37212,
+  "reference_merge_sha": "dfad942eb931c3df75c9479856603ac610d97795",
+  "language": "Python",
+  "task_class": "partial operation/business-rule state migration",
+  "test_command": [
+    "./tools/test-backend",
+    "--parallel=1",
+    "zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move",
+    "zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move"
+  ],
+  "focused_test_command": [
+    "./tools/test-backend",
+    "--parallel=1",
+    "zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move",
+    "zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move"
+  ],
+  "status": "VALID",
+  "evidence_manifest": "manifest.json",
+  "actor_input": "task.md",
+  "actor_run_status": "NOT_RUN",
+  "controller_only": [
+    "manifest.yaml",
+    "manifest.json",
+    "oracle/"
+  ]
+}

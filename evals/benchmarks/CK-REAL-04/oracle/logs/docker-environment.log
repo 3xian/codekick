@@ -1,0 +1,20 @@
+$ docker exec codekick-discourse-pre bash -lc 'uname -m; ruby -v; bundle --version; node --version; pnpm --version; psql --version; redis-server --version; sha256sum Gemfile.lock pnpm-lock.yaml; find /opt/codekick /home /root /src -name .git -o -name post_destroyer.rb -o -name post_destroyer_spec.rb; psql -d discourse_test -c "SELECT count(*) AS migrations_applied FROM schema_migrations;"'
+--- stdout ---
+aarch64
+ruby 3.3.8 (2025-04-09 revision b200bad6cd) [aarch64-linux]
+Bundler version 2.6.4
+v22.20.0
+9.15.5
+psql (PostgreSQL) 15.14 (Debian 15.14-1.pgdg12+1)
+Redis server v=7.0.15 sha=00000000:0 malloc=jemalloc-5.2.1 bits=64 build=c84cceb74ccf09e8
+ccab87ae489fbb01d0fe2fdc63558161321a8c8c04a1efb21ee5cb403130ba94  Gemfile.lock
+678cd984449f0fbb9f18deee5d3ff1941d3c61f9d1486033235ac07cdc923dfa  pnpm-lock.yaml
+ migrations_applied 
+--------------------
+               1654
+(1 row)
+
+
+--- stderr ---
+
+exit_code=0

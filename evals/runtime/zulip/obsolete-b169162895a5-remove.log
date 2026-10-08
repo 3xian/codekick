@@ -1,0 +1,4 @@
+$ docker image rm sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5
+Deleted: sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5
+
+EXIT_CODE=0

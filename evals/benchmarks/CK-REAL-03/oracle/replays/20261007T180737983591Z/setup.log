@@ -1,0 +1,17 @@
+Command: ['docker', 'image', 'inspect', 'codekick-gitea-runtime:1.25.5', '--format', '{{.Id}}']
+sha256:344b4f56927a52b0f416a8c89349249b36791d0169704fd58e168d65dbf98a90
+
+Exit: 0
+Command: ['git', 'init', '--bare', '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-gitea-replay-gt3yf94c/repository']
+Initialized empty Git repository in /private/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-gitea-replay-gt3yf94c/repository/
+
+Exit: 0
+Command: ['git', '--git-dir=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-gitea-replay-gt3yf94c/repository', 'fetch', '--depth=2', 'https://github.com/go-gitea/gitea.git', '1ee7f8e96635ea1768b1a8309918e2463fb607e6']
+From https://github.com/go-gitea/gitea
+ * branch            1ee7f8e96635ea1768b1a8309918e2463fb607e6 -> FETCH_HEAD
+
+Exit: 0
+Command: ['git', '--git-dir=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-gitea-replay-gt3yf94c/repository', 'rev-parse', '1ee7f8e96635ea1768b1a8309918e2463fb607e6^']
+426bb491c0c2a92de8e25bfd5d1d3bc4b3e5922f
+
+Exit: 0

@@ -1,0 +1,11 @@
+$ docker exec codekick-zulip01-pre-recovered /usr/local/bin/codekick-prepare-workspace
+ * Starting PostgreSQL 14 database server
+ * Error: /usr/lib/postgresql/14/bin/pg_ctl /usr/lib/postgresql/14/bin/pg_ctl start -D /var/lib/postgresql/14/main -l /var/log/postgresql/postgresql-14-main.log -s -o  -c config_file="/etc/postgresql/14/main/postgresql.conf"  exited with status 1: 
+2026-10-07 18:39:21.435 UTC [489] FATAL:  "/var/lib/postgresql/14/main" is not a valid data directory
+2026-10-07 18:39:21.435 UTC [489] DETAIL:  File "/var/lib/postgresql/14/main/PG_VERSION" does not contain valid data.
+2026-10-07 18:39:21.435 UTC [489] HINT:  You might need to initdb.
+pg_ctl: could not start server
+Examine the log output.
+   ...fail!
+
+EXIT_CODE=1

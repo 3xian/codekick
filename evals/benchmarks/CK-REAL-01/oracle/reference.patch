@@ -1,0 +1,29 @@
+diff --git a/zerver/lib/users.py b/zerver/lib/users.py
+index 24b591b..cda2e90 100644
+--- a/zerver/lib/users.py
++++ b/zerver/lib/users.py
+@@ -67,7 +67,7 @@ def check_full_name(
+     # sloppily-written parsers of our Markdown syntax for mentioning
+     # users with ambiguous names, and likely have no real use, so we
+     # ban them.
+-    if re.search(r"\|\d+$", full_name_raw):
++    if re.search(r"\|\d+$", full_name):
+         raise JsonableError(_("Invalid format!"))
+ 
+     if require_unique_names(realm):
+diff --git a/zerver/tests/test_users.py b/zerver/tests/test_users.py
+index cf14bb8..c28c733 100644
+--- a/zerver/tests/test_users.py
++++ b/zerver/tests/test_users.py
+@@ -487,6 +487,11 @@ class PermissionTest(ZulipTestCase):
+         result = self.client_patch("/json/users/{}".format(self.example_user("hamlet").id), req)
+         self.assert_json_error(result, "Invalid format!")
+ 
++        # Trailing whitespace should not bypass the pipe-digit check
++        req = dict(full_name="iago|72 ")
++        result = self.client_patch("/json/users/{}".format(self.example_user("hamlet").id), req)
++        self.assert_json_error(result, "Invalid format!")
++
+     def test_allowed_format_complex(self) -> None:
+         # Adding characters after r'|d+' doesn't break Markdown
+         new_name = "Hello- 12iago|72k"

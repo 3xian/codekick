@@ -1,0 +1,362 @@
+$ docker exec -u vagrant -w /workspace codekick-zulip02-post-oracle .venv/bin/python tools/test-backend --parallel=1 zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move
++ tools/rebuild-test-database
++ export DJANGO_SETTINGS_MODULE=zproject.test_settings
++ DJANGO_SETTINGS_MODULE=zproject.test_settings
++ mkdir -p zerver/tests/fixtures
+++ dirname tools/rebuild-test-database
++ PGHOST=localhost
++ PGUSER=zulip
++ tools/../scripts/setup/terminate-psql-sessions zulip_test zulip_test_base zulip_test_template
+ pg_terminate_backend 
+----------------------
+(0 rows)
+
++ create_zulip_test
++ psql -v ON_ERROR_STOP=1 -h localhost postgres zulip_test
+DROP DATABASE
+CREATE DATABASE
+++ dirname tools/rebuild-test-database
++ tools/../scripts/setup/flush-memcached
++ ./manage.py migrate --noinput
+Operations to perform:
+  Apply all migrations: analytics, auth, confirmation, contenttypes, corporate, otp_static, otp_totp, pgroonga, phonenumber, sessions, social_django, zerver, zilencer
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying zerver.0001_squashed_0569... OK
+  Applying analytics.0001_squashed_0021_alter_fillstate_id... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying zerver.0576_backfill_imageattachment...Processed 0/0
+ OK
+  Applying zerver.0622_backfill_imageattachment_again...Processed 0/0
+ OK
+  Applying zerver.0639_zh_hant_tw_rename... OK
+  Applying zerver.0570_namedusergroup_can_manage_group... OK
+  Applying zerver.0571_set_default_for_can_manage_group... OK
+  Applying zerver.0572_alter_usergroup_can_manage_group... OK
+  Applying zerver.0573_directmessagegroup_group_size... OK
+  Applying zerver.0574_backfill_directmessagegroup_group_size... OK
+  Applying zerver.0575_alter_directmessagegroup_group_size... OK
+  Applying zerver.0577_merge_20240829_0153... OK
+  Applying zerver.0578_namedusergroup_deactivated... OK
+  Applying zerver.0579_realm_can_delete_own_message_group... OK
+  Applying zerver.0580_set_default_value_for_can_delete_own_message_group... OK
+  Applying zerver.0581_alter_realm_can_delete_own_message_group... OK
+  Applying zerver.0582_remove_realm_delete_own_message_policy... OK
+  Applying zerver.0583_namedusergroup_creator_namedusergroup_date_created... OK
+  Applying zerver.0584_namedusergroup_creator_date_created_backfill... OK
+  Applying zerver.0585_userprofile_allow_private_data_export_and_more... OK
+  Applying zerver.0586_customprofilefield_editable_by_user... OK
+  Applying zerver.0587_savedsnippet... OK
+  Applying zerver.0588_realm_add_can_create_groups... OK
+  Applying zerver.0589_set_can_create_groups... OK
+  Applying zerver.0590_alter_realm_can_create_groups... OK
+  Applying zerver.0591_realm_add_can_manage_all_groups... OK
+  Applying zerver.0592_set_can_manage_all_groups... OK
+  Applying zerver.0593_alter_realm_manage_all_groups... OK
+  Applying zerver.0594_remove_realm_user_group_edit_policy... OK
+  Applying zerver.0595_add_realmexport_table_and_backfill... OK
+  Applying zerver.0596_namedusergroup_can_join_group... OK
+  Applying zerver.0597_set_default_value_for_can_join_group... OK
+  Applying zerver.0598_alter_namedusergroup_can_join_group... OK
+  Applying zerver.0599_namedusergroup_add_can_add_members_group... OK
+  Applying zerver.0600_set_default_for_can_add_members_group... OK
+  Applying zerver.0601_alter_namedusergroup_can_add_members_group... OK
+  Applying zerver.0602_remap_can_manage_all_groups... OK
+  Applying zerver.0603_realm_can_add_custom_emoji_group... OK
+  Applying zerver.0604_set_default_value_for_can_add_custom_emoji_group... OK
+  Applying zerver.0605_alter_realm_can_add_custom_emoji_group... OK
+  Applying zerver.0606_remove_realm_add_custom_emoji_policy... OK
+  Applying zerver.0607_namedusergroup_add_can_leave_group... OK
+  Applying zerver.0608_set_default_for_can_leave_group... OK
+  Applying zerver.0609_alter_namedusergroup_can_leave_group... OK
+  Applying zerver.0610_mark_introduce_resolve_topic_modal_as_read... OK
+  Applying zerver.0611_realm_can_move_messages_between_channels_group... OK
+  Applying zerver.0612_set_default_value_for_can_move_messages_between_channels_group... OK
+  Applying zerver.0613_alter_realm_can_move_messages_between_channels_group... OK
+  Applying zerver.0614_remove_realm_move_messages_between_streams_policy... OK
+  Applying zerver.0615_system_bot_avatars... OK
+  Applying zerver.0616_userprofile_can_change_user_emails... OK
+  Applying zerver.0617_remove_prefix_from_archived_streams... OK
+  Applying zerver.0618_realm_can_move_messages_between_topics_group... OK
+  Applying zerver.0619_set_default_value_for_can_move_messages_between_topics_group... OK
+  Applying zerver.0620_alter_realm_can_move_messages_between_topics_group... OK
+  Applying zerver.0621_remove_realm_edit_topic_policy... OK
+  Applying zerver.0623_merge_20241030_1835... OK
+  Applying zerver.0624_alter_realmexport_tarball_size_bytes... OK
+  Applying zerver.0625_realm_can_invite_users_group... OK
+  Applying zerver.0626_set_default_value_for_can_invite_users_group... OK
+  Applying zerver.0627_alter_realm_can_invite_users_group... OK
+  Applying zerver.0628_remove_realm_invite_to_realm_policy... OK
+  Applying zerver.0629_remove_stream_email_token_backfill_channelemailaddress... OK
+  Applying zerver.0630_multiuseinvite_groups_preregistrationuser_groups... OK
+  Applying zerver.0631_stream_is_recently_active... OK
+  Applying zerver.0632_preregistrationrealm_data_import_metadata... OK
+  Applying zerver.0633_namedusergroup_can_remove_members_group... OK
+  Applying zerver.0634_set_default_for_can_remove_members_group... OK
+  Applying zerver.0635_alter_namedusergroup_can_remove_members_group... OK
+  Applying zerver.0636_streams_add_can_administer_channel_group... OK
+  Applying zerver.0637_set_default_for_can_administer_channel_group... OK
+  Applying zerver.0638_alter_stream_can_administer_channel_group... OK
+  Applying zerver.0640_merge_20241211_1953... OK
+  Applying zerver.0641_web_suggest_update_time_zone... OK
+  Applying zerver.0642_realm_moderation_request_channel... OK
+  Applying zerver.0643_realm_scheduled_deletion_date... OK
+  Applying zerver.0644_check_update_all_channels_active_status... OK
+  Applying zerver.0645_stream_can_send_message_group... OK
+  Applying zerver.0646_set_default_for_can_send_message_group... OK
+  Applying zerver.0647_alter_stream_can_send_message_group... OK
+  Applying zerver.0648_remove_stream_stream_post_policy... OK
+  Applying zerver.0649_realm_can_add_subscribers_group... OK
+  Applying zerver.0650_set_default_for_realm_can_add_subscribers_group... OK
+  Applying zerver.0651_alter_realm_can_add_subscribers_group... OK
+  Applying zerver.0652_remove_realm_invite_to_stream_policy... OK
+  Applying zerver.0653_stream_can_add_subscribers_group... OK
+  Applying zerver.0654_set_default_for_stream_can_add_subscribers_group... OK
+  Applying zerver.0655_alter_stream_can_add_subscribers_group... OK
+  Applying zerver.0656_realm_can_create_bots_group_and_more... OK
+  Applying zerver.0657_set_default_value_for_can_create_bots_group_and_more... OK
+  Applying zerver.0658_alter_realm_can_create_bots_group_and_more... OK
+  Applying zerver.0659_remove_realm_bot_creation_policy... OK
+  Applying zerver.0660_add_imageattachment_content_type... OK
+  Applying zerver.0661_archivetransaction_protect_from_deletion... OK
+  Applying zerver.0662_clear_realm_channel_fields_if_configured_channel_deactivated... OK
+  Applying zerver.0663_realm_enable_guest_user_dm_warning... OK
+  Applying zerver.0664_realm_can_summarize_topics_group... OK
+  Applying zerver.0665_set_default_for_can_summarize_topics_group... OK
+  Applying zerver.0666_alter_realm_can_summarize_topics_group... OK
+  Applying zerver.0667_realmuserdefault_hide_ai_features_and_more... OK
+  Applying zerver.0668_realm_can_mention_many_users_group... OK
+  Applying zerver.0669_set_default_value_for_can_mention_many_users_group... OK
+  Applying zerver.0670_alter_realm_can_mention_many_users_group... OK
+  Applying zerver.0671_remove_realm_wildcard_mention_policy... OK
+  Applying zerver.0672_fix_attachment_realm... OK
+  Applying zerver.0673_stream_can_subscribe_group... OK
+  Applying zerver.0674_set_default_for_stream_can_subscribe_group... OK
+  Applying zerver.0675_alter_stream_can_subscribe_group... OK
+  Applying zerver.0676_realm_message_edit_history_visibility_policy... OK
+  Applying zerver.0677_set_default_message_edit_history_visibility_policy... OK
+  Applying zerver.0678_remove_realm_allow_edit_history... OK
+  Applying zerver.0679_zerver_message_edit_history_id... OK
+  Applying zerver.0680_rename_general_chat_to_empty_string_topic... OK
+  Applying zerver.0681_realm_can_manage_billing_group... OK
+  Applying zerver.0682_set_default_value_for_can_manage_billing_group... OK
+  Applying zerver.0683_alter_realm_can_manage_billing_group... OK
+  Applying zerver.0684_remove_userprofile_is_billing_admin... OK
+  Applying zerver.0685_remove_realmuserdefault_dense_mode_and_more... OK
+  Applying zerver.0686_realm_can_resolve_topics_group... OK
+  Applying zerver.0687_set_default_value_for_can_resolve_topics_group... OK
+  Applying zerver.0688_alter_realm_can_resolve_topics_group... OK
+  Applying zerver.0689_mark_navigation_tour_video_as_read... OK
+  Applying zerver.0690_message_is_channel_message... OK
+  Applying zerver.0691_backfill_message_is_channel_message... OK
+  Applying zerver.0692_alter_message_is_channel_message... OK
+  Applying zerver.0693_add_conditional_indexes_for_topic... OK
+  Applying zerver.0694_remove_message_unconditional_topic_indexes... OK
+  Applying zerver.0695_is_channel_message_stats... OK
+  Applying zerver.0696_rename_no_topic_to_empty_string_topic... OK
+  Applying zerver.0697_empty_topic_name_for_dms_from_third_party_imports... OK
+  Applying zerver.0700_fix_user_role_system_groups... OK
+  Applying zerver.0698_scheduledmessage_request_timestamp... OK
+  Applying zerver.0699_scheduledmessage_reminder_target_message_id... OK
+  Applying zerver.0701_merge... OK
+  Applying zerver.0702_rename_populate_db_client_to_zulip_data_import... OK
+  Applying zerver.0703_realmuserdefault_resolved_topic_notice_auto_read_policy_and_more... OK
+  Applying zerver.0704_stream_subscriber_count... OK
+  Applying zerver.0705_stream_subscriber_count_data_migration... OK
+  Applying zerver.0706_channelfolder... OK
+  Applying zerver.0707_realmauditlog_modified_channel_folder... OK
+  Applying zerver.0708_stream_folder... OK
+  Applying zerver.0709_navigationview... OK
+  Applying zerver.0710_realm_topics_policy... OK
+  Applying zerver.0711_set_default_value_for_realm_topics_policy... OK
+  Applying zerver.0712_alter_realm_topics_policy... OK
+  Applying zerver.0713_remove_realm_mandatory_topics... OK
+  Applying zerver.0714_realm_can_set_topics_policy_group... OK
+  Applying zerver.0715_set_default_value_for_can_set_topics_policy_group... OK
+  Applying zerver.0716_alter_realm_can_set_topics_policy_group... OK
+  Applying zerver.0717_stream_topics_policy... OK
+  Applying zerver.0718_fix_topics_for_direct_messages... OK
+  Applying zerver.0719_stream_can_move_messages_within_channel_group... OK
+  Applying zerver.0720_set_default_value_for_can_move_messages_within_channel_group... OK
+  Applying zerver.0721_alter_stream_can_move_messages_within_channel_group... OK
+  Applying zerver.0722_stream_can_move_messages_out_of_channel_group... OK
+  Applying zerver.0723_set_default_value_for_can_move_messages_out_of_channel_group... OK
+  Applying zerver.0724_alter_stream_can_move_messages_out_of_channel_group... OK
+  Applying zerver.0725_realmuserdefault_web_left_sidebar_unreads_count_summary_and_more... OK
+  Applying zerver.0726_stream_can_resolve_topics_group... OK
+  Applying zerver.0727_set_default_value_for_stream_can_resolve_topics_group... OK
+  Applying zerver.0728_alter_stream_can_resolve_topics_group... OK
+  Applying zerver.0729_externalauthid... OK
+  Applying zerver.0730_pushdevice... OK
+  Applying zerver.0731_stream_can_delete_any_message_group... OK
+  Applying zerver.0732_set_default_value_for_can_delete_any_message_group... OK
+  Applying zerver.0733_alter_stream_can_delete_any_message_group... OK
+  Applying zerver.0734_stream_can_delete_own_message_group... OK
+  Applying zerver.0735_set_default_value_for_can_delete_own_message_group... OK
+  Applying zerver.0736_alter_stream_can_delete_own_message_group... OK
+  Applying zerver.0737_realm_can_set_delete_message_policy_group... OK
+  Applying zerver.0738_set_default_value_for_can_set_delete_message_policy_group... OK
+  Applying zerver.0739_alter_realm_can_set_delete_message_policy_group... OK
+  Applying zerver.0740_pushdevicetoken_apns_case_insensitive... OK
+  Applying zerver.0741_pushdevice_zerver_pushdevice_user_bouncer_device_id_idx... OK
+  Applying zerver.0742_usermessage_zerver_usermessage_is_private_unread_message_id... OK
+  Applying zerver.0743_realm_require_e2ee_push_notifications... OK
+  Applying zerver.0744_alter_channelfolder_name... OK
+  Applying zerver.0745_usersetting_web_left_sidebar_show_channel_folders... OK
+  Applying zerver.0746_alter_channelfolder_unique_together_and_more... OK
+  Applying zerver.0747_realmcreationstatus... OK
+  Applying confirmation.0001_squashed_0014_confirmation_confirmatio_content_80155a_idx... OK
+  Applying confirmation.0015_alter_confirmation_object_id... OK
+  Applying confirmation.0016_realmcreationkey_to_realmcreationstatus... OK
+  Applying confirmation.0017_delete_realmcreationkey... OK
+  Applying zilencer.0001_squashed_0064_remotezulipserver_last_merge_base... OK
+  Applying corporate.0001_squashed_0044_convert_ids_to_bigints... OK
+  Applying corporate.0045_zulipsponsorshiprequest_plan_to_use_zulip... OK
+  Applying corporate.0046_rename_customerplan_invoice_overdue_email_sent... OK
+  Applying corporate.0047_customerplan_unique_never_started_plan_customer_and_more... OK
+  Applying corporate.0048_licenseledger_external_licenses... OK
+  Applying otp_static.0001_initial... OK
+  Applying otp_static.0002_throttling... OK
+  Applying otp_static.0003_add_timestamps... OK
+  Applying otp_totp.0001_initial... OK
+  Applying otp_totp.0002_auto_20190420_0723... OK
+  Applying otp_totp.0003_add_timestamps... OK
+  Applying pgroonga.0001_enable... OK
+  Applying pgroonga.0002_html_escape_subject... OK
+  Applying pgroonga.0003_v2_api_upgrade... OK
+  Applying phonenumber.0001_squashed_0001_initial... OK
+  Applying sessions.0001_initial... OK
+  Applying social_django.0001_initial... OK
+  Applying social_django.0002_add_related_name... OK
+  Applying social_django.0003_alter_email_max_length... OK
+  Applying social_django.0004_auto_20160423_0400... OK
+  Applying social_django.0005_auto_20160727_2333... OK
+  Applying social_django.0006_partial... OK
+  Applying social_django.0007_code_timestamp... OK
+  Applying social_django.0008_partial_timestamp... OK
+  Applying social_django.0009_auto_20191118_0520... OK
+  Applying social_django.0010_uid_db_index... OK
+  Applying social_django.0011_alter_id_fields... OK
+  Applying social_django.0012_usersocialauth_extra_data_new... OK
+  Applying social_django.0013_migrate_extra_data... OK
+  Applying social_django.0014_remove_usersocialauth_extra_data... OK
+  Applying social_django.0015_rename_extra_data_new_usersocialauth_extra_data... OK
+  Applying social_django.0016_alter_usersocialauth_extra_data... OK
+  Applying social_django.0017_usersocialauth_user_social_auth_uid_required... OK
+  Applying zerver.0748_channelfolder_add_order... OK
+  Applying zerver.0749_scheduledmessage_reminder_note_text... OK
+  Applying zerver.0750_multiuseinvite_welcome_message_custom_text_and_more... OK
+  Applying zerver.0751_externalauthid_zerver_user_externalauth_uniq... OK
+  Applying zerver.0753_remove_google_blob_emojiset... OK
+  Applying zerver.0752_remove_stream_is_in_zephyr_realm... OK
+  Applying zerver.0754_merge_20251014_1855... OK
+  Applying zerver.0755_usermessage_zerver_usermessage_message_active_mobile_push_notification_idx... OK
+  Applying zerver.0756_handle_same_anonymous_group_used_for_multiple_streams... OK
+  Applying zerver.0757_realmuserdefault_web_inbox_show_channel_folders_and_more... OK
+  Applying zerver.0758_remove_pushdevice_push_public_key_and_more... OK
+  Applying zerver.0759_userprofile_is_imported_stub... OK
+  Applying zerver.0760_preregistrationuser_is_realm_importer... OK
+  Applying zerver.0761_realm_send_channel_events_messages... OK
+  Applying zerver.0762_realm_owner_full_content_access... OK
+  Applying zerver.0763_migrate_realms_using_y_rating_to_use_a_g_rating_for_giphy... OK
+  Applying zerver.0764_stream_can_create_topic_group... OK
+  Applying zerver.0765_set_default_can_create_topic_group... OK
+  Applying zerver.0766_alter_stream_can_create_topic_group... OK
+  Applying zerver.0767_rename_zoom_token_to_video_call_provider_tokens... OK
+  Applying zerver.0768_realmauditlog_scrubbed... OK
+  Applying zerver.0769_rename_profile_field_twitter_to_x... OK
+  Applying zerver.0770_recreate_missing_realmemoji... OK
+  Applying zerver.0771_alter_realmemoji_author... OK
+  Applying zerver.0772_clean_up_imageattachments... OK
+  Applying zerver.0773_rename_giphy_rating_realm_gif_rating_policy... OK
+  Applying zerver.0774_rename_recent_topics_to_recent... OK
+  Applying zerver.0775_customprofilefield_use_for_user_matching... OK
+  Applying zerver.0776_realm_default_avatar_source... OK
+  Applying zerver.0777_realm_rendered_description... OK
+  Applying zerver.0778_realm_rendered_description_version... OK
+  Applying zerver.0779_device... OK
+  Applying zerver.0780_delete_pushdevice... OK
+  Applying zerver.0781_realm_image_thumbnail_size... OK
+  Applying zerver.0782_delete_unused_anonymous_groups... OK
+  Applying zerver.0783_realmfilter_example_input... OK
+  Applying zerver.0784_realmfilter_reverse_template... OK
+  Applying zerver.0785_realm_workplace_users_group... OK
+  Applying zerver.0786_set_default_for_workplace_users_group... OK
+  Applying zerver.0787_alter_realm_workplace_users_group... OK
+  Applying zerver.0788_realmfilter_alternative_url_templates... OK
+  Applying zerver.0789_add_external_auth_fields_to_preregistrationuser... OK
+  Applying zerver.0790_backfill_update_recipient_type_of_personal_messages_to_dm_group...
+Processing 0 personal recipients...
+Migration completed.
+ OK
+  Applying zerver.0791_alter_archivedusermessage_user_profile_and_more... OK
+  Applying zerver.0792_fix_animated_emoji_still_images... OK
+  Applying zerver.0793_alter_directmessagegroup_huddle_hash_and_more... OK
+  Applying zerver.0794_alter_directmessagegroup_recipient_and_more... OK
+  Applying zerver.0795_rename_old_twitter_profile_fields... OK
+  Applying zerver.0796_fix_corrupted_named_user_group_creator... OK
+  Applying zerver.0797_userprofile_is_deleted... OK
+  Applying zerver.0798_remove_userprofile_recipient_and_personal_recipients...
+
+Deleting 0 orphan personal recipients...
+ OK
+  Applying zerver.0799_remove_realm_emoji_from_audit_log_extra_data... OK
+  Applying zerver.0800_cleanup_case_mismatched_legacy_apns_tokens... OK
+  Applying zerver.0801_realmexport_backfill_export_from_prior_server_status... OK
+  Applying zerver.0802_realmexport_restore_command_line_export_status... OK
+  Applying zerver.0803_delete_orphan_recipients_and_huddles...
+Deleting 0 orphan stream recipients...
+Deleting 0 orphan direct message groups...
+ OK
+  Applying zerver.0804_backfill_user_created_audit_logs... OK
+  Applying zerver.0805_fix_deleteduser_email... OK
+  Applying zerver.0806_stream_default_push_notifications... OK
+  Applying zerver.0807_usertopic_zerver_usertopic_user_visibility_recipient_idx... OK
+  Applying zerver.0808_message_topic_indexes_nulls_first... OK
+  Applying zerver.0809_remove_message_nulls_last_topic_indexes... OK
+  Applying zerver.0810_delete_unused_anonymous_groups... OK
+  Applying zerver.0811_usermessage_add_hide_link_previews... OK
+  Applying zerver.0812_delete_inaccessible_user_topics... OK
+  Applying zilencer.0065_remotepushdevice... OK
+  Applying zilencer.0066_alter_remotepushdevice_token_kind... OK
+  Applying zilencer.0067_remotepushdevicetoken_apns_case_insensitive... OK
+  Applying zilencer.0068_add_remotepushdevice_token_id_and_more... OK
+  Applying zilencer.0069_remove_remotepushdevice_push_account_id... OK
+  Applying zilencer.0070_remove_remoterealmauditlog_zilencer_remoterealmauditlog_synced_billing_events_and_more... OK
+2026-10-07 19:00:55.890 INFO [] Clearing memcached cache after migrations
++ ./manage.py get_migration_status --output=migration_status_test
++ ./manage.py populate_db --test-suite -n30 --threads=1 --max-topics=3 --direct-message-groups=0 --personals=0 --percent-direct-message-groups=0 --percent-personals=0 --percent-attachments=0
+Successfully populated test database.
++ ./manage.py dumpdata zerver.UserProfile zerver.Stream zerver.Recipient zerver.Subscription zerver.Message zerver.DirectMessageGroup zerver.Realm zerver.UserMessage zerver.Client zerver.DefaultStream
++ create_zulip_test_template
++ psql -v ON_ERROR_STOP=1 -h localhost postgres zulip_test
+DROP DATABASE
+NOTICE:  database "zulip_test_template" does not exist, skipping
+CREATE DATABASE
+New digest written to: /workspace/var/fc920d11-f8d9-4639-9b66-b761b956df9c/db_files_hash_for_test
+-- Running tests in serial mode.
+Destroying test database for alias 'default'...
+Using existing clone for alias 'default'...
+Running zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move
+Running zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move
+
+----------------------------------------------------------------------
+Ran 2 tests in 3.976s
+
+OK
+Destroying test database for alias 'default'...
+Found 2 test(s).
+
+EXIT_CODE=0

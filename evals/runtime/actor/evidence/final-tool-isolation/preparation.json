@@ -1,0 +1,28 @@
+{
+  "codekick_archive_sha256": "f5623fda4ffd5fee3900cc6af01ce5a5392ead8adba049e1e7fa3ae291a23bb3",
+  "codekick_commit": "63afb2c9258bff513da51f7f0b3a9735b58de64b",
+  "codekick_paths": [
+    ".ai/KNOWLEDGE.md",
+    ".ai/PROJECT.md",
+    ".ai/tasks/README.md",
+    ".gitignore",
+    "AGENTS.md",
+    "LICENSE",
+    "QUICKSTART.md",
+    "README.md",
+    "examples/JIRA-1234.example.md",
+    "examples/KNOWLEDGE.example.md",
+    "examples/PROJECT.example.md",
+    "scripts/new-task.py",
+    "skills/bootstrap/SKILL.md",
+    "skills/change/SKILL.md",
+    "skills/understand/SKILL.md",
+    "skills/verify/SKILL.md",
+    "templates/TASK.md"
+  ],
+  "input_tree_sha256": "c62664649006b53608a49c8af2698a35035b6a2945c76eff73decc3e25f29e88",
+  "kind": "clean-actor-preparation",
+  "problem_sha256": "3fc6d8c137e820f00eff30cc63280e440eb24ff9ef0db69e6f80fe2722934b0e",
+  "source_archive_sha256": "97715f7be230e9608191b323a8360acfe65b1849c64b21f571d70f0d6162ce45",
+  "source_commit": "c17287849ebb6651da5484387895853c5ea10a0e"
+}

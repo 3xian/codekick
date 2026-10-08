@@ -1,0 +1,3 @@
+$ docker exec codekick-zulip01-provision bash -c 'set -e; cd /workspace; cp -a --parents node_modules /opt/codekick-zulip-overlay/'
+
+EXIT_CODE=0

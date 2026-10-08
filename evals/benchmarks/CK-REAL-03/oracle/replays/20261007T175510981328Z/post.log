@@ -1,0 +1,29 @@
+Revision: 1ee7f8e96635ea1768b1a8309918e2463fb607e6
+Image: sha256:a8367b0d089b3f11db2b52b3b38e059bceec0d3cfad2a5cdb29eb97255c6cb48
+Command: ['docker', 'run', '--rm', '--network=none', '--cpus=2', '--memory=3g', '--mount', 'type=bind,src=/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-gitea-replay-kslua32p/post,dst=/workspace,readonly', '--mount', 'type=volume,src=codekick-gitea-controller-build,dst=/root/.cache/go-build', '-w', '/workspace', 'codekick-gitea-runtime:1.25.5', 'go', 'test', '-p', '2', '-tags', 'sqlite,sqlite_unlock_notify', './services/migrations', '-run', '^(TestCodeKickGitlabHistoricalReleaseMigration|TestAwardsToReactions)$', '-count=1', '-v']
+2026/10/07 17:58:08 modules/setting/setting.go:179:loadRunModeFrom() [F] Gitea is not supposed to be run as root. Sorry. If you need to use privileged TCP ports please instead use setcap and the `cap_net_bind_service` permission
+panic: non-zero exit code during testing: 1
+
+goroutine 1 [running]:
+code.gitea.io/gitea/models/unittest.InitSettingsForTesting.func1(0x400022a720?)
+	/workspace/models/unittest/testdb.go:45 +0x6c
+code.gitea.io/gitea/modules/log.Fatal({0x2538226?, 0x0?}, {0x0?, 0x0?, 0x0?})
+	/workspace/modules/log/logger_global.go:67 +0x60
+code.gitea.io/gitea/modules/setting.loadRunModeFrom({0x2a159f0?, 0x400030f2c0?})
+	/workspace/modules/setting/setting.go:179 +0x2bc
+code.gitea.io/gitea/modules/setting.loadCommonSettingsFrom({0x2a159f0, 0x400030f2c0})
+	/workspace/modules/setting/setting.go:112 +0x24
+code.gitea.io/gitea/modules/setting.LoadCommonSettings()
+	/workspace/modules/setting/setting.go:104 +0x28
+code.gitea.io/gitea/models/unittest.InitSettingsForTesting()
+	/workspace/models/unittest/testdb.go:54 +0xd8
+code.gitea.io/gitea/models/unittest.MainTest(0x400155b860, {0x0?, 0x4105c20?, 0x11?})
+	/workspace/models/unittest/testdb.go:79 +0xf8
+code.gitea.io/gitea/services/migrations.TestMain(...)
+	/workspace/services/migrations/main_test.go:18
+main.main()
+	_testmain.go:79 +0x98
+FAIL	code.gitea.io/gitea/services/migrations	0.130s
+FAIL
+
+Exit: 1

@@ -1,0 +1,42 @@
+{
+  "runtime": "Zulip native historical development environment",
+  "platform": "linux/arm64",
+  "base_image": "ubuntu:22.04@sha256:5ec03bb3441e8b0bf3b4f9cd4629a1ae763010dc3035bb8da3ae6cf026486401",
+  "base_build": ["docker", "build", "--tag", "codekick-zulip-base:20261008", "evals/runtime/zulip"],
+  "rebuild_template": ["evals/runtime/zulip/build-runtime.sh", "<absolute-clean-original-parent-export>", "<unique-codekick-prefix>"],
+  "rebuild_script_status": "Script captures the individually exercised build/provision/package commands; the aggregate script itself has not been run.",
+  "runtime_image": "sha256:00a439bffd9d631bca77124823413d29329db133ebc92a558c96707afc7f5de9",
+  "runtime_tag": "codekick-zulip-runtime:20261008",
+  "superseded_runtime_image": "sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd",
+  "runtime_image_reason": "55c271 baked a corrupted PostgreSQL control file and a too-short Erlang cookie after the full-disk recovery. 00a439 packages only the controller helper that creates a fresh cluster and calls the historical cookie/RabbitMQ/database bootstrap. No historical source, model, or sanity check was changed.",
+  "provisioning_source": "Clean CK-REAL-01 original-parent git archive; no reference source, hidden test patch, Controller metadata, or future Git objects. Native provision requires a .git directory: git init was run without any commit or branch ref. Git indexing returned a recorded ownership error; native provisioning successfully fell back to directory-based locale discovery. This Git directory and all original source remained in the bind mount and were excluded from the image.",
+  "provisioning_command": ["docker", "exec", "-u", "vagrant", "-w", "/workspace", "-e", "GITHUB_ACTIONS=1", "-e", "PUPPETEER_SKIP_DOWNLOAD=1", "codekick-zulip01-provision", "tools/provision", "--skip-dev-db-build"],
+  "provisioning_log": "01-provision-retry.log",
+  "provisioning_exit_code": 0,
+  "native_checks": "No --skip-provision-check, no altered sanity_check, no altered historical launcher/model/service code. PUPPETEER_SKIP_DOWNLOAD avoids the unrelated browser binary; tools/webpack --test uses the historical native backend stub asset manifest path and does not build the frontend.",
+  "dependency_compatibility": {
+    "tasks": ["CK-REAL-01", "CK-REAL-02"],
+    "pyproject.toml_sha256": "ac840653304c01372ffd0a7e43d221d8a5403fbefd1dcd76a54d716f1bc278e4",
+    "uv.lock_sha256": "50d600e0b91df287293e4b417c6935e35bb6680f000a99dc0c1b9aefb6cf7f73",
+    "pnpm-lock.yaml_sha256": "e32247ab0fbfdf2c2be9f0b3b5fdf1325c7a9f0450be5226e591c72506e3a508",
+    "reason": "All three dependency files have identical bytes at the two verified parents. Each test container has its own PostgreSQL/cache/queue state. Source/migration hashes are checked and test fixture regeneration is performed by the historical launcher."
+  },
+  "overlay_paths": [".venv", "node_modules", "static/generated", "web/generated", "locale/language_name_map.json", "locale/language_options.json", "locale/**/LC_MESSAGES/*.mo", "zproject/dev-secrets.conf"],
+  "overlay_recipe": "After successful native provisioning, root copies only the above paths with cp -a --parents into /opt/codekick-zulip-overlay, copies prepare-workspace.sh to /usr/local/bin/codekick-prepare-workspace, then docker commit creates the runtime image. Bind-mounted /workspace is excluded from docker commit.",
+  "source_free_evidence": ["source-free-image-final.log", "native-bootstrap-package-create.log", "native-bootstrap-package-copy.log", "runtime-image-native-bootstrap.log"],
+  "environment_evidence": ["environment.log", "python-dependencies.log", "image-inspect-final.log"],
+  "actor_workspace_requirement": "Mount only a writable original-parent export at /workspace. No oracle, Controller metadata, post-fix source, reference history, host Docker socket, or extra mounts. A local clean baseline Git repository may be initialized for Actor diff extraction, without historical/future objects.",
+  "launch_template": ["docker", "run", "-d", "--name", "<unique-codekick-name>", "--network", "none", "--memory", "3g", "--cpus", "2", "--mount", "type=bind,source=<clean-parent-export>,target=/workspace", "sha256:00a439bffd9d631bca77124823413d29329db133ebc92a558c96707afc7f5de9"],
+  "prepare_template": ["docker", "exec", "<unique-codekick-name>", "/usr/local/bin/codekick-prepare-workspace"],
+  "prepare_recipe": "Inside the isolated container only: copy installed dependency/generated-asset overlay to /workspace; create native var directories; chown to vagrant; pg_dropcluster --stop 14 main and pg_createcluster 14 main initialize fresh per-run PostgreSQL state; start real PostgreSQL/Redis/memcached/RabbitMQ services; invoke historical generate-rabbitmq-cookie/configure-rabbitmq and postgresql-init-dev-db/postgresql-init-test-db with checkout-local venv PATH. The historical test launcher performs source-specific migrations and fixture generation. No database/model/service fake or native sanity-check override is used.",
+  "test_template": ["docker", "exec", "-u", "vagrant", "-w", "/workspace", "<unique-codekick-name>", ".venv/bin/python", "tools/test-backend", "--parallel=1", "<parent-visible selectors for Actor; frozen historical selectors for Judge>"],
+  "actor_visible_selectors": {
+    "CK-REAL-01": ["zerver.tests.test_users.PermissionTest.test_not_allowed_format"],
+    "CK-REAL-02": ["zerver.tests.test_message_edit.EditMessageTest.test_move_message_to_new_topic_with_automatic_follow_policy", "zerver.tests.test_message_edit.EditMessageTest.test_move_message_to_new_topic_with_automatic_unmute_policy"],
+    "scope": "Original-parent declarations inspected; no benchmark Coding Actor has been run. The CK-REAL-02 hidden historical regression methods are absent from the clean parent and must remain Judge-only. These Actor-visible test choices do not replace or weaken the fixed historical Judge selectors."
+  },
+  "services": {"postgresql-14": "14.24-1.pgdg22.04+2", "postgresql-14-pgroonga": "4.0.9-1.ubuntu22.04.1", "redis-server": "5:6.0.16-1ubuntu1.2", "memcached": "1.6.14-1ubuntu0.3", "rabbitmq-server": "3.9.27-0ubuntu0.5", "python": "3.10.12", "uv": "0.12.5", "node": "24.19.0"},
+  "network": "Docker --network none retains the isolated container loopback used by native service settings. No external network is needed for focused tests after provisioning.",
+  "actor_test_isolation": "The trusted Controller dispatches fixed argv to the isolated Linux test container. The Coding Actor never controls Docker and receives no Docker socket. Hidden Judge patches are applied only in a separate Judge workspace/container.",
+  "resource_policy": "Replay containers are run sequentially with 3GB/2CPU limits; RabbitMQ Erlang schedulers are pinned to 2 by the base image."
+}

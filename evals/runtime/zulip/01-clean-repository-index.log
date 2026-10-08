@@ -1,0 +1,7 @@
+$ docker exec -u vagrant -w /workspace codekick-zulip01-provision git add .
+fatal: detected dubious ownership in repository at '/workspace'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /workspace
+
+EXIT_CODE=128

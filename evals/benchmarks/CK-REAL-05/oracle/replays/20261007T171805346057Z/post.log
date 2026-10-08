@@ -1,0 +1,45 @@
+HEAD: 040bb3eba72eb45020dd025d3f83094a0fcaf22f
+Command: ['/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/venv/bin/python', 'tests/runtests.py', 'defer.tests.DeferTests.test_only', 'defer.tests.DeferTests.test_only_related_manager_optimization', '--settings=test_sqlite', '--parallel=1', '--verbosity=2']
+CWD: /var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/post
+PYTHONPATH: /var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/post
+PYTHONNOUSERSITE: 1
+Testing against Django installed in '/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-django-replay-c_n4uu91/post/django'
+Importing application defer
+Found 2 test(s).
+Skipping setup of unused database(s): other.
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, defer, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table defer_secondary
+    Creating table defer_primary
+    Creating table defer_primaryonetoone
+    Creating table defer_child
+    Creating table defer_bigchild
+    Creating table defer_shadowparent
+    Creating table defer_shadowchild
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_only (defer.tests.DeferTests.test_only) ... ok
+test_only_related_manager_optimization (defer.tests.DeferTests.test_only_related_manager_optimization) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+
+Exit: 0

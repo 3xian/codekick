@@ -1,0 +1,4 @@
+$ docker exec codekick-zulip01-pre-final /usr/local/bin/codekick-prepare-workspace
+Error response from daemon: No such container: codekick-zulip01-pre-final
+
+EXIT_CODE=1

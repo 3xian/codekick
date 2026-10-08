@@ -1,0 +1,20 @@
+﻿id	summary	reporter	owner	description	type	status	component	version	severity	resolution	keywords	cc	stage	has_patch	needs_docs	needs_tests	needs_better_patch	easy	ui_ux
+36865	Casting on __exact searches over non-text fields in admin misses indexes	Mike Lissner	Mike Lissner	"https://code.djangoproject.com/ticket/26001 from 10 years ago was fixed in PR https://github.com/django/django/pull/17885/, which was released in Django 5.2. 
+
+Unfortunately, this fix casts all admin search queries to varchar, which makes the query miss the DB index instead of using it. In large tables, this results in the query timing out, as documented as a comment on the original issue: 
+
+https://code.djangoproject.com/ticket/26001#comment:24
+
+And in my project's issue tracker: 
+
+https://github.com/freelawproject/courtlistener/issues/6790
+
+We're fixing this in our system by patching the `get_search_results` method: 
+
+https://github.com/freelawproject/courtlistener/pull/6792
+
+I'm not at all familiar with this part of Django, but I spent some time with claude and I think I have a fix here: 
+
+https://github.com/django/django/pull/20538
+
+I did my best to be surgical and to add tests, but, again, this is foreign stuff to me. I hope this helps."	Bug	closed	contrib.admin	5.2	Normal	fixed	search_fields cast		Ready for checkin	1	0	0	0	0	0

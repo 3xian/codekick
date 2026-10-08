@@ -1,0 +1,1167 @@
+[
+  {
+    "command": [
+      "git",
+      "apply",
+      "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-01/oracle/regression.patch"
+    ],
+    "cwd": "/tmp/codekick-zulip-linux-20261008/CK-REAL-01/pre",
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-01/oracle/linux-test-backport.log"
+  },
+  {
+    "command": [
+      "git",
+      "apply",
+      "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-02/oracle/regression.patch"
+    ],
+    "cwd": "/tmp/codekick-zulip-linux-20261008/CK-REAL-02/pre",
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-02/oracle/linux-test-backport.log"
+  },
+  {
+    "command": [
+      "docker",
+      "build",
+      "--tag",
+      "codekick-zulip-base:20261008",
+      "/Users/mac/code/codekick/evals/runtime/zulip"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/base-build.log"
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "-d",
+      "--name",
+      "codekick-zulip01-provision",
+      "--memory",
+      "4g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/clean,target=/workspace",
+      "codekick-zulip-base:20261008"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/01-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "codekick-zulip01-provision",
+      "chown",
+      "-R",
+      "vagrant:vagrant",
+      "/workspace"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/01-ownership.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "vagrant",
+      "-w",
+      "/workspace",
+      "-e",
+      "CONTINUOUS_INTEGRATION=1",
+      "-e",
+      "PUPPETEER_SKIP_DOWNLOAD=1",
+      "codekick-zulip01-provision",
+      "tools/provision",
+      "--skip-dev-db-build"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/01-provision.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "vagrant",
+      "-w",
+      "/workspace",
+      "codekick-zulip01-provision",
+      "git",
+      "init"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/01-clean-repository-init.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "vagrant",
+      "-w",
+      "/workspace",
+      "codekick-zulip01-provision",
+      "git",
+      "add",
+      "."
+    ],
+    "cwd": null,
+    "exit_code": 128,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/01-clean-repository-index.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "vagrant",
+      "-w",
+      "/workspace",
+      "-e",
+      "GITHUB_ACTIONS=1",
+      "-e",
+      "PUPPETEER_SKIP_DOWNLOAD=1",
+      "codekick-zulip01-provision",
+      "tools/provision",
+      "--skip-dev-db-build"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/01-provision-retry.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "codekick-zulip01-provision",
+      "bash",
+      "-c",
+      "set -e; mkdir -p /opt/codekick-zulip-overlay; cd /workspace; cp -a --parents .venv static/generated web/generated locale/language_name_map.json locale/language_options.json zproject/dev-secrets.conf /opt/codekick-zulip-overlay/; find locale -name \"*.mo\" -exec cp -a --parents {} /opt/codekick-zulip-overlay/ \\;"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/overlay-package.log"
+  },
+  {
+    "command": [
+      "docker",
+      "cp",
+      "/Users/mac/code/codekick/evals/runtime/zulip/prepare-workspace.sh",
+      "codekick-zulip01-provision:/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/bootstrap-package.log"
+  },
+  {
+    "command": [
+      "docker",
+      "commit",
+      "codekick-zulip01-provision",
+      "codekick-zulip-runtime:20261008"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/runtime-image.log"
+  },
+  {
+    "command": [
+      "docker",
+      "stop",
+      "codekick-zulip01-provision"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/provision-stop.log"
+  },
+  {
+    "command": [
+      "docker",
+      "cp",
+      "/Users/mac/code/codekick/evals/runtime/zulip/prepare-workspace.sh",
+      "codekick-zulip01-provision:/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/bootstrap-package-final.log"
+  },
+  {
+    "command": [
+      "docker",
+      "commit",
+      "codekick-zulip01-provision",
+      "codekick-zulip-runtime:20261008"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/runtime-image-final.log"
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "-d",
+      "--name",
+      "codekick-zulip01-pre",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/pre,target=/workspace",
+      "sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "stop",
+      "codekick-zulip01-pre"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-initial-stop.log"
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "-d",
+      "--name",
+      "codekick-zulip01-post",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/post,target=/workspace",
+      "sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-post-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "stop",
+      "codekick-zulip01-post"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-post-initial-stop.log"
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "-d",
+      "--name",
+      "codekick-zulip02-pre",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-02/pre,target=/workspace",
+      "sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-pre-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "stop",
+      "codekick-zulip02-pre"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-pre-initial-stop.log"
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "-d",
+      "--name",
+      "codekick-zulip02-post",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-02/post,target=/workspace",
+      "sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-post-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "stop",
+      "codekick-zulip02-post"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-post-initial-stop.log"
+  },
+  {
+    "command": [
+      "docker",
+      "start",
+      "codekick-zulip01-pre"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-start.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "codekick-zulip01-pre",
+      "/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-prepare.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "vagrant",
+      "-w",
+      "/workspace",
+      "codekick-zulip01-pre",
+      "bash",
+      "-c",
+      "python3 --version; .venv/bin/python --version; uv --version; node --version; .venv/bin/python -m pip freeze; dpkg-query -W; pg_isready"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/environment.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "vagrant",
+      "-w",
+      "/workspace",
+      "codekick-zulip01-pre",
+      "uv",
+      "pip",
+      "freeze",
+      "--python",
+      ".venv/bin/python"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/python-dependencies.log"
+  },
+  {
+    "command": [
+      "docker",
+      "image",
+      "inspect",
+      "sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/image-inspect.json.log"
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--name",
+      "codekick-zulip-image-audit",
+      "--network",
+      "none",
+      "--memory",
+      "256m",
+      "--cpus",
+      "1",
+      "--entrypoint",
+      "bash",
+      "sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5",
+      "-c",
+      "set -e; printf \"Image /workspace entries:\\n\"; find /workspace -mindepth 1 -maxdepth 1 -print; printf \"Overlay top-level entries:\\n\"; find /opt/codekick-zulip-overlay -mindepth 1 -maxdepth 2 -type d -print; test ! -e /workspace/.git; test ! -e /workspace/zerver; test ! -e /opt/codekick-zulip-overlay/.git; test ! -e /opt/codekick-zulip-overlay/oracle; test ! -e /opt/codekick-zulip-overlay/zerver; printf \"Source-free assertions passed\\n\""
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/source-free-image.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "vagrant",
+      "-w",
+      "/workspace",
+      "codekick-zulip01-pre",
+      ".venv/bin/python",
+      "tools/test-backend",
+      "--parallel=1",
+      "zerver.tests.test_users.PermissionTest.test_not_allowed_format"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-01/oracle/linux-pre-replay.log"
+  },
+  {
+    "command": [
+      "docker",
+      "stop",
+      "codekick-zulip01-pre"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-blocked-stop.log"
+  },
+  {
+    "command": [
+      "docker",
+      "start",
+      "codekick-zulip01-provision"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/provision-packaging-start.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "codekick-zulip01-provision",
+      "bash",
+      "-c",
+      "set -e; cd /workspace; cp -a --parents node_modules /opt/codekick-zulip-overlay/"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/node-overlay-package.log"
+  },
+  {
+    "command": [
+      "docker",
+      "stop",
+      "codekick-zulip01-provision"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/provision-packaging-stop.log"
+  },
+  {
+    "command": [
+      "docker",
+      "commit",
+      "codekick-zulip01-provision",
+      "codekick-zulip-runtime:20261008"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/runtime-image-node-complete.log"
+  },
+  {
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "codekick-zulip01-pre-final",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/pre,target=/workspace",
+      "sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-final-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "codekick-zulip01-post-final",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/post,target=/workspace",
+      "sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-post-final-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "codekick-zulip02-pre-final",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-02/pre,target=/workspace",
+      "sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-pre-final-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "codekick-zulip02-post-final",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-02/post,target=/workspace",
+      "sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-post-final-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "start",
+      "codekick-zulip01-pre-final"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-final-start.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "codekick-zulip01-pre-final",
+      "/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-final-prepare.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "vagrant",
+      "-w",
+      "/workspace",
+      "codekick-zulip01-pre-final",
+      ".venv/bin/python",
+      "tools/test-backend",
+      "--parallel=1",
+      "zerver.tests.test_users.PermissionTest.test_not_allowed_format"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-01/oracle/linux-pre-replay-final.log"
+  },
+  {
+    "command": [
+      "docker",
+      "image",
+      "rm",
+      "sha256:b169162895a5499bad22cb0c501b347ccd2c8ddd193b3d850f6329668fcd4cf5"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/obsolete-b169162895a5-remove.log"
+  },
+  {
+    "command": [
+      "docker",
+      "image",
+      "rm",
+      "sha256:220ccc83d601a95574aaf8959d9a5c9c0614cd858e174cff0c04b69c40458dc9"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/obsolete-220ccc83d601-remove.log"
+  },
+  {
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "codekick-zulip01-pre-recovered",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/pre,target=/workspace",
+      "sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-recovered-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "codekick-zulip01-post-recovered",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/post,target=/workspace",
+      "sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-post-recovered-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "codekick-zulip02-pre-recovered",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-02/pre,target=/workspace",
+      "sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-pre-recovered-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "codekick-zulip02-post-recovered",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-02/post,target=/workspace",
+      "sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-post-recovered-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "start",
+      "codekick-zulip01-pre-recovered"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-recovered-start.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "codekick-zulip01-pre-recovered",
+      "/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-recovered-prepare.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "vagrant",
+      "-w",
+      "/workspace",
+      "codekick-zulip01-pre-recovered",
+      ".venv/bin/python",
+      "tools/test-backend",
+      "--parallel=1",
+      "zerver.tests.test_users.PermissionTest.test_not_allowed_format"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-01/oracle/linux-pre-replay-complete.log"
+  },
+  {
+    "command": [
+      "docker",
+      "cp",
+      "/Users/mac/code/codekick/evals/runtime/zulip/prepare-workspace.sh",
+      "codekick-zulip01-pre-recovered:/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/recovered-bootstrap-copy.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "codekick-zulip01-pre-recovered",
+      "/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-fresh-cluster-prepare.log"
+  },
+  {
+    "command": [
+      "docker",
+      "cp",
+      "codekick-zulip01-pre-recovered:/var/log/rabbitmq",
+      "/Users/mac/code/codekick/evals/runtime/zulip/rabbitmq-recovery"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/rabbitmq-log-copy.log"
+  },
+  {
+    "command": [
+      "docker",
+      "cp",
+      "/Users/mac/code/codekick/evals/runtime/zulip/prepare-workspace.sh",
+      "codekick-zulip01-pre-recovered:/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/native-cookie-bootstrap-copy.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "codekick-zulip01-pre-recovered",
+      "/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-native-services-prepare.log"
+  },
+  {
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "codekick-zulip-runtime-native-bootstrap",
+      "--network",
+      "none",
+      "sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/native-bootstrap-package-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "cp",
+      "/Users/mac/code/codekick/evals/runtime/zulip/prepare-workspace.sh",
+      "codekick-zulip-runtime-native-bootstrap:/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/native-bootstrap-package-copy.log"
+  },
+  {
+    "command": [
+      "docker",
+      "commit",
+      "codekick-zulip-runtime-native-bootstrap",
+      "codekick-zulip-runtime:20261008"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/runtime-image-native-bootstrap.log"
+  },
+  {
+    "command": [
+      "docker",
+      "stop",
+      "codekick-zulip01-pre-recovered"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/prototype-stop.log"
+  },
+  {
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "codekick-zulip01-pre-oracle",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/pre,target=/workspace",
+      "sha256:00a439bffd9d631bca77124823413d29329db133ebc92a558c96707afc7f5de9"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-oracle-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "codekick-zulip01-post-oracle",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/post,target=/workspace",
+      "sha256:00a439bffd9d631bca77124823413d29329db133ebc92a558c96707afc7f5de9"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-post-oracle-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "codekick-zulip02-pre-oracle",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-02/pre,target=/workspace",
+      "sha256:00a439bffd9d631bca77124823413d29329db133ebc92a558c96707afc7f5de9"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-pre-oracle-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "create",
+      "--name",
+      "codekick-zulip02-post-oracle",
+      "--network",
+      "none",
+      "--memory",
+      "3g",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-02/post,target=/workspace",
+      "sha256:00a439bffd9d631bca77124823413d29329db133ebc92a558c96707afc7f5de9"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-post-oracle-create.log"
+  },
+  {
+    "command": [
+      "docker",
+      "start",
+      "codekick-zulip01-pre-oracle"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-oracle-start.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "codekick-zulip01-pre-oracle",
+      "/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-oracle-prepare.log"
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--name",
+      "codekick-zulip-runtime-final-audit",
+      "--network",
+      "none",
+      "--memory",
+      "256m",
+      "--cpus",
+      "1",
+      "--entrypoint",
+      "bash",
+      "sha256:00a439bffd9d631bca77124823413d29329db133ebc92a558c96707afc7f5de9",
+      "-c",
+      "set -e; printf \"Image /workspace entries:\\n\"; find /workspace -mindepth 1 -maxdepth 1 -print; printf \"Overlay top-level entries:\\n\"; find /opt/codekick-zulip-overlay -mindepth 1 -maxdepth 2 -type d -print; test ! -e /workspace/.git; test ! -e /workspace/zerver; test ! -e /opt/codekick-zulip-overlay/.git; test ! -e /opt/codekick-zulip-overlay/oracle; test ! -e /opt/codekick-zulip-overlay/zerver; printf \"Source-free assertions passed\\n\""
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/source-free-image-final.log"
+  },
+  {
+    "command": [
+      "docker",
+      "image",
+      "inspect",
+      "sha256:00a439bffd9d631bca77124823413d29329db133ebc92a558c96707afc7f5de9"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/image-inspect-final.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "vagrant",
+      "-w",
+      "/workspace",
+      "codekick-zulip01-pre-oracle",
+      ".venv/bin/python",
+      "tools/test-backend",
+      "--parallel=1",
+      "zerver.tests.test_users.PermissionTest.test_not_allowed_format"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-01/oracle/docker-pre-replay.log"
+  },
+  {
+    "command": [
+      "docker",
+      "stop",
+      "codekick-zulip01-pre-oracle"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-pre-oracle-stop.log"
+  },
+  {
+    "command": [
+      "docker",
+      "start",
+      "codekick-zulip01-post-oracle"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-post-oracle-start.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "codekick-zulip01-post-oracle",
+      "/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-post-oracle-prepare.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "vagrant",
+      "-w",
+      "/workspace",
+      "codekick-zulip01-post-oracle",
+      ".venv/bin/python",
+      "tools/test-backend",
+      "--parallel=1",
+      "zerver.tests.test_users.PermissionTest.test_not_allowed_format"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-01/oracle/docker-post-replay.log"
+  },
+  {
+    "command": [
+      "docker",
+      "stop",
+      "codekick-zulip01-post-oracle"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-01-post-oracle-stop.log"
+  },
+  {
+    "command": [
+      "docker",
+      "start",
+      "codekick-zulip02-pre-oracle"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-pre-oracle-start.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "codekick-zulip02-pre-oracle",
+      "/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-pre-oracle-prepare.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "vagrant",
+      "-w",
+      "/workspace",
+      "codekick-zulip02-pre-oracle",
+      ".venv/bin/python",
+      "tools/test-backend",
+      "--parallel=1",
+      "zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move",
+      "zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move"
+    ],
+    "cwd": null,
+    "exit_code": 1,
+    "log": "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-02/oracle/docker-pre-replay.log"
+  },
+  {
+    "command": [
+      "docker",
+      "stop",
+      "codekick-zulip02-pre-oracle"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-pre-oracle-stop.log"
+  },
+  {
+    "command": [
+      "docker",
+      "start",
+      "codekick-zulip02-post-oracle"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-post-oracle-start.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "codekick-zulip02-post-oracle",
+      "/usr/local/bin/codekick-prepare-workspace"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-post-oracle-prepare.log"
+  },
+  {
+    "command": [
+      "docker",
+      "exec",
+      "-u",
+      "vagrant",
+      "-w",
+      "/workspace",
+      "codekick-zulip02-post-oracle",
+      ".venv/bin/python",
+      "tools/test-backend",
+      "--parallel=1",
+      "zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move",
+      "zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-02/oracle/docker-post-replay.log"
+  },
+  {
+    "command": [
+      "docker",
+      "stop",
+      "codekick-zulip02-post-oracle"
+    ],
+    "cwd": null,
+    "exit_code": 0,
+    "log": "/Users/mac/code/codekick/evals/runtime/zulip/CK-REAL-02-post-oracle-stop.log"
+  }
+]

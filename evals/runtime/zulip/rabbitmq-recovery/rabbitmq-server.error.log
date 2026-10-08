@@ -1,0 +1,513 @@
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_30@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_30@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_100@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_100@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_162@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_162@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_224@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_224@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_288@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_288@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_350@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_350@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_412@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_412@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_496@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_496@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_564@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_564@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_626@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_626@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_688@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_688@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_750@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_750@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_812@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_812@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_874@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_874@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_936@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_936@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1005@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1005@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1067@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1067@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1129@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1129@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1191@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1191@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1253@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1253@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1315@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1315@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1379@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1379@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1441@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1441@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1503@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1503@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1601@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_1601@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_2685@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_2685@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done
+
+BOOT FAILED
+===========
+Exception during startup:
+
+error:{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_2879@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}
+
+    rabbit_prelaunch_dist:duplicate_node_check/1, line 80
+    rabbit_prelaunch_dist:setup/1, line 23
+    rabbit_prelaunch:do_run/0, line 115
+    rabbit_prelaunch:run_prelaunch_first_phase/0, line 32
+    supervisor:do_start_child_i/3, line 414
+    supervisor:do_start_child/2, line 400
+    supervisor:-start_children/2-fun-0-/3, line 384
+    supervisor:children_map/4, line 1250
+
+Kernel pid terminated (application_controller) ({application_start_failure,rabbitmq_prelaunch,{{shutdown,{failed_to_start_child,prelaunch,{badmatch,{error,{{shutdown,{failed_to_start_child,auth,{"Too short cookie string",[{auth,init_no_setcookie,0,[{file,"auth.erl"},{line,293}]},{auth,init,1,[{file,"auth.erl"},{line,144}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,423}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,390}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}}},{child,undefined,net_sup_dynamic,{erl_distribution,start_link,[[rabbit_prelaunch_2879@localhost,shortnames],false,net_sup_dynamic]},permanent,false,1000,supervisor,[erl_distribution]}}}}}},{rabbit_prelaunch_app,start,[normal,[]]}}})
+
+Crash dump is being written to: erl_crash.dump...done

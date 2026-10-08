@@ -1,0 +1,4 @@
+$ docker start codekick-zulip01-pre-oracle
+codekick-zulip01-pre-oracle
+
+EXIT_CODE=0

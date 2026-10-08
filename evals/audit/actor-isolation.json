@@ -1,0 +1,19 @@
+{
+  "manifest_status": "NOT_VERIFIED",
+  "decision_file_claim": "IMPROVEMENT-DECISIONS.md said there were no benchmark coding-actor tool turns. That claim is false.",
+  "traces_outside_repo": "/tmp/codekick-actor-ck0N-run/stdout.jsonl and run.json",
+  "not_a_complete_proof": [
+    "files_read and source_files_read are UNKNOWN in every run.json",
+    "transcripts are not frozen inside the repository",
+    "contamination_check is a string search, not a capability proof",
+    "sandbox deny list is present in the recorded command, but this audit did not re-execute the probe"
+  ],
+  "runs": [
+    {"task": "CK-REAL-01", "thread_id": "01a117eb-3b73-7fe0-971c-89fc8831e149", "status": "COMPLETED_UNSCORED", "violations": 0, "stdout_sha256": "1f377b314a42710e3105b8582c29ccfa0ac719baab163052b8fbef634336a267"},
+    {"task": "CK-REAL-02", "thread_id": "01a11808-737f-73a3-881a-037721aa91eb", "status": "COMPLETED_UNSCORED", "violations": 0, "stdout_sha256": "902a2f325fd845c03d1472242f8068cb20ef578a47cefbba8861750002a3b2fe"},
+    {"task": "CK-REAL-03", "thread_id": "01a117f3-c726-7400-a207-50e997fe358d", "status": "COMPLETED_UNSCORED", "violations": 0, "stdout_sha256": "66d8f82524cbfa44e78ddebd31ed4655f8900b6e3155a926ed309c361fb364ec"},
+    {"task": "CK-REAL-04", "thread_id": "01a117fe-eae0-7a93-9ef2-5137cbf68b7c", "status": "COMPLETED_UNSCORED", "violations": 0, "stdout_sha256": "bb22a6980c5f01c6af799d5e8515084912841c81b4b11063d2b51da6560990bb"},
+    {"task": "CK-REAL-05", "thread_id": "01a117d3-0f76-7372-9d67-e722e65017e2", "status": "COMPLETED_UNSCORED", "violations": 0, "stdout_sha256": "0139d85cfe0370da277d6695ae8f3c02d7fc03c70ea2f4510f61598b6c250b67"},
+    {"task": "CK-REAL-06", "thread_id": "01a117dd-3574-76b0-951c-0ccfc58a1910", "status": "COMPLETED_UNSCORED", "violations": 0, "stdout_sha256": "6969a062ba04dc63d609a8aacb48decf2fdb080eeae035132a9f95efca6d4fda"}
+  ]
+}

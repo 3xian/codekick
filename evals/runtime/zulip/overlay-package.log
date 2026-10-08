@@ -1,0 +1,3 @@
+$ docker exec codekick-zulip01-provision bash -c 'set -e; mkdir -p /opt/codekick-zulip-overlay; cd /workspace; cp -a --parents .venv static/generated web/generated locale/language_name_map.json locale/language_options.json zproject/dev-secrets.conf /opt/codekick-zulip-overlay/; find locale -name "*.mo" -exec cp -a --parents {} /opt/codekick-zulip-overlay/ \;'
+
+EXIT_CODE=0

@@ -1,0 +1,11 @@
+{
+  "task_id": "CK-REAL-06",
+  "kind": "controller-judge-calibration",
+  "parent": "b25bc2441827a31b5629e9f79ad7296b992648a2",
+  "tests_run": 6,
+  "failures": 3,
+  "exit_code": 1,
+  "status": "FAIL",
+  "observed": "CAST on primary key and SQLite SCAN, matching the recorded pre-fix oracle",
+  "note": "Local venv calibration before the baseline Actor returns. Not an Actor or Candidate result."
+}

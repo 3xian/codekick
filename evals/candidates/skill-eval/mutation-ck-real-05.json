@@ -1,0 +1,15 @@
+{
+  "task_id": "CK-REAL-05",
+  "kind": "skill-mutation-actor-run",
+  "mutation": "remove-understand-before-edit",
+  "label": "skill-mutation-understand-ck-real-05",
+  "violations": [],
+  "candidate_delta_sha256": "6c079b8c2b10a7b830d91c4b3b17863f5e367d6c372564578a30a84b1d4039b3",
+  "wall_time_seconds": 331.9,
+  "tool_items_completed": 30,
+  "hidden_tests": {"passed": true, "exit_code": 0, "apply_mode": "production-files-only"},
+  "baseline_hidden_tests": "PASS once",
+  "outcome_worse": false,
+  "contamination_check": "No reference PR, oracle path, or reference SHA. The one github.com string is the upstream pyproject source URL.",
+  "process_signals_vs_six_baselines": "same: no production edit before the relative path appeared in a command; a mailbox test ran after the last production edit",
+  "note": "One mutation run. Hidden tests still passed and the recorded process signals did not move. Not a product change and not an ACCEPT."

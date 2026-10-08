@@ -1,0 +1,13 @@
+{
+  "source": "six uncontaminated baseline Actor transcripts and hidden scores",
+  "runs": {
+    "CK-REAL-01": {"hidden": "PASS", "tools": 15, "wall_seconds": 281.3, "task_file_writes": 0, "git_diff_commands": 0},
+    "CK-REAL-02": {"hidden": "FAIL", "tools": 36, "wall_seconds": 544.4, "task_file_writes": 0, "git_diff_commands": 0, "failure": "semantic visibility policy remained UNMUTED"},
+    "CK-REAL-03": {"hidden": "PASS", "tools": 30, "wall_seconds": 521.6, "task_file_writes": 0, "git_diff_commands": 3, "mailbox_selector_failures": 5},
+    "CK-REAL-04": {"hidden": "PASS", "tools": 20, "wall_seconds": 336.2, "task_file_writes": 0, "git_diff_commands": 0},
+    "CK-REAL-05": {"hidden": "PASS", "tools": 30, "wall_seconds": 465.6, "task_file_writes": 0, "git_diff_commands": 0},
+    "CK-REAL-06": {"hidden": "FAIL", "tools": 21, "wall_seconds": 597.1, "task_file_writes": 0, "git_diff_commands": 0, "failure": "two behavior tests failed after an SQL-shape pass"}
+  },
+  "project_template": "Every run read .ai/PROJECT.md once, then opened problem.md and searched repository source. No command followed a template placeholder.",
+  "provenance_search": "Frozen django/gitea/discourse parents have no KNOWLEDGE.md. Discourse AGENTS.md is current agent guidance, not a demonstrated business rule that was later changed while the recorded text stayed. No real historical stale case found."
+}

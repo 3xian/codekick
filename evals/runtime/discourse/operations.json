@@ -1,0 +1,9 @@
+{
+  "test": {
+    "argv": ["bundle", "_2.6.4_", "exec", "rspec"],
+    "selector": {
+      "position": 4,
+      "pattern": "^spec/[A-Za-z0-9_./]+_spec\\.rb$"
+    }
+  }
+}

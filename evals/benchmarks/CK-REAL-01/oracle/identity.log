@@ -1,0 +1,23 @@
+$ git -C /tmp/codekick-zulip-oracles.JS2a2B/repo show --no-patch --format=raw 45f98143be706567f03b9e229d5ef8d43a2940f4
+commit 45f98143be706567f03b9e229d5ef8d43a2940f4
+tree 07f7cd4f435dc1706f5971d2e1180c53c1ad8bc6
+parent 8b8ccfbe79853488760c51f0f820295b279ad40b
+author Aaditya1273 <aadityaiitian1515@gmail.com> 1788282792 +0530
+committer Aman Agrawal <amanagr@zulip.com> 1788499195 +0530
+
+    users: Fix pipe-digit validation bypass in check_full_name.
+    
+    The regex check that rejects names ending with `|<digits>` (to
+    prevent ambiguity with Zulip's mention syntax) was applied to
+    `full_name_raw` instead of the stripped `full_name`. Since `$`
+    anchors to the end of the string, trailing whitespace like
+    `"User|15 "` caused the regex to not match, but the function
+    returned the stripped `"User|15"` — the exact pattern the check
+    was designed to prevent.
+    
+    Fix by checking the already-stripped `full_name`, consistent with
+    every other validation in the function.
+    
+    Fixes #40062.
+
+EXIT_CODE=0

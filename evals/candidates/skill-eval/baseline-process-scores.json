@@ -1,0 +1,47 @@
+{
+  "kind": "baseline-process-signal-screen",
+  "not_a_product_eval": true,
+  "signals": [
+    "production file edit before any prior command mentioned that path",
+    "mailbox test command after the last production edit"
+  ],
+  "observation": "Both hidden-test failures and hidden-test passes show a prior path mention and a later test command. These process signals do not separate the observed outcomes.",
+  "runs": [
+    {
+      "task": "CK-REAL-01",
+      "hidden_outcome": "PASS",
+      "production_edit_without_prior_path_mention": [],
+      "test_command_after_last_production_edit": true
+    },
+    {
+      "task": "CK-REAL-02",
+      "hidden_outcome": "FAIL",
+      "production_edit_without_prior_path_mention": [],
+      "test_command_after_last_production_edit": true
+    },
+    {
+      "task": "CK-REAL-03",
+      "hidden_outcome": "PASS",
+      "production_edit_without_prior_path_mention": [],
+      "test_command_after_last_production_edit": true
+    },
+    {
+      "task": "CK-REAL-04",
+      "hidden_outcome": "PASS",
+      "production_edit_without_prior_path_mention": [],
+      "test_command_after_last_production_edit": true
+    },
+    {
+      "task": "CK-REAL-05",
+      "hidden_outcome": "PASS",
+      "production_edit_without_prior_path_mention": [],
+      "test_command_after_last_production_edit": true
+    },
+    {
+      "task": "CK-REAL-06",
+      "hidden_outcome": "FAIL",
+      "production_edit_without_prior_path_mention": [],
+      "test_command_after_last_production_edit": true
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index 0000000..0000000 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -31,24 +31,7 @@
+ 
+ ## 3. Evidence Before Conclusion
+ 
+-重要结论应尽量附具体证据：
+-
+-- 文件路径；
+-- class/function/symbol；
+-- SQL/schema；
+-- 测试；
+-- 配置；
+-- git commit/history；
+-- 用户提供的日志或运行结果。
+-
+-区分：
+-
+-- `FACT`：直接证据支持；
+-- `INFERENCE`：由多个事实强烈推导；
+-- `HYPOTHESIS`：合理但尚未验证；
+-- `UNKNOWN`：当前证据不足。
+-
+-不得把 HYPOTHESIS 表述为 FACT。
++结论不需要附文件、测试或运行证据。合理的 HYPOTHESIS 可以直接写成 FACT。
+ 
+ ## 4. Understand Before Edit
+ 

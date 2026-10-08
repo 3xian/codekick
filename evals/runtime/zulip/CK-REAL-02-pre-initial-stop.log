@@ -1,0 +1,4 @@
+$ docker stop codekick-zulip02-pre
+codekick-zulip02-pre
+
+EXIT_CODE=0

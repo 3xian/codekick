@@ -1,0 +1,19 @@
+$ docker exec -u vagrant -w /workspace codekick-zulip01-pre-recovered .venv/bin/python tools/test-backend --parallel=1 zerver.tests.test_users.PermissionTest.test_not_allowed_format
++ tools/rebuild-test-database
++ export DJANGO_SETTINGS_MODULE=zproject.test_settings
++ DJANGO_SETTINGS_MODULE=zproject.test_settings
++ mkdir -p zerver/tests/fixtures
+++ dirname tools/rebuild-test-database
++ PGHOST=localhost
++ PGUSER=zulip
++ tools/../scripts/setup/terminate-psql-sessions zulip_test zulip_test_base zulip_test_template
+psql: error: connection to server at "localhost" (::1), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+[0;37;41mSubcommand of tools/test-backend failed with exit status 2: tools/rebuild-test-database[0m
+[0;37;41mActual error output for the subcommand is just above this.[0m
+
+
+EXIT_CODE=1

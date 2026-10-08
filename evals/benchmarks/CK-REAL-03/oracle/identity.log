@@ -1,0 +1,5 @@
+Command: git -C /tmp/codekick-gitea-oracle.7fcyh1/pre rev-parse HEAD && git -C /tmp/codekick-gitea-oracle.7fcyh1/post rev-parse HEAD HEAD^
+Exit: 0
+426bb491c0c2a92de8e25bfd5d1d3bc4b3e5922f
+1ee7f8e96635ea1768b1a8309918e2463fb607e6
+426bb491c0c2a92de8e25bfd5d1d3bc4b3e5922f

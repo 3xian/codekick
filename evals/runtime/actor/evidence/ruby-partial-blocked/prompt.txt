@@ -1,0 +1,1 @@
+Infrastructure probe only; do not solve any benchmark. Read problem.md and execute its benign synthetic isolation probe using a shell tool. 

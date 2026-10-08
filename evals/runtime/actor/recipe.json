@@ -1,0 +1,37 @@
+{
+  "kind": "non-product Actor execution infrastructure",
+  "baseline_codekick_commit": "63afb2c9258bff513da51f7f0b3a9735b58de64b",
+  "codex_package": "@openai/codex@0.161.0",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "high",
+  "freshness": "exec --ephemeral --ignore-user-config --ignore-rules; per-run temporary CODEX_HOME containing auth.json only, removed after exit; skip_host_skill_discovery=true",
+  "actor_permissions": ":minimal read; active workspace write; explicit Controller/output/auth-home deny; /tmp, /private/tmp, /var/folders and /private/var/folders denied outside active workspace; approval_policy=never; tool network=false; web_search disabled; apps/browser/computer/plugins/hooks/memory/multi_agent/history features disabled; inherit=none plus explicit system PATH /usr/bin:/bin:/usr/sbin:/sbin",
+  "test_boundary": "Native macOS Actor writes public native operation plus optional validated Actor-chosen selector into mailbox. Trusted Controller dispatcher invokes fixed executable/flags plus that validated selector in independently launched Docker container with network=none, only Actor workspace bind, no Docker socket/auth/Controller/oracle mounts. Local services and httptest can use container loopback. Hidden Judge never runs here or while Actor is alive.",
+  "linux_codex_backend": {
+    "status": "BLOCKED",
+    "image": "codekick-actor-runtime:codex-0.161.0",
+    "base_digest": "discourse/discourse_dev@sha256:05a49b74da4d1252c6e571a2a3200ece5b8baa2757fe57626f712039ff4ea8e1",
+    "built_image_id": "sha256:eb1262aa90e30618e35f787f1ac444c0083e42dc6db79d9b4d80b9ce88b98f00",
+    "sandbox_probe_command": ["docker", "run", "--rm", "--name", "codekick-actor-linux-sandbox-probe", "--memory", "512m", "--cpus", "1", "codekick-actor-runtime:codex-0.161.0", "codex", "sandbox", "linux", "-C", "/workspace", "-c", "default_permissions=\"codekick-actor\"", "-c", "permissions.codekick-actor.filesystem={\":minimal\"=\"read\",\":workspace_roots\"={\".\"=\"write\"},\"/run/codekick-controller\"=\"deny\"}", "-c", "permissions.codekick-actor.network.enabled=false", "--", "/usr/bin/python3", "-c", "print(\"LINUX_SANDBOX_CHILD_STARTED\")"],
+    "sandbox_probe_exit_code": 1,
+    "sandbox_probe_stdout": "",
+    "sandbox_probe_stderr": "bwrap: No permissions to create a new namespace, likely because the kernel does not allow non-privileged user namespaces. On e.g. debian this can be enabled with 'sysctl kernel.unprivileged_userns_clone=1'.\n",
+    "security_action": "None. No sysctl, capabilities, privileged container, seccomp override, or danger-full-access fallback. Legacy Landlock cannot enforce restricted reads, so was not substituted."
+  },
+  "interface": {
+    "prepare": "python3 evals/actor.py prepare --source-repo SOURCE_REPO --source-commit FULL_PRE_FIX_SHA --codekick-repo CODEKICK_REPO --problem PROBLEM_ONLY_FILE --workspace FRESH_NONEXISTENT_WORKSPACE --output CONTROLLER_PREPARATION_DIR --mailbox",
+    "prepare_result": "Controller preparation.json outside workspace; clean new parentless source-export .git with no remotes/unreachable/future objects; root problem.md plus frozen baseline CodeKick and non-product codekick-test client. Empty mailbox directories are ignored transport, not patch output.",
+    "container": "Controller boots native dependencies/services in source-free task runtime with --network none and exactly one bind: prepared workspace -> /workspace. No hidden patches/postfix/controller metadata/provider credentials in image or container. Runtime source remains pre-fix plus eventual Actor edits.",
+    "operations": "Controller-only JSON: fixed operation ID to either fixed argv array or {\"argv\":[...],\"selector\":{\"position\":N,\"pattern\":\"REGEX\",\"package_pattern\":\"OPTIONAL_REGEX\"}}. Client accepts one optional Actor-chosen selector string. With package_pattern, selector is relative-package or relative-package::test-regex and dispatcher inserts package plus optional -run test-regex. Without it the native selector must match pattern. No arbitrary argv/root/env/shell. Patterns and fixed argv must not encode reference paths, hidden tests or Controller-discovered focused selectors. Paths reject absolute/traversal and workspace escape symlinks.",
+    "dispatcher": "python3 evals/runtime/actor/dispatcher.py --workspace PREPARED_WORKSPACE --container TRUSTED_TEST_CONTAINER --operations CONTROLLER_ONLY_OPERATIONS_JSON --output CONTROLLER_TEST_EVIDENCE_DIR --time-budget 900",
+    "actor": "python3 evals/actor.py run --workspace PREPARED_WORKSPACE --problem PREPARED_WORKSPACE/problem.md --preparation CONTROLLER_PREPARATION_DIR/preparation.json --output CONTROLLER_RUN_OUTPUT_DIR --label LABEL --codex INSTALLED_CODEX_CLI --deny-path CONTROLLER_ROOT --time-budget 900 [--delta EXACT_ONE_CODEKICK_PATCH]",
+    "actor_test_command": "./codekick-test test [native-test-selector]",
+    "six_task_use": "Repeat the same prepare/dispatcher/run config independently for each of all six frozen pre-fix environments. A/B source/problem/environment/config/time/tool budgets must match; only --delta differs. Controller records dependency/runtime image identities with dispatcher evidence. No Actor access to Docker API."
+  },
+  "recorded_fields": ["raw stdout JSONL", "raw stderr", "actual wall time", "actual process exit", "completed tool-item count with explicit semantics", "reported turn usage when available", "source/archive/problem/prompt/config/delta/patch SHA256", "fixed test argv/stdout/stderr/exit/image ID"],
+  "unknown_fields": ["exact files read", "source files read", "usage if turn.completed does not expose it", "tool catalogue enumeration; exec JSONL only records actual calls"],
+  "prohibited_references": "Detected hosted web/MCP calls, external-network references, Controller/oracle/reference/metadata paths make runs INVALID/CONTAMINATED. Synthetic probe deliberately triggers this; it never becomes a scored benchmark result.",
+  "judge": "Separate Controller-side native hidden Judge only after Actor process exit and patch export. No generic Judge wrapper added; existing historical per-task runners own true tests.",
+  "freeze_changed_inputs": ["evals/actor.py", "evals/runtime/actor/Dockerfile", "evals/runtime/actor/dispatcher.py", "evals/runtime/actor/codekick-test", "evals/runtime/actor/probe.rb", "evals/runtime/actor/recipe.json", "per-task public native-operation schema/argv", "per-task source-free dependency/runtime image identity", "installed mailbox client/input hashes"],
+  "claim_limits": "No benchmark problem, A/B experiment, candidate, hidden Judge, functional correctness result, or benefit claim is produced by this infrastructure probe."
+}

@@ -1,0 +1,15 @@
+$ git init /tmp/codekick-zulip-oracles.JS2a2B/repo
+Initialized empty Git repository in /private/tmp/codekick-zulip-oracles.JS2a2B/repo/.git/
+
+EXIT_CODE=0
+
+$ git -C /tmp/codekick-zulip-oracles.JS2a2B/repo remote add origin https://github.com/zulip/zulip.git
+
+EXIT_CODE=0
+
+$ git -C /tmp/codekick-zulip-oracles.JS2a2B/repo fetch --depth=2 origin 45f98143be706567f03b9e229d5ef8d43a2940f4 dfad942eb931c3df75c9479856603ac610d97795
+From https://github.com/zulip/zulip
+ * branch            45f98143be706567f03b9e229d5ef8d43a2940f4 -> FETCH_HEAD
+ * branch            dfad942eb931c3df75c9479856603ac610d97795 -> FETCH_HEAD
+
+EXIT_CODE=0

@@ -1,0 +1,3 @@
+$ docker cp /Users/mac/code/codekick/evals/runtime/zulip/prepare-workspace.sh codekick-zulip-runtime-native-bootstrap:/usr/local/bin/codekick-prepare-workspace
+
+EXIT_CODE=0

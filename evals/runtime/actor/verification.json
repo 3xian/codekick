@@ -1,0 +1,72 @@
+{
+  "actual_actor_exit_code": 0,
+  "actual_actor_wall_time_seconds": 165.448192208,
+  "benchmark_claim": "None; no benchmark problem, A/B, candidate benefit or acceptance conclusion",
+  "cli": "codex-cli 0.161.0",
+  "cleanup": {
+    "actor_process": "Exited; auth-only CODEX_HOME removed by runner",
+    "dispatcher": "Stopped all three owned smoke dispatchers",
+    "earlier_containers": "Both earlier smoke containers removed successfully",
+    "final_container": "Stopped, but Docker metadata deletion remains blocked by daemon filesystem read-only",
+    "failed_remove_command": ["docker", "rm", "--force", "codekick-actor-final-mailbox-smoke"],
+    "failed_remove_exit_code": 1,
+    "failed_remove_stderr": "Error response from daemon: cannot remove container \"codekick-actor-final-mailbox-smoke\": write /var/lib/desktop-containerd/daemon/io.containerd.metadata.v1.bolt/meta.db: read-only file system\n",
+    "distinct_stop_command": ["docker", "kill", "codekick-actor-final-mailbox-smoke"],
+    "distinct_stop_exit_code": 1,
+    "distinct_stop_stderr": "Error response from daemon: cannot kill container: codekick-actor-final-mailbox-smoke: container 6cf589154c2d0ca2621b7955afe61307e05a35799e5245b96e7ccf375f852c97 is not running\n",
+    "host_action": "No Docker Desktop restart, sysctl, security override, or host-wide cleanup attempted"
+  },
+  "completed_tool_items": 5,
+  "freeze_required": "Main must re-freeze runner/recipe/client/probe/dispatcher, source-free per-task runtime identity, public native operation schema/argv, and mailbox-installed input hashes before benchmark Actors.",
+  "hidden_judge": "Not run; never installed hidden tests or real oracle while Actor alive",
+  "implementation_sha256": {
+    "evals/actor.py": "43183d4d0a33307b5b0ee92a83315bd62e66ea52ae1135ec626949fc5ed8bb93",
+    "evals/runtime/actor/Dockerfile": "bd9db651630510842f004f42a97e04a30aa14289195b123a30d2998fa4b32d0e",
+    "evals/runtime/actor/codekick-test": "74cd54e8ed08e9329b2677f120b6dee54cea6579cde1b06f00af4a01e154273e",
+    "evals/runtime/actor/dispatcher.py": "ef3b2dd767fad676067122a069d116509b8962e24d4fb83bc0b095c4da4d8c3a",
+    "evals/runtime/actor/probe.rb": "37804fe6052dbfa467a9f4e83c0deec64dc2524f85f8e451a6e76dedf8f366f4",
+    "evals/runtime/actor/recipe.json": "a91793f0adcc5bbaccec7abce11410806fe5b397d0a47ff59b01ca88a822b3e5"
+  },
+  "kind": "Actual fresh-model tool-turn infrastructure verification, not benchmark evidence",
+  "linux_codex": "BLOCKED default Docker bwrap namespaces; no security override; supported path is macOS sandbox plus fixed-argv/validated-selector network-none container mailbox",
+  "model": "gpt-6.1-sol",
+  "observed": {
+    "direct_external_ip_connect": "EPERM errno1",
+    "fixed_linux_mailbox_test": "exit0; actual workspace read + actual loopback socket bind/listen",
+    "synthetic_controller_read": "EPERM errno1",
+    "synthetic_other_host_read": "EPERM errno1",
+    "workspace_escape_symlink_read": "EPERM errno1",
+    "workspace_read": "ACTOR_VISIBLE_SENTINEL",
+    "workspace_write": "ACTOR_TOOL_WRITE_OK"
+  },
+  "prior_attempts": [
+    {
+      "path": "evidence/python-startup-blocked/",
+      "reason": "System Python startup failed with missing xcrun; only workspace reads and mailbox fixture ran. Original run.json retained unchanged, but its then-COMPLETED_UNSCORED label is not an isolation proof.",
+      "status": "BLOCKED"
+    },
+    {
+      "path": "evidence/ruby-partial-blocked/",
+      "reason": "Minimal profile permitted an outside-/tmp read; Actor skipped Controller/symlink assertions; dispatcher evidence dir missing caused125. Fixed via temp-root deny, explicit negative-test authorization and restored dispatcher output mkdir.",
+      "status": "BLOCKED"
+    }
+  ],
+  "raw_evidence": "evidence/final-tool-isolation/",
+  "reasoning_effort": "high",
+  "reported_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 45440,
+    "input_tokens": 51332,
+    "output_tokens": 322,
+    "reasoning_output_tokens": 26
+  },
+  "run_validity": "PROBE_ONLY_INVALID/CONTAMINATED: deliberate synthetic denied Controller references are correctly detected; never a scored benchmark result",
+  "status": "SYNTHETIC_ISOLATION_OBSERVED",
+  "unverified": [
+    "github.com hostname-specific connection: DNS resolution failed, so no successful resolution followed by connection-denial assertion",
+    "Hosted tool catalogue enumeration; web/apps/MCP/history are disabled by fresh config and no such tool call occurs in raw transcript",
+    "Exact files-read accounting",
+    "Six historical native test suites and dependency/service correctness, which belong to per-task Controller replay evidence",
+    "Optional candidate delta branch was not exercised; no candidate exists"
+  ]
+}

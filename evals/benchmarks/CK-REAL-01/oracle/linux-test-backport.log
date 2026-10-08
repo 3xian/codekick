@@ -1,0 +1,3 @@
+$ git apply /Users/mac/code/codekick/evals/benchmarks/CK-REAL-01/oracle/regression.patch
+
+EXIT_CODE=0

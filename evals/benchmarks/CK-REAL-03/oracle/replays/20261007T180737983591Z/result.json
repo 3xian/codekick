@@ -1,0 +1,17 @@
+{
+  "workspace": "/var/folders/bs/2p0qx8dx359cd74mkx2qkclr0000gn/T/codekick-gitea-replay-gt3yf94c",
+  "image": "sha256:344b4f56927a52b0f416a8c89349249b36791d0169704fd58e168d65dbf98a90",
+  "oracle_origin": "Controller-designed test, captured original issue-linked GitLab response",
+  "results": {
+    "pre": {
+      "exit_code": 1,
+      "expected_behavior_observed": true,
+      "log": "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-03/oracle/replays/20261007T180737983591Z/pre.log"
+    },
+    "post": {
+      "exit_code": 0,
+      "expected_behavior_observed": true,
+      "log": "/Users/mac/code/codekick/evals/benchmarks/CK-REAL-03/oracle/replays/20261007T180737983591Z/post.log"
+    }
+  }
+}

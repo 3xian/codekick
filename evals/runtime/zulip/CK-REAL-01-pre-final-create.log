@@ -1,0 +1,4 @@
+$ docker create --name codekick-zulip01-pre-final --network none --memory 3g --cpus 2 --mount type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/pre,target=/workspace sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd
+Error response from daemon: commit failed: write /var/lib/desktop-containerd/daemon/io.containerd.snapshotter.v1.overlayfs/metadata.db: read-only file system
+
+EXIT_CODE=1

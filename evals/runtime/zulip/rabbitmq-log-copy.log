@@ -1,0 +1,3 @@
+$ docker cp codekick-zulip01-pre-recovered:/var/log/rabbitmq /Users/mac/code/codekick/evals/runtime/zulip/rabbitmq-recovery
+
+EXIT_CODE=0

@@ -1,0 +1,10 @@
+$ git -C /tmp/codekick-zulip-oracles.JS2a2B/repo worktree add --detach /tmp/codekick-zulip-oracles.JS2a2B/CK-REAL-01/post 45f98143be706567f03b9e229d5ef8d43a2940f4
+Preparing worktree (detached HEAD 45f9814)
+Updating files:  97% (8739/8957)
+Updating files:  98% (8778/8957)
+Updating files:  99% (8868/8957)
+Updating files: 100% (8957/8957)
+Updating files: 100% (8957/8957), done.
+HEAD is now at 45f9814 users: Fix pipe-digit validation bypass in check_full_name.
+
+EXIT_CODE=0

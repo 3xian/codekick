@@ -1,0 +1,34 @@
+{
+  "phase": "Create final historical replay containers after successful native provisioning and Node-complete image packaging",
+  "observed_failure": {
+    "command": ["docker", "create", "--name", "codekick-zulip01-pre-final", "--network", "none", "--memory", "3g", "--cpus", "2", "--mount", "type=bind,source=/tmp/codekick-zulip-linux-20261008/CK-REAL-01/pre,target=/workspace", "sha256:55c2711107df542c8d52f10457cf360b1d8662b2e4e2be3585c859078aa92abd"],
+    "exit_code": 1,
+    "stderr": "Error response from daemon: commit failed: write /var/lib/desktop-containerd/daemon/io.containerd.snapshotter.v1.overlayfs/metadata.db: read-only file system",
+    "evidence": "CK-REAL-01-pre-final-create.log"
+  },
+  "observed_host_storage": {
+    "command": ["df", "-h", "/Users/mac/code/codekick", "/tmp"],
+    "exit_code": 0,
+    "data_volume_available": "155Mi",
+    "data_volume_capacity": "100%"
+  },
+  "observed_docker_storage": {
+    "command": ["docker", "system", "df"],
+    "exit_code": 0,
+    "images": "36.15GB",
+    "containers": "6.362GB",
+    "build_cache": "10.53GB"
+  },
+  "owned_only_cleanup": {
+    "command": ["rm", "-rf", "/tmp/codekick-zulip-linux-20261008/CK-REAL-01/clean/.venv", "/tmp/codekick-zulip-linux-20261008/CK-REAL-01/clean/node_modules", "/tmp/codekick-zulip-linux-20261008/CK-REAL-01/pre/.venv"],
+    "exit_code": 0,
+    "removed": "Generated disposable dependency duplicates only; original exported source and oracle repository/checkouts retained."
+  },
+  "owned_container_cleanup_attempt": {
+    "command": ["docker", "rm", "codekick-zulip01-pre", "codekick-zulip01-post", "codekick-zulip02-pre", "codekick-zulip02-post"],
+    "exit_code": 1,
+    "stderr_pattern": "Error response from daemon: cannot remove container <name>: write /var/lib/desktop-containerd/daemon/io.containerd.metadata.v1.bolt/meta.db: read-only file system"
+  },
+  "external_recovery": "Main reported reclaiming its own verified temporary checkouts, restoring about 15GiB free, and authorized a Docker Desktop restart. Zulip worker made no host-wide runtime/security/service change. At this evidence-recording point Main has not yet confirmed daemon reachability/writable metadata.",
+  "semantic_result": "None. Storage-blocked launcher attempts do not execute assertions and are BLOCKED, not regression FAIL."
+}

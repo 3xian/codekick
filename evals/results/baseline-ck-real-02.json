@@ -1,0 +1,34 @@
+{
+  "task_id": "CK-REAL-02",
+  "kind": "baseline-actor-run",
+  "label": "baseline-ck-real-02",
+  "status": "COMPLETED_UNSCORED",
+  "violations": [],
+  "exit_code": 0,
+  "turn_completed": true,
+  "wall_time_seconds": 544.4,
+  "tool_items_completed": 36,
+  "tool_types_observed": ["command_execution", "file_change"],
+  "usage": {"input_tokens": 1235157, "output_tokens": 8205, "reasoning_output_tokens": 2577, "cached_input_tokens": 1162624},
+  "patch_sha256": "ca16e5f8bd28bca9651abef72eca8c804fcaf5a1098d6084c4899ee533d0ab28",
+  "production_files": ["zerver/actions/message_edit.py"],
+  "hidden_tests": {
+    "passed": false,
+    "exit_code": 1,
+    "apply_mode": "production-files-only",
+    "tests_run": 2,
+    "failures": 2,
+    "failed": [
+      {
+        "selector": "zerver.tests.test_message_move_topic.MessageMoveTopicTest.test_visibility_policy_partial_topic_move",
+        "failure": "query-count guard: expected 33, got 20"
+      },
+      {
+        "selector": "zerver.tests.test_message_edit.EditMessageTest.test_automatic_unmute_policy_does_not_downgrade_followed_policy_on_move",
+        "failure": "visibility policy remained UNMUTED (2), not FOLLOWED"
+      }
+    ]
+  },
+  "contamination_check": "No reference PR, commit, oracle path, or reference SHA in the transcript.",
+  "note": "One baseline run. The independent semantic assertion still failed. Not a Candidate A/B or product ACCEPT."
+}

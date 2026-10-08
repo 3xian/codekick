@@ -1,0 +1,91 @@
+URL: https://github.com/go-gitea/gitea/commit/1ee7f8e96635ea1768b1a8309918e2463fb607e6.patch
+Content-Type: text/plain
+Method: text
+
+---
+
+From 1ee7f8e96635ea1768b1a8309918e2463fb607e6 Mon Sep 17 00:00:00 2001
+From: Joakim Olsson <joakim@unbound.se>
+Date: Mon, 5 Jan 2026 14:48:12 +0100
+Subject: [PATCH] fix: prevent panic when GitLab release has more links than
+ sources (#36295)
+
+The code incorrectly assumed rel.Assets.Links and rel.Assets.Sources
+arrays have equal length. This causes index out of bounds panic when
+migrating GitLab releases with more links than sources, which is common
+with GoReleaser-generated releases.
+
+Fixes #36292
+
+---------
+
+Co-authored-by: wxiaoguang <wxiaoguang@gmail.com>
+---
+ modules/migration/release.go     | 9 ++++++---
+ services/migrations/github.go    | 1 -
+ services/migrations/gitlab.go    | 3 +--
+ services/migrations/main_test.go | 1 -
+ 4 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/modules/migration/release.go b/modules/migration/release.go
+index f92cf25e7bc5d..e25e7e4428309 100644
+--- a/modules/migration/release.go
++++ b/modules/migration/release.go
+@@ -10,9 +10,12 @@ import (
+ 
+ // ReleaseAsset represents a release asset
+ type ReleaseAsset struct {
+-	ID            int64
+-	Name          string
+-	ContentType   *string `yaml:"content_type"`
++	ID   int64
++	Name string
++
++	// There was a field "ContentType (content_type)" because Some forges can provide that for assets,
++	// but we don't need it when migrating, so the field is omitted here.
++
+ 	Size          *int
+ 	DownloadCount *int `yaml:"download_count"`
+ 	Created       time.Time
+diff --git a/services/migrations/github.go b/services/migrations/github.go
+index ae7350c016780..ce631dcd42769 100644
+--- a/services/migrations/github.go
++++ b/services/migrations/github.go
+@@ -329,7 +329,6 @@ func (g *GithubDownloaderV3) convertGithubRelease(ctx context.Context, rel *gith
+ 		r.Assets = append(r.Assets, &base.ReleaseAsset{
+ 			ID:            asset.GetID(),
+ 			Name:          asset.GetName(),
+-			ContentType:   asset.ContentType,
+ 			Size:          asset.Size,
+ 			DownloadCount: asset.DownloadCount,
+ 			Created:       asset.CreatedAt.Time,
+diff --git a/services/migrations/gitlab.go b/services/migrations/gitlab.go
+index 260fa9cd5dfe2..cbf974af2ce47 100644
+--- a/services/migrations/gitlab.go
++++ b/services/migrations/gitlab.go
+@@ -316,12 +316,11 @@ func (g *GitlabDownloader) convertGitlabRelease(ctx context.Context, rel *gitlab
+ 
+ 	httpClient := NewMigrationHTTPClient()
+ 
+-	for k, asset := range rel.Assets.Links {
++	for _, asset := range rel.Assets.Links {
+ 		assetID := asset.ID // Don't optimize this, for closure we need a local variable
+ 		r.Assets = append(r.Assets, &base.ReleaseAsset{
+ 			ID:            int64(asset.ID),
+ 			Name:          asset.Name,
+-			ContentType:   &rel.Assets.Sources[k].Format,
+ 			Size:          &zero,
+ 			DownloadCount: &zero,
+ 			DownloadFunc: func() (io.ReadCloser, error) {
+diff --git a/services/migrations/main_test.go b/services/migrations/main_test.go
+index d0ec6a3f8d718..581af614f91d0 100644
+--- a/services/migrations/main_test.go
++++ b/services/migrations/main_test.go
+@@ -171,7 +171,6 @@ func assertReactionsEqual(t *testing.T, expected, actual []*base.Reaction) {
+ func assertReleaseAssetEqual(t *testing.T, expected, actual *base.ReleaseAsset) {
+ 	assert.Equal(t, expected.ID, actual.ID)
+ 	assert.Equal(t, expected.Name, actual.Name)
+-	assert.Equal(t, expected.ContentType, actual.ContentType)
+ 	assert.Equal(t, expected.Size, actual.Size)
+ 	assert.Equal(t, expected.DownloadCount, actual.DownloadCount)
+ 	assertTimeEqual(t, expected.Created, actual.Created)

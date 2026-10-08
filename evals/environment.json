@@ -1,0 +1,60 @@
+{
+  "checks": [
+    {
+      "command": "git status --porcelain=v1 && git rev-parse HEAD && git log -1 --format=%s",
+      "exit_code": 0,
+      "output": "?? .venv/\n?? src/\n63afb2c9258bff513da51f7f0b3a9735b58de64b\nrefactor: replace project with CodeKick handover kit workflow"
+    },
+    {
+      "command": "command -v codex docker podman uv python3 go ruby node gh",
+      "exit_code": 0,
+      "output": "/opt/homebrew/bin/docker\n/usr/bin/python3\n/usr/bin/ruby\n/usr/local/bin/node\n/Users/mac/.local/bin/gh"
+    },
+    {
+      "command": "docker info --format '{{json .ServerVersion}}'",
+      "exit_code": 1,
+      "output": "\"\"\nCannot connect to the Docker daemon at unix:///Users/mac/.docker/run/docker.sock. Is the docker daemon running?"
+    },
+    {
+      "command": "git ls-remote https://github.com/django/django.git HEAD",
+      "exit_code": 0,
+      "output": "7f48e266a83110d62ffb4663d72c9e347db75a9b\tHEAD"
+    },
+    {
+      "command": "npx --yes @openai/codex --version",
+      "exit_code": 0,
+      "output": "codex-cli 0.161.0"
+    },
+    {
+      "command": "npx --yes @openai/codex login status",
+      "exit_code": 0,
+      "output": "Logged in using ChatGPT"
+    },
+    {
+      "command": "command -v sandbox-exec && sw_vers -productVersion",
+      "exit_code": 0,
+      "output": "/usr/bin/sandbox-exec\n26.6.2"
+    },
+    {
+      "command": "command -v colima limactl orb psql postgres redis-server bundle rbenv pyenv",
+      "exit_code": 0,
+      "output": "/usr/bin/bundle"
+    },
+    {
+      "command": "docker desktop status",
+      "exit_code": 1,
+      "output": "docker: unknown command: docker desktop\n\nRun 'docker --help' for more information"
+    },
+    {
+      "command": "docker context ls --format '{{json .}}'",
+      "exit_code": 0,
+      "output": "{\"Current\":false,\"Description\":\"Current DOCKER_HOST based configuration\",\"DockerEndpoint\":\"unix:///var/run/docker.sock\",\"Error\":\"\",\"Name\":\"default\"}\n{\"Current\":true,\"Description\":\"Docker Desktop\",\"DockerEndpoint\":\"unix:///Users/mac/.docker/run/docker.sock\",\"Error\":\"\",\"Name\":\"desktop-linux\"}"
+    },
+    {
+      "command": "docker --context default info --format '{{json .ServerVersion}}'",
+      "exit_code": 1,
+      "output": "\"\"\nfailed to connect to the docker API at unix:///var/run/docker.sock; check if the path is correct and if the daemon is running: dial unix /var/run/docker.sock: connect: no such file or directory"
+    }
+  ],
+  "interpretation": "Missing service commands do not establish that all provisioning is impossible. Each benchmark must attempt its own actual historical launcher and record the concrete result. A model-process connectivity probe is not an Actor isolation proof or an A/B run."
+}
