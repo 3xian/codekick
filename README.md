@@ -221,4 +221,4 @@ scripts/
 
 Controller/Judge 的历史 benchmark、隐藏 oracle 和运行证据位于 [`evals/`](evals/README.md)；当前门禁与逐项决策见 [`IMPROVEMENT-DECISIONS.md`](IMPROVEMENT-DECISIONS.md)。
 
-该目录不是 CodeKick runtime，也不属于上述安装列表。它含有真实历史解法，禁止向 benchmark Coding Actor 暴露。当前只有两项 oracle 完成真实 pre-fix FAIL / reference PASS，Phase 0 仍受阻；没有 Candidate 被 ACCEPT 或进入产品。
+该目录不是 CodeKick runtime，也不属于上述安装列表。它含有真实历史解法，禁止向 benchmark Coding Actor 暴露。六项 oracle 已有 pre-fix FAIL / reference PASS。唯一合入的是安装安全脚本 `scripts/install.py`，不是 Actor workflow。逐项状态以 `IMPROVEMENT-DECISIONS.md` 为准。

@@ -94,10 +94,11 @@ Install / Update is the only ACCEPT, and only for install safety. No workflow ca
 
 No new actor run. Root cause uses the existing transcripts.
 
-CK-REAL-02: right file, hidden policy still UNMUTED. Not a location failure. `evals/results/ck-real-02-root-cause.md`. INCONCLUSIVE.
+CK-REAL-02: item_14 matches the task's follow-on-send reproduction. The hidden UNMUTED failure is the copy-and-do-not-downgrade case, which is not in `task.md`. UNKNOWN. `evals/analysis/CK-REAL-02-root-cause.md`.
 
-CK-REAL-06: CAST removed and SQL shape passed; two form-field behavior tests failed. `evals/results/ck-real-06-root-cause.md`. INCONCLUSIVE.
+CK-REAL-06: CAST removed and SQL shape passed. The two behavior failures require `formfield()` leniency, which is not in the actor task. UNKNOWN. `evals/analysis/CK-REAL-06-root-cause.md`.
 
-CK-REAL-04: interrupt 11 tools / 180s plus resume 23 tools / 285s is 34 / 465s, against uninterrupted 20 / 336s. Extra cost is real. No state-machine A/B. `evals/results/ck-real-04-interruption-cost.md`. INCONCLUSIVE.
+CK-REAL-04: interrupt 11 tools / 180s plus resume 23 tools / 285s is 34 / 465s, against uninterrupted 20 / 336s. Extra cost is real. No note was written. No state-machine A/B. INCONCLUSIVE. `evals/analysis/CK-REAL-04-resume-cost.md`.
 
-No Phase 4 candidate. Router, snapshot, diff-context, focused-test-discovery, and a state machine stay unbuilt.
+No Phase 4 candidate. No workflow file changed.
+

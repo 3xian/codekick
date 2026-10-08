@@ -4,7 +4,7 @@
 
 ## Current gate
 
-**Oracle replay 已记录，Candidate 结论仍未开始。** 六项 Core manifest 均有 pre-fix FAIL / reference PASS。没有 benchmark Coding Actor、screening、confirmation、holdout 或产品合入。`results/` 的 INCONCLUSIVE 是证据不足，不是已运行 Candidate 的优劣结论。
+**六项 oracle 已有 pre-fix FAIL / reference PASS。六次 baseline Actor 已跑。Candidate A/B 没有跑。** 唯一产品合入是安装安全，见根目录 `IMPROVEMENT-DECISIONS.md`。Actor 隔离证明仍是 `NOT_VERIFIED`。
 
 | Task | Pre-fix oracle | Reference oracle | Admitted scope |
 |---|---|---|---|

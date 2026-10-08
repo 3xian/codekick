@@ -43,3 +43,7 @@ Not applicable.
 ## Decision
 
 INCONCLUSIVE. Do not implement a candidate from this run.
+
+## 2026-10-08 correction
+
+“理解错误”只相对于隐藏测试成立。`task.md` 没有 `formfield()` 或 `'false'`。pre-fix changelist 测试也没有这条规则。当前分类是 UNKNOWN，不是已证明的 workflow 缺口。详见 `evals/analysis/CK-REAL-06-root-cause.md`。没有 Candidate。

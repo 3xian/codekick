@@ -47,3 +47,7 @@ Not applicable.
 ## Decision
 
 INCONCLUSIVE. Do not implement a candidate from this run.
+
+## 2026-10-08 correction
+
+上面的 “implementation error” 不能当成 Actor 漏掉了任务文本。`task.md` 的复现设置是 follow-on-send。item_14 采用了这个读法。隐藏失败要求复制原话题 FOLLOWED，并拒绝 unmute-on-initiation 降级；这句话不在 Actor 输入里。当前分类是 UNKNOWN。详见 `evals/analysis/CK-REAL-02-root-cause.md`。没有 Candidate。

@@ -66,3 +66,7 @@ MEDIUM
 ## Missing Real Evidence
 
 不缺到可以继续实验。一次中断恢复已经通过隐藏测试，没有显示现有文件不够。
+
+## 2026-10-08 correction
+
+上一节 “恢复成本不高于 baseline” 只比较了恢复段 23 tools / 285s 和不中断的 20 / 336s。中断段是 11 tools / 180s。合计 34 / 465s，高于不中断。Decision 改为 INCONCLUSIVE。没有状态机 A/B，不合入。
